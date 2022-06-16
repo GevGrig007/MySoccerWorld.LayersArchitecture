@@ -1,0 +1,30 @@
+﻿@model National
+@{
+    Layout = null;
+}
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+    </div>
+    <div class="modal-body p-0">
+        <form asp-action="CreatePlayer" asp-controller="Nationals" method="post">
+            <h3 class="d-flex justify-content-center" style="background-color:brown;color:antiquewhite;padding:5px;"> Select Players </h3>
+            @Html.HiddenFor(model => model.Id)
+            <div class="d-flex justify-content-center">
+                @Html.EditorFor(model => model.Name)
+            </div>
+            <div class="d-flex justify-content-center"><b>Teams</b></div>
+            @{ List<Player> players = ViewBag.Players; }
+            @foreach (Player p in players)
+            {
+                <input type="checkbox" name="selectedPlayers" value="@p.Id" style="margin-left:20%;"
+                     @if (Model.PlayerTeams != null) { @(Model.PlayerTeams.Contains(p.PlayerTeams.OrderBy(p => p.Season).LastOrDefault()) ? "checked=\"checked\"" : "") }/>
+                @p.Name
+                <br />
+            }
+            <p class="d-flex justify-content-center">
+                <input type="submit" value="ADD SELECTED TEAMS" />
+            </p>
+        </form>
+    </div>
+</div>

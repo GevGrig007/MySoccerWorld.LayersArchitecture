@@ -1,0 +1,79 @@
+﻿@model TournamentViewModel
+@{
+    Layout = "_TournamentLayout";
+    ViewData["Title"] = Model.Tournament.Name + "Info";
+}
+<h1>
+    @Model.Tournament.Name - @Model.Tournament.Season.Data
+</h1>
+<div class="container">
+    @{
+        if (Model.Matches.Count > 0)
+        {
+            <div class="row">
+                <div class="col-7">
+                    @await Html.PartialAsync("Standing", Model.TournamentStandings)
+                </div>
+                <div class="col-5">
+                    <div class="justify-content-center">
+                        <div id="goalscorers">
+                            <div class="title">
+                                GOALSCORERS
+                            </div>
+                            @foreach (var c in Model.Goals.Where(g => g.Goals.Count > 2).OrderByDescending(g => g.Goals.Count).Take(15))
+                            {
+                                <div class="row m-0" style="border-bottom:1px solid">
+                                    <div class="col-6 player">
+                                        @c.Player.Name
+                                    </div>
+                                    <div class="col-5 team">@c.Team.Name</div>
+                                    <div class="col-1 count">@c.Goals.Count()</div>
+                                </div>
+                            }
+                        </div>
+                        <div id="goalscorers">
+                            <div class="title">
+                                ASSISTANTS
+                            </div>
+                            @foreach (var c in Model.Asists.Where(a => a.Asists.Count > 1).OrderByDescending(g => g.Asists.Count).Take(15))
+                            {
+                                <div class="row m-0" style="border-bottom:1px solid">
+                                    <div class="col-6 player">
+                                        @c.Player.Name
+                                    </div>
+                                    <div class="col-5 team">@c.Team.Name</div>
+                                    <div class="col-1 count">@c.Asists.Count()</div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5">
+                @foreach (var m in Model.Matches.OrderBy(c => c.Round).GroupBy(c => c.Round))
+                {
+                    <div class="roundrow">
+                        <div class="round">
+                            @m.Key ROUND
+                        </div>
+                        @foreach (var c in m)
+                        {
+                            <div>
+                                @await Html.PartialAsync("Match", c)
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+        else
+        {<p>Please create a shedulle for tournament</p>;
+        }
+    }
+</div>
+<div class="mt-5 mb-5">
+    @if (Model.BestPlayer.Count() > 0)
+    {
+        @await Html.PartialAsync("BestPlayer", Model.Tournament)
+    }
+</div>

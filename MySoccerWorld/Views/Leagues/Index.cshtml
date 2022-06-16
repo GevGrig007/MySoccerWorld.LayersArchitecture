@@ -1,0 +1,75 @@
+﻿@model IEnumerable<League>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/leagues.css" />
+</head>
+<body>
+    <div>
+        @await Html.PartialAsync("MenuHeader")
+    </div>
+    <div class="container row m-auto">
+        <div class="col-6" id="fon">
+            <p id="name">
+                LEAGUES
+            </p>
+            @foreach (var league in Model)
+            {
+                <div class="row justify-content-between m-auto">
+                    <div class="ml-3" id="leaguename">
+                        @league.Name
+                    </div>
+                    <div>
+                        @Html.ActionLink("EDIT", "Edit",
+                            new { id = league.Id }, new { @class = "modalItem" }) ||
+                        @Html.ActionLink("DELETE", "Delete",
+                            new { id = league.Id }, new { @class = "modalItem" })
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-6" id="fon">
+            <div class="p-5">
+                <p id="name">
+                    Create New League
+                </p>
+                <div>
+                    <form asp-action="Create" method="post" style="display:grid">
+                        <input type="text" name="Name" placeholder="Create a Name of League" />
+                        <input type="text" name="Region" placeholder="Add a Region for League" />
+                        <input type="text" name="Type" placeholder="Add a Type  for League" />
+                        <button class="btn-primary" type="submit">
+                            CREATE LEAGUE
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="p-5">
+                <p id="name">
+                    Create New Season
+                </p>
+                <div>
+                    <form asp-action="CreateSeason" method="post" style="display:grid">
+                        <input type="text" inputmode="numeric" name="dataseason" />
+                        <button class="btn-primary" type="submit">
+                            CREATE SEASON
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modDialog" class="modal fade" style="top:10%">
+        <div id="dialogContent" class="modal-dialog"></div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/modal.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+﻿@model Player
+
+@{
+    ViewData["Title"] = "Details";
+}
+<style>
+    .table td, th {
+        color: aliceblue;
+    }
+</style>
+<div class="col-5" style="margin-left:25%;margin-top:10%;padding:20px;background-color:brown">
+    <div>
+        <div class="d-flex justify-content-center" style="text-transform:uppercase;color:aliceblue;font-size:30px;"> @Model.Name </div>
+        <div>
+            <table class="table table-bordered">
+                <tr>
+                    <th> C </th>
+                    <th> S </th>
+                    <th> G </th>
+                    <th> A </th>
+                </tr>
+                @foreach (var p in Model.PlayerTeams)
+                {
+                    <tr>
+                        <td> @p.Team.Name </td>
+                        <td> @p.Season.Data </td>
+                        <td> @p.Goals.Count() </td>
+                        <td> @p.Asists.Count() </td>
+                    </tr>
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    @{
+                        var goals = new List<int>();
+                        foreach (var p in Model.PlayerTeams)
+                        {
+                            var goal = p.Goals.Count();
+                            goals.Add(goal);
+                        }
+                        <td> @goals.Sum() </td>
+                    }
+                    @{
+                        var asists = new List<int>();
+                        foreach (var p in Model.PlayerTeams)
+                        {
+                            var asist = p.Asists.Count();
+                            asists.Add(asist);
+                        }
+                        <td> @asists.Sum() </td>
+                    }
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>

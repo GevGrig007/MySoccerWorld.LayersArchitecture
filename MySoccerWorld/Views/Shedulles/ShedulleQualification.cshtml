@@ -1,0 +1,25 @@
+﻿@model Tournament
+<div class="center m-5">
+    <div>
+        <form action="ShedulleQualification" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <p class="text-white">  Round :   <input type="text" name="round" />  </p>
+            <select name="matchcount">
+                <option value="1"> 1 Match</option>
+                <option value="2"> 2 Match</option>
+            </select>
+            @for (int i = 0; i < ViewBag.TeamsCount; i++)
+            {
+                var c = i + 1;
+                <div class="form-group col-6">
+                    <span class="text-white"> @c : </span>
+                    <select name="clubs[]" asp-items="@ViewBag.Teams">
+                         <option selected="selected" disabled="disabled">  Select TEAM </option>
+                    </select>
+                </div>
+            }
+            <input type="text" inputmode="numberic" name="data" />
+            <input type="submit" value="send" />
+        </form>
+    </div>   
+</div>

@@ -1,0 +1,191 @@
+﻿body {
+    background: url("../images/intro.svg");
+    font-size: 15px;
+    background-color: indigo;
+    background-attachment: fixed;
+    background-size:100% 100%;
+}
+a{
+    text-decoration:none;
+}
+.table{
+    border:solid;
+}
+.table td {
+    vertical-align: unset;    
+    text-align:center;
+    border-top: solid 1px darkcyan;
+    padding: 0.35rem;
+}
+.table thead {
+    background-color: blue;
+    border: solid;
+    border-color:black;
+    color: aliceblue;
+}
+.table tbody {
+    background-color: azure;
+}
+h1 {
+    display:flex;
+    justify-content:center;
+    color: blanchedalmond;
+    margin-bottom: 50px;
+    font-family: Impact;
+}
+#club {
+    font-size: 18px;
+    border-left: solid 1px;
+    border-right: solid 1px;
+    font-variant-caps: small-caps;
+}
+#club img{
+    width:36px;
+    height:38px;
+    margin-right:10px;
+}
+#points {
+    background-color: brown;
+    border-left: solid 1px;
+    font-size: 16px;
+    color: aliceblue;
+}
+
+#matchplayoff .matchrow {
+    background: midnightblue;
+    margin: 0;
+}
+#matchplayoff .clubname {
+    background-color: lightgrey;
+    padding: 5px;
+    text-align: center;
+}
+#matchplayoff .clubname img {
+    width:30px;
+    height:33px;
+}
+#matchplayoff .score {
+    color: white;
+    padding: 0;
+    align-self: center;
+    text-decoration: none;
+    text-align: center;
+}
+#matchplayoff .pen1 {
+    float:left;
+}
+#matchplayoff .pen2 {
+    float: right;
+}
+#matchplayoff .goals {
+    color: white;
+    padding: 5px;
+}
+#matchplayoff .goalsname {
+    font-size: 9px;
+}
+.round {
+    background-color: darkcyan;
+    text-align: center;
+    font-size: 24px;
+    color: white;
+    padding:10px;
+    border-bottom:solid black;
+}
+.roundrow {
+    border: solid black;
+    border-bottom: none;
+}
+#goalscorers {
+    border: solid;
+    border-color: coral;
+    margin-top: 25px;
+    padding: 0;
+}
+#goalscorers .title {
+    font-size: x-large;
+    background-color: navy;
+    color: darkorange;
+    font-family: cursive;
+    justify-content: center;
+    border-bottom: solid;
+    display: flex;
+}
+#goalscorers .player{
+    background-color:lightblue;
+    font-size:14px;
+    margin-left:0;
+}
+#goalscorers .team{
+    font-size:13px;
+    background-color: aliceblue;
+}
+#goalscorers .count{
+    background-color:brown;
+    color:ivory;
+}
+.sidebar {
+    width: 20%;
+    background-color: #301e48;
+    border-right: solid;
+    color: white;
+    position: fixed;
+    padding: 20px;
+    display: flex;
+    height: 100%;
+}
+.sidebar h4{
+    margin-bottom:50px;
+}
+.sidebar a{
+    color:white;
+    padding:10px;
+    display:block;
+}
+.nav-item {
+    text-transform: uppercase;
+    font-size: 20px;
+    color: darkturquoise;
+    border: solid 1px;
+    background-color: ghostwhite;
+    font-weight: 500;
+}
+.nav-item :hover{
+    color:aliceblue;
+    background-color:blue;
+    border-radius: unset;
+}
+.bestplayer {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    border: solid;
+    border-color: darkolivegreen;
+    background-color: #90ee9094;
+}
+.bpclub {
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    color: darkviolet;
+    text-transform: uppercase;
+    font-weight: bolder;
+}
+.bprow {
+    justify-content: space-around;
+    height: 50px;
+}
+#bestplayer {
+    background: url(/images/Field.jpg) no-repeat;
+    background-size: cover;
+    width: 830px;
+    height: 530px;
+}
+#bestplayer p {
+    margin :0;
+}
+.gk {
+    background-color: darkgreen;
+    color: aliceblue;
+    border-color: darkcyan;
+}

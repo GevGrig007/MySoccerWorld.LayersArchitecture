@@ -1,0 +1,154 @@
+﻿@model Tournament
+@{
+    Layout = "_General";
+    ViewData["Title"] = Model.Name + "Details";
+}
+<div>
+    @await Html.PartialAsync("MenuHeader")
+</div>
+<h1>
+    @Model.League.Name - @Model.Season.Data
+</h1>
+<div>
+    @{
+        var action = "";
+        if (Model.TournamentType == TournamentType.Regular)
+        {
+            action = "RegionalDetails";
+        }
+        else if (Model.TournamentType == TournamentType.EuroCup)
+        {
+            action = "EuroCupDetails";
+        }
+        else if (Model.TournamentType == TournamentType.EuroCupKnockOut)
+        {
+            action = "EuroCupKnockOut";
+        }
+        else if (Model.TournamentType == TournamentType.National8)
+        {
+            action = "NationalDetails";
+        }
+        else if (Model.TournamentType == TournamentType.NationalEuro)
+        {
+            action = "NationalEuro";
+        }
+        else if (Model.TournamentType == TournamentType.Qualification)
+        {
+            action = "Qualification";
+        }
+        <div class="pl-5">
+            <a asp-action="@action" asp-controller="Tournaments" asp-route-id="@Model.Id" class="btn btn-secondary"> BACK TO TOURNAMENT </a>
+        </div>
+    }
+</div>
+<div class="container mt-5">
+    <div class="mainsection">
+        <div class="col-4 mainrow">
+            <h3 class="center">TEAMS</h3>
+            @if (Model.Teams.Count < 1)
+            {<p class="emptymodel"> Please , Add the Teams </p>}
+            <div class="maincol">
+                @foreach (var t in Model.Teams)
+                {
+                    <div class="row">
+                        <img src="@t.Flag" width="56" height="64" />
+                        <div class="clubname">
+                            @t.Name
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="addteams">
+                <a asp-action="AddTeams" asp-route-id="@Model.Id" class="modalItem btn btn-collapse">
+                    ADD TEAMS
+                </a>
+            </div>
+        </div>
+        <div class="col-4 mainrow">
+            <div>
+                <h3 class="center"> LOTERRY </h3>
+                @if (Model.TournamentType == TournamentType.EuroCup)
+                {
+                    @await Html.PartialAsync("ShedulleEuroCup")
+                }
+                else if (Model.TournamentType == TournamentType.NationalEuro)
+                {
+                    @await Html.PartialAsync("ShedulleEuroNational")
+                }
+                else if (Model.TournamentType == TournamentType.National8)
+                {
+                    @await Html.PartialAsync("ShedulleNational8")
+                }
+                else if (Model.TournamentType == TournamentType.EuroCupKnockOut)
+                {
+                    @await Html.PartialAsync("ShedulleCC")
+                }
+                else if (Model.TournamentType == TournamentType.Qualification)
+                {
+                    <form asp-action="ShedulleQualification" method="get">
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <input type="number" name="teamscount" />
+                        <input type="submit" value="SEND" />
+                    </form>
+                }
+                else if (Model.TournamentType == TournamentType.Regular)
+                {
+                    <div class="maincol">
+                        @{
+                            var link = "";
+                            if (Model.Teams.Count == 9)
+                            {
+                                link = "ShedulleFor9";
+                            }
+                            else if (Model.Teams.Count == 12)
+                            {
+                                link = "ShedulleFor12";
+                            }
+                            else if (Model.Teams.Count == 16)
+                            {
+                                link = "ShedulleFor16";
+                            }
+
+                        }
+                        <form asp-action="@link" asp-controller="Shedulles" method="post">
+                            <input type="hidden" asp-for="@Model.Id" />
+                            @for (int i = 0; i < Model.Teams.Count; i++)
+                            {
+                                <div class="form-group">
+                                    <select name="clubs[]" asp-items="@ViewBag.Teams"> </select>
+                                </div>
+                            }
+                            <input type="text" inputmode="numeric" name="data" />
+                            <input class="addteams" type="submit" name="Create" />
+                        </form>
+                    </div>
+                }
+                <div>
+                    <h5> CREATE YOUR SHEDULLE </h5>
+                    <form asp-action="ShedulleQualification" method="get">
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <input type="number" name="teamscount" />
+                        <input type="submit" value="SEND" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 mainrow">
+            <div>
+                <h3 class="center"> BEST   PLAYERS </h3>
+                @foreach (var c in ViewBag.BestPlayers)
+                {
+                    <div class="maincol"> @c.Position - @c.PlayerTeam.Player.Name || <a asp-route-id="@c.Id" asp-action="Edit" asp-controller="BestPlayers" class="modalItem">EDIT</a> </div>
+                }
+                <a asp-action="Create" asp-controller="BestPlayers" asp-route-id="@Model.Id" class="modalItem btn btn-collapse"> ADD PLAYERS </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modDialog" class="modal fade" style="top:5%">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/modal.js"></script>

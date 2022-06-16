@@ -1,0 +1,103 @@
+﻿@model ClubViewModel
+@{
+    Layout = "_Details";
+    ViewData["Title"] = "Details";
+}
+<div>
+    @await Html.PartialAsync("MenuHeader")
+</div>
+<div class="container box">
+    <div class="mainrow">
+        <div>
+            <div class="center">
+                <img src="@Model.Team.Flag" />
+                <div class="ml-5 p-4">
+                    <h1> @Model.Team.Name </h1>
+                    <div class="center">
+                        <img src="@Model.Team.Country.Flag" style="height:26px;width:28px;margin-right:10px;" /> @Model.Team.Country.Name
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th> GAMES </th>
+                        <th> WIN </th>
+                        <th> DRAW </th>
+                        <th> LOST </th>
+                        <th> GOALS </th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td> @Model.Stats.Games </td>
+                    <td> @Model.Stats.Win </td>
+                    <td> @Model.Stats.Draw </td>
+                    <td> @Model.Stats.Lost </td>
+                    <td> @Model.Stats.GoalsFor - @Model.Stats.GoalsAgainst </td>
+                </tr>
+            </table>
+        </div>
+        <div class="mainrow d-flex mt-5">
+            <div class="col-6">
+                <div class="center mainname">
+                    TOURNAMENTS
+                </div>
+                <div class="p-5">
+                    @foreach (var r in Model.Ratings)
+                    {
+                        <div class="ctr-spacearound">
+                            <div class="col-3"> @r.Tournament.Season.Data </div>
+                            <div class="col-6"> @r.Tournament.Name </div>
+                            <div class="col-3"> @r.Round  @r.Position </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-6">
+                <div>
+                    <div class="center mainname">
+                        PLAYERS
+                    </div >
+                    <div class="p-5">
+                        @foreach (var p in Model.Players)
+                        {
+                            <div class="d-flex ml-5">
+                                <img src="@p.Country.Flag" width="24" height="22" />
+                                <div class="ml-2">  @p.Name </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-5">
+            <div class="mainname center mb-4">
+                MATCHES
+            </div>
+            <div class="container">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item"><a class="nav-link" href="#all" role="tab" data-toggle="tab">ALL MATCHES</a></li>
+                    <li class="nav-item active"><a class="nav-link active" href="#latest" role="tab" data-toggle="tab">LAST 10 MATCHES</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#regional" role="tab" data-toggle="tab">REGIONAL</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#eurocups" role="tab" data-toggle="tab">EURO CUP</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade" id="all">
+                        @await Html.PartialAsync("ClubMatches", Model.Matches)
+                    </div>
+                    <div role="tabpanel" class="tab-pane active" id="latest">
+                        @await Html.PartialAsync("ClubMatches", Model.Matches.OrderByDescending(m => m.Data).Take(10))
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="regional">
+                        @await Html.PartialAsync("ClubMatches", Model.Matches.Where(m => m.Tournament.League.Type == "Regional"))
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="eurocups">
+                        @await Html.PartialAsync("ClubMatches", Model.Matches.Where(m => m.Tournament.League.Type == "EuroCup"))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

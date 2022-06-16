@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Match>
+@{
+    Layout = null;
+    ViewData["Title"] = "Club Matches";
+}
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>DATA</th>
+                <th>HOME</th>
+                <th>TOURNAMENT</th>
+                <th>ROUND</th>
+                <th>GR</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>ET</th>
+                <th>ET</th>
+                <th>P</th>
+                <th>P</th>
+                <th>GOALS</th>
+            </tr>
+        </thead>
+        @foreach (var m in Model)
+        {
+            <tr>
+                <td>@m.Data</td>
+                <td>@m.Neytral</td>
+                <td>@m.Tournament.Name</td>
+                <td>@m.Round</td>
+                <td>@m.Group</td>
+                <td>@m.Home.Name</td>
+                <td>@m.Away.Name</td>
+                <td>@m.HomeScore</td>
+                <td>@m.AwayScore</td>
+                <td>@m.HomeEx</td>
+                <td>@m.AwayEx</td>
+                <td>@m.HomePen</td>
+                <td>@m.AwayPen</td>
+                <td style=" font-size:12px;">
+                    @foreach (var g in m.Goals.GroupBy(g => g.PlayerTeam.Player.Name))
+                    {
+                        <div> @g.Key - @g.Count() </div>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+</div>

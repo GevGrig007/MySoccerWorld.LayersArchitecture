@@ -1,0 +1,92 @@
+﻿@model Tournament
+@{
+    ViewData["Title"] = "Matches";
+}
+<h1 class="justify-content-center d-flex"
+    style="color: blanchedalmond; background-color: brown; padding: 15px; margin-bottom: 50px; border: solid 3px; border-color: indigo; font-family: Impact;">
+    @Model.Name - @Model.Season.Data
+</h1>
+<div>
+    @{
+        var action = "";
+        if (Model.TournamentType == TournamentType.Regular)
+        {
+            action = "RegionalDetails";
+        }
+        else if (Model.TournamentType == TournamentType.EuroCup)
+        {
+            action = "EuroCupDetails";
+        }
+        else if (Model.TournamentType == TournamentType.EuroCupKnockOut)
+        {
+            action = "EuroCupKnockOut";
+        }
+        else if (Model.TournamentType == TournamentType.National8)
+        {
+            action = "NationalDetails";
+        }
+        else if (Model.TournamentType == TournamentType.NationalEuro)
+        {
+            action = "NationalEuro";
+        }
+        else if (Model.TournamentType == TournamentType.Qualification)
+        {
+            action = "Qualification";
+        }
+        <a asp-action="Index" asp-controller="Home" class="btn btn-secondary float-left"> HOME </a>
+        <a asp-action="@action" asp-route-id="@Model.Id" class="btn btn-secondary float-right"> BACK TO TOURNAMENT </a>
+    }
+</div>
+<div class="p-5">
+    <table class="table">
+        <thead class="table thead-dark">
+            <tr>
+                <th scope="col">R</th>
+                <th scope="col">G</th>
+                <th scope="col">N</th>
+                <th scope="col">D</th>
+                <th scope="col">HOME TEAM</th>
+                <th scope="col">AWAY TEAM</th>
+                <th scope="col">H S</th>
+                <th scope="col">A S</th>
+                <th scope="col">H EX</th>
+                <th scope="col">A EX</th>
+                <th scope="col">H PEN</th>
+                <th scope="col">A PEN</th>
+                <th scope="col">EDIT</th>
+                <th scope="col">DELETE</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in ViewBag.Matches)
+            {
+                <tr>
+                    <td>@m.Round</td>
+                    <td>@m.Group</td>
+                    <td>@m.Neytral</td>
+                    <td>@m.Data</td>
+                    <td>@m.Home.Name</td>
+                    <td>@m.Away.Name</td>
+                    <td>@m.HomeScore</td>
+                    <td>@m.AwayScore</td>
+                    <td>@m.HomeEx</td>
+                    <td>@m.AwayEx</td>
+                    <td>@m.HomePen</td>
+                    <td>@m.AwayPen</td>
+                    <td>
+                        <a asp-action="Edit" asp-controller="Matches" asp-route-id="@m.Id" class="modalItem btn btn-success" style="color:azure"> EDIT </a>
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-controller="Matches" asp-route-id="@m.Id" class="modalItem btn btn-success" style="color:azure"> DELETE </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div id="modDialog" class="modal fade" style="top:5%">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/js/modal.js"></script>

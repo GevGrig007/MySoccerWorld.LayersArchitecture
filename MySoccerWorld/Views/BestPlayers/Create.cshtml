@@ -1,0 +1,28 @@
+﻿@model BestPlayer
+@{
+    Layout = null;
+}
+<div class="modal-content p-5">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+    </div>
+    <div class="modal-body p-0">
+        <form asp-action="Create" asp-controller="BestPlayers" method="post">
+            @for (int i = 1; i < 12; i++)
+            {
+                <div class="d-flex justify-content-around">
+                    <p>@i</p>
+                    <input type="hidden" name="TournamentId" value="@ViewBag.TournamentId" />
+                    <input type="hidden" name="Position" value="@i" />
+                    <select name="PlayerTeamId" asp-items="@ViewBag.Players">
+                    </select>
+                </div>
+                <br />
+            }
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

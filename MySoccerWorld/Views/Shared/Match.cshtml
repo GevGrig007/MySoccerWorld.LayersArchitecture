@@ -1,0 +1,51 @@
+﻿@model Match
+<div>
+    <div class="border border-secondary" id="matchplayoff">
+        <div class="row matchrow">
+            <div class="col-4 clubname">
+                <img src="@Model.Home.Flag" />
+                <div> @Model.Home.Name  </div>
+            </div>
+            <a class="col-1 score" asp-controller="Matches" asp-action="EditScore" asp-route-id="@Model.Id">
+                <div>
+                    @Model.HomeScore-@Model.AwayScore
+                </div>
+                @if (Model.HomeEx != null)
+                    {
+                        <div>
+                            @Model.HomeEx-@Model.AwayEx
+                        </div>
+                    }
+                @if (Model.HomePen != null)
+                    {
+                            @if (Model.HomePen == 1)
+                            {<div class="pen1">pen</div>}
+                            @if (Model.AwayPen == 1)
+                            {<div class="pen2">pen</div>}
+                    } 
+            </a>
+            <div class="col-4 clubname">
+                <img src="@Model.Away.Flag" />
+                <div> @Model.Away.Name </div>
+            </div>
+            <div class="col-3 goals">
+                <div>
+                    @foreach (var g in Model.Goals.Where(g => g.PlayerTeam.Team == Model.Home).GroupBy(g => g.PlayerTeam.Player.Name))
+                    {
+                        <div class="goalsname">
+                            @g.Key- @g.Count()
+                        </div>
+                    }
+                </div>
+                <div>
+                    @foreach (var g in Model.Goals.Where(g => g.PlayerTeam.Team == Model.Away).GroupBy(g => g.PlayerTeam.Player.Name))
+                    {
+                        <div class="goalsname">
+                            @g.Key- @g.Count()
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

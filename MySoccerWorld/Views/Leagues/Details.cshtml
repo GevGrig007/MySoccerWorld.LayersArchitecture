@@ -1,0 +1,184 @@
+﻿@model LeagueViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="row" style="margin-right:0;">
+    <div class="col-3">
+        <div class="mainrow" style="width:20%">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <h4 class="fs-4" style="margin-bottom:50px;">My Soccer World</h4>
+            </a>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" aria-current="page">
+                        Home
+                    </a>
+                </li>
+                @foreach (var c in Model.Tournaments.OrderByDescending(c => c.Season.Data).ThenBy(c => c.Division))
+                {
+                    var link = "";
+                    if (c.TournamentType == TournamentType.Regular)
+                    {
+                        link = "RegionalDetails";
+                    }
+                    else if (c.TournamentType == TournamentType.EuroCup)
+                    {
+                        link = "EuroCupDetails";
+                    }
+                    else if (c.TournamentType == TournamentType.EuroCupKnockOut)
+                    {
+                        link = "EuroCupKnockOut";
+                    }
+                    else if (c.TournamentType == TournamentType.National8)
+                    {
+                        link = "NationalDetails";
+                    }
+                    else if (c.TournamentType == TournamentType.NationalEuro)
+                    {
+                        link = "NationalEuro";
+                    }
+                    else if (c.TournamentType == TournamentType.Qualification)
+                    {
+                        link = "Qualification";
+                    }
+                    <li style="padding:5px">
+                        <a style="color:cyan" asp-action=@link asp-controller="Tournaments" asp-route-id="@c.Id">
+                            @c.Name - @c.Season.Data
+                        </a>
+                    </li>
+
+                }
+                <li>
+                    <a asp-action="TournamentManage" asp-controller="Tournaments" asp-route-id="@Model.League.Id"
+                       class="modal-btn nav-link text-white position-fixed" style="bottom:50px;">
+                        Manage Tournaments
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-9">
+        <div >
+            @await Html.PartialAsync("MenuHeader") 
+        </div>
+        <div>
+            @if (Model.Tournaments.Count >0)
+            {
+                <div class="d-flex justify-content-center">
+                    <div>
+                        <img src="@Model.League.Logo" width="600" height="400" />
+                        <div class="d-flex justify-content-center text-white"> @Model.League.Name </div>
+                    </div>
+                </div>
+                <div class="mt-5">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th style="background-color: cornsilk"> SEASON </th>
+                                <th style="background-color:gold"> WINNER </th>
+                                <th style="background-color:lightgray"> SILVER </th>
+                                <th style="background-color:goldenrod"> BRONZE </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var r in Model.Ratings.GroupBy(r => r.Tournament))
+                            {
+                                <tr>
+                                    <td>  @r.Key.Season.Data </td>
+                                    @foreach (var t in r.Key.Ratings.Where(r => r.Position == 1))
+                                    {
+                                        <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name  </td>
+                                    }
+                                    @foreach (var t in r.Key.Ratings.Where(r => r.Round == "Winner"))
+                                    {
+                                        <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name </td>
+                                    }
+                                    @foreach (var t in r.Key.Ratings.Where(r => r.Position == 2))
+                                    {
+                                        <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name </td>
+                                    }
+                                    @foreach (var t in r.Key.Ratings.Where(r => r.Round == "Silver"))
+                                    {
+                                        <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name </td>
+                                    }
+                                    @foreach (var t in r.Key.Ratings.Where(r => r.Position == 3))
+                                    {
+                                        <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name </td>
+                                    }
+                                    @foreach (var t in r.Key.Ratings.Where(r => r.Round == "Bronze"))
+                                    {
+                                        <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="container d-flex justify-content-center" style=" background-color: darkslateblue; color: aliceblue;">
+                    <div>
+                        <div class="row">
+                            <div> Games -  @Model.Stats.Games </div>
+                            <div> Goals - @Model.Stats.Goals   </div>
+                            <div> Average Total per game -@Math.Round((Double)Model.Stats.AverageTotal, 1)  </div>
+                        </div>
+                        <div> Over Total Games :  @Model.Stats.OverResultGame.Home.Name  -@Model.Stats.OverResultGame.Away.Name  @Model.Stats.OverResultGame.HomeScore : @Model.Stats.OverResultGame.AwayScore  </div>
+                        <div> Big win games :  @Model.Stats.MaxWin.Home.Name  -@Model.Stats.MaxWin.Away.Name  @Model.Stats.MaxWin.HomeScore : @Model.Stats.MaxWin.AwayScore  </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div id="goalscorers">
+                            <div class="title">
+                                GOALSCORERS
+                            </div>
+                            @foreach (var c in Model.Goals.GroupBy(p => p.Player).OrderByDescending(p => p.Key.PlayerTeams.Sum(p => p.Goals.Count)).Take(15))
+                            {
+                                <div class="row m-0" style="border-bottom:1px solid">
+                                    <div class="col-6 player">
+                                        @c.Key.Name
+                                    </div>
+                                    <div class="col-5 team">
+                                        @foreach (var g in c.Key.PlayerTeams)
+                                        {
+                                            if (g.Goals.Count() > 0)
+                                            {<div> @g.Team.Name - @g.Goals.Count() </div>}
+                                    }
+                                    </div>
+                                    <div class="col-1 count" >@c.Key.PlayerTeams.Sum(c => c.Goals.Count())</div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div id="goalscorers">
+                            <div class="title">
+                                ASSISTANTS
+                            </div>
+                            @foreach (var c in Model.Asists.GroupBy(p => p.Player).OrderByDescending(p => p.Key.PlayerTeams.Sum(p => p.Asists.Count)).Take(15))
+                            {
+                                <div class="row m-0" style="border-bottom:1px solid">
+                                    <div class="col-6 player">
+                                        @c.Key.Name
+                                    </div>
+                                    <div class="col-5 team">
+                                        @foreach (var g in c.Key.PlayerTeams)
+                                        {
+                                            if (g.Asists.Count() > 0)
+                                            {<div> @g.Team.Name - @g.Asists.Count() </div>}
+                                    }
+                                    </div>
+                                    <div class="col-1 count">@c.Key.PlayerTeams.Sum(c => c.Asists.Count())</div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            else { <p class="linkforcreate"> Please go to -
+            <a asp-action="TournamentManage" asp-controller="Tournaments" asp-route-id="@Model.League.Id"> MANAGE TOURNAMETS  </a> 
+            - for create a new tournament   </p> }
+        </div>
+    </div>
+</div>

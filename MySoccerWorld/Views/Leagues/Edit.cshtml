@@ -1,0 +1,24 @@
+﻿@model League
+@{
+    Layout = null;
+}
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+    </div>
+    <div class="modal-body">
+        <form asp-action="Edit" method="post" style="display:grid">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" value="@Model.Name" />
+            <label asp-for="Region"></label>
+            <input asp-for="Region" value="@Model.Region" />
+            <label asp-for="Type"></label>
+            <input asp-for="Type" value="@Model.Type" />
+            <label asp-for="Logo"></label>
+            <input asp-for="Logo" value="@Model.Logo" />
+            <button class="btn-primary" type="submit">
+                SAVE CHANGES
+            </button>
+        </form>
+    </div>
+</div>

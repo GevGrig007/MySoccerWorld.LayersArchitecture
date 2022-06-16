@@ -1,0 +1,27 @@
+﻿@model Match
+@{
+    Layout = null;
+}
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+    </div>
+    <div class="modal-body">
+        <form asp-action="Delete" asp-controller="Matches" method="post" class="p-4">
+            <div class="mb-4">
+                Are you sure want delete <br /> <span style="color:darkred; font-size:20px;">@Model.Home.Name - @Model.Away.Name</span> match?
+            </div>
+            <div>
+                <button id="btnCancel" class="btn btn-success" type="button">CANCEL</button>
+                <button class="btn btn-danger" type="submit">DELETE</button>
+            </div>
+            <input class="modelId" type="hidden" value="@Model.TournamentId" />
+        </form>
+    </div>
+</div>
+<script>
+    var matchid = $(".modelId").val();
+    $("#btnCancel").click(function () {
+        window.location.href = "/Tournaments/Matches/" + matchid;
+    });
+</script>

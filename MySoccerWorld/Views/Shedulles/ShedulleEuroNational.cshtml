@@ -1,0 +1,28 @@
+﻿@model Tournament
+<div>
+    @await Html.PartialAsync("_ShedulleGroup")
+</div>
+<div class="container">
+    <button class="btn btn-collapse" type="button" data-toggle="collapse" data-target="#shedulle8" aria-expanded="false" aria-controls="shedulle8">
+        Shedulle for 1/8 finals
+    </button>
+    <div class="collapse" id="shedulle8">
+        <div class="card card-body">
+            <form asp-action="ShedullEuro8" asp-controller="Shedulles" method="post">
+                <input type="hidden" asp-for="@Model.Id" />
+                @for (int i = 0; i < 8; i++)
+                {
+                    <div class="form-group">
+                        <select name="clubs[]" asp-items="@ViewBag.Teams">
+                        </select>
+                    </div>
+                }
+                <input type="text" inputmode="numeric" name="data" />
+                <input type="submit" value="Create" />
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+    @await Html.PartialAsync("_ShedulleNationalKnockOut")
+</div>

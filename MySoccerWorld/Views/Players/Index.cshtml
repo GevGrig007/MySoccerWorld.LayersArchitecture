@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Player>
+@{
+    Layout = "_General";
+}
+@await Html.PartialAsync("MenuHeader")
+<div class="container">
+    <p>
+        <a class="modalItem btn btn-secondary" asp-action="Create">Create New</a>
+    </p>
+    <div class="mainsection">
+        <table class="table tb mainrow">
+            <thead>
+                <tr>
+                    <th>
+                        <a asp-action="Index" asp-route-sortType="@ViewBag.NameSort">
+                            NAME
+                        </a>
+                    </th>
+                    <th> COUNTRY </th>
+                    <th>
+                        CLUB
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var player in Model)
+                {
+                    <tr>
+                        <td class="club">
+                            <a asp-action="Details" asp-route-id="@player.Id">  @player.Name  </a>
+                        </td>
+                        <td>
+                            @if (player.Country != null)
+                            {
+                                <img src="@player.Country.Flag" style="height:32px;width:36px;" /> @player.Country.Name
+                            }
+                        </td>
+                        <td>
+                            @if (player.PlayerTeams.Count > 0)
+                            {
+                                <img src="@player.PlayerTeams.LastOrDefault().Team.Flag" style="height:38px;width:40px;" /> @player.PlayerTeams.LastOrDefault().Team.Name
+                            }
+                        </td>
+                        <td>
+                            <a class="modalItem btn-sm" asp-action="Edit" asp-route-id="@player.Id">Edit</a>
+                            <a class="modalItem btn-sm" asp-action="Delete" asp-route-id="@player.Id">Delete</a>
+                            <a class="modalItem btn btn-secondary" asp-route-id="@player.Id" asp-action="AddPlayerTeams"> TRANSFER </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="modDialog" class="modal fade" style="top:5%">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/modal.js"></script>

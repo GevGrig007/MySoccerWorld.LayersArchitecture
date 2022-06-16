@@ -1,0 +1,56 @@
+﻿@model IEnumerable<TournamentTable>
+    
+<div>
+    @{
+        var standings = Model.Select((p, i) => new { Index = i + 1, standing = p });
+        <table class="table">
+            <thead >
+                <tr>
+                    <td> #    </td>
+                    <td> Club </td>
+                    <td> P    </td>
+                    <td> W    </td>
+                    <td> D    </td>
+                    <td> L    </td>
+                    <td> G    </td>
+                    <td> D    </td>
+                    <td> P    </td>
+                </tr>
+            </thead>
+            <tbody >
+                @foreach (var c in standings)
+                {
+                    <tr>
+                        @if (c.Index == 1)
+                        {
+                            <td style="background-color:gold"> @c.Index </td>
+                        }
+                        else if (c.Index == 2)
+                        {
+                            <td style="background-color:silver"> @c.Index </td>
+                        }
+                        else if (c.Index == 3)
+                        {
+                            <td style="background-color:goldenrod"> @c.Index </td>
+                        }
+                        else
+                        {
+                            <td> @c.Index </td>
+                        }
+                        <td id="club" >
+                            <img src="@c.standing.Flag" />
+                            @c.standing.TeamName
+                        </td>
+                        <td> @c.standing.Played  </td>
+                        <td> @c.standing.Won </td>
+                        <td> @c.standing.Draw  </td>
+                        <td> @c.standing.Lost </td>
+                        <td> @c.standing.GoalsFor-@c.standing.GoalsAgainst </td>
+                        <td> @c.standing.GoalDifference </td>
+                        <td id="points"> @c.standing.Points </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

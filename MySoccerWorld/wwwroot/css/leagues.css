@@ -1,0 +1,41 @@
+﻿body {
+    background: url("../images/soccer-stadium2.jpg") no-repeat;
+    background-size: cover;
+    padding: 0;
+    margin: 0;
+    font-family: Candara, sans-serif;
+}
+ul {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+}
+img {
+    max-width: 100%;
+}
+#name {
+    text-align: center;
+    font-size: 24px;
+    color: #fff;
+}
+#fon {
+    background: #0c132ccf;
+}
+#leaguename {
+    font-weight: 500;
+    font-size: 20px;
+    color: #fff;
+}
+.nav-item {
+    text-transform: uppercase;
+    font-size: 20px;
+    color: lawngreen;
+    border: solid 1px;
+    background-color: ghostwhite;
+    font-weight:500;
+}
+.nav-item :hover{
+    color:aliceblue;
+    background-color:blue;
+}

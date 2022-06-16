@@ -1,0 +1,53 @@
+﻿@model KnockOutViewModel
+@{
+    Layout = "_TournamentLayout";
+    ViewData["Title"] = Model.Tournament.Name + "" + "Details";
+}
+<h1>
+    @Model.Tournament.Name - @Model.Tournament.Season.Data  @Model.Tournament.Place
+</h1>
+<div>
+    @await Html.PartialAsync("KnockOut", Model.Matches)
+</div>
+<div class="row">
+    <div class="col-6">
+        <div id="goalscorers">
+            <div class="title">
+                GOALSCORERS
+            </div>
+            @foreach (var c in Model.Goals.Where(g => g.Goals.Count > 2).OrderByDescending(g => g.Goals.Count))
+            {
+                <div class="row m-0" style="border-bottom:1px solid">
+                    <div class="col-6 player">
+                        @c.Player.Name
+                    </div>
+                    <div class="col-5 team">@c.Team.Name</div>
+                    <div class="col-1 count">@c.Goals.Count()</div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-6">
+        <div id="goalscorers">
+            <div class="title">
+                ASSISTANTS
+            </div>
+            @foreach (var c in Model.Asists.Where(a => a.Asists.Count > 1).OrderByDescending(g => g.Asists.Count))
+            {
+                <div class="row m-0" style="border-bottom:1px solid">
+                    <div class="col-6 player">
+                        @c.Player.Name
+                    </div>
+                    <div class="col-5 team">@c.Team.Name</div>
+                    <div class="col-1 count">@c.Asists.Count()</div>
+                </div>
+            }
+        </div>
+    </div>
+</div>   
+<div>
+    @if (Model.BestPlayer.Count() > 0)
+    {
+        @await Html.PartialAsync("BestPlayer", Model.Tournament)
+    }
+</div>

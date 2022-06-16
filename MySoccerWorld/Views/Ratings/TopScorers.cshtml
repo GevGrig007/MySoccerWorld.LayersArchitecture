@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Player>
+@{
+    Layout = "_Rating";
+    ViewData["Title"] = "Calculate Rating";
+}
+<div>
+    @await Html.PartialAsync("MenuHeader")
+</div>
+<div class="mainsection">
+    <div class="mainrow2">
+        <div>
+            <div>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item active"><a class="nav-link active" href="#goals" data-toggle="tab">GOALSCORERS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#asists" data-toggle="tab">ASISTANTS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#goalandasist" data-toggle="tab">GOAL + ASIST</a></li>
+                </ul>
+                <div class="tab-content mt-3">
+                    <div role="tabpanel" class="tab-pane active" id="goals">
+                        <div class="w-75">
+                            @foreach (var p in Model.OrderByDescending(p => p.PlayerTeams.Sum(g => g.Goals.Count())).Take(100))
+                            {
+                                <table class="table mb-0">
+                                    <tr>
+                                        <td class="col-7"> @p.Name </td>
+                                        <td class="col-4"> @p.Country.Name </td>
+                                        <td class="col-1"> @p.PlayerTeams.Sum(g => g.Goals.Count()) </td>
+                                    </tr>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="asists">
+                        <div class="w-75">
+                            @foreach (var p in Model.OrderByDescending(p => p.PlayerTeams.Sum(g => g.Asists.Count())).Take(100))
+                            {
+                                <table class="table mb-0">
+                                    <tr>
+                                        <td class="col-7"> @p.Name </td>
+                                        <td class="col-4"> @p.Country.Name </td>
+                                        <td class="col-1"> @p.PlayerTeams.Sum(g => g.Asists.Count()) </td>
+                                    </tr>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="goalandasist">
+                        <div class="w-75">
+                            @foreach (var p in Model.OrderByDescending(p => p.PlayerTeams.Sum(g => g.Goals.Count() + g.Asists.Count())).Take(100))
+                            {
+                                <table class="table mb-0">
+                                    <tr>
+                                        <td class="col-7"> @p.Name </td>
+                                        <td class="col-4"> @p.Country.Name </td>
+                                        <td class="col-1"> @p.PlayerTeams.Sum(g => g.Goals.Count() + g.Asists.Count()) </td>
+                                    </tr>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

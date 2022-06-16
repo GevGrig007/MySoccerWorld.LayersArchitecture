@@ -1,0 +1,138 @@
+﻿@model NationalViewModel
+@{
+    Layout = "_Details";
+    ViewData["Title"] = "Details";
+}
+<div>
+    @await Html.PartialAsync("MenuHeader")
+</div>
+<div class="container box">
+    <div class="">
+        <div class="center">
+            <img src="@Model.Team.Flag" />
+            <div class="ml-5 p-4">
+                <h1> @Model.Team.Name </h1>
+                <div class="center text-white">  @Model.Team.Region </div>
+            </div>
+        </div>
+        <div class="mt-5">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th> GAMES </th>
+                        <th> WIN </th>
+                        <th> DRAW </th>
+                        <th> LOST </th>
+                        <th> GOALS </th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td> @Model.Stats.Games </td>
+                    <td> @Model.Stats.Win </td>
+                    <td> @Model.Stats.Draw </td>
+                    <td> @Model.Stats.Lost </td>
+                    <td> @Model.Stats.GoalsFor - @Model.Stats.GoalsAgainst </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="mainrow d-flex mt-5">
+        <div class="col-6">
+            <div class="center mainname">
+                TOURNAMENTS
+            </div>
+            <div class="p-5">
+                @foreach (var r in Model.Ratings)
+                {
+                    <div class="ctr-spacearound">
+                        <div class="col-3"> @r.Tournament.Season.Data </div>
+                        <div class="col-6"> @r.Tournament.Name </div>
+                        <div class="col-3"> @r.Round  @r.Position </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-6">
+            <div>
+                <div class="center mainname">
+                    PLAYERS
+                </div>
+                <div class="p-5">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th> G </th>
+                                <th> A </th>
+                            </tr>
+                        </thead>
+                        @foreach (var p in Model.Players)
+                        {
+                            <tr>
+                                <td> @p.Name </td>
+                                <td> @p.PlayerTeams.FirstOrDefault().Goals.Count() </td>
+                                <td> @p.PlayerTeams.FirstOrDefault().Asists.Count() </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+            <div class="center">
+                <a asp-action="CreatePlayer" asp-controller="Nationals" asp-route-id="@Model.Team.Id" class="modalItem btn btn-primary"> ADD PLAYERS </a>
+            </div>
+        </div>
+    </div>
+    <div class="mainrow mt-5">
+        <div class="mainname"> MATCHES </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>DATA</th>
+                    <th>HOME</th>
+                    <th>TOURNAMENT</th>
+                    <th>ROUND</th>
+                    <th>GR</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>ET</th>
+                    <th>ET</th>
+                    <th>P</th>
+                    <th>P</th>
+                    <th>GOALS</th>
+                </tr>
+            </thead>
+            @foreach (var m in Model.Matches)
+            {
+                <tr>
+                    <td>@m.Data</td>
+                    <td>@m.Neytral</td>
+                    <td>@m.Tournament.Name</td>
+                    <td>@m.Round</td>
+                    <td>@m.Group</td>
+                    <td>@m.Home.Name</td>
+                    <td>@m.Away.Name</td>
+                    <td>@m.HomeScore</td>
+                    <td>@m.AwayScore</td>
+                    <td>@m.HomeEx</td>
+                    <td>@m.AwayEx</td>
+                    <td>@m.HomePen</td>
+                    <td>@m.AwayPen</td>
+                    <td style=" font-size:12px;">
+                        @foreach (var g in m.Goals.GroupBy(g => g.PlayerTeam.Player.Name))
+                        {
+                            <div> @g.Key - @g.Count() </div>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<div id="modDialog" class="modal fade" style="top:5%">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/modal.js"></script>

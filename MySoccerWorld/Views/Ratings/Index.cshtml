@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Club>
+@{
+    Layout = "_Rating";
+    ViewData["Title"] = "ClubsRating";
+}
+<div>
+    @await Html.PartialAsync("MenuHeader")
+</div>
+<div class="mainsection">
+    <div class="mainrow">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th> # </th>
+                    <th> CLUB </th>
+                    <th> P </th>
+                    <th> COUNTRY </th>
+                    <th> REGION </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var clubs = Model.OrderByDescending(c => c.AllPoints).Select((c, i) => new { Index = i + 1, clubs = c });
+                }
+                @foreach (var c in clubs)
+                {
+                    <tr>
+                        <td class="points"> @c.Index </td>
+                        <td class="teamnameleft"> <img src="@c.clubs.Flag"/>  @c.clubs.Name </td>
+                        <td class="points"> @Math.Round((Double)c.clubs.AllPoints, 1) </td>
+                        <td> <img src="@c.clubs.Country.Flag" style="height:25px;width:28px; margin-right:5px;" /> @c.clubs.Country.Name </td>
+                        <td> @c.clubs.Country.Region </td>
+                    </tr>
+                }
+            </tbody>
+        </table>         
+    </div>
+</div>

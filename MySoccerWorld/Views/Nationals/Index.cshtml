@@ -1,0 +1,64 @@
+﻿@model IEnumerable<National>
+@{
+    Layout = "_General";
+    ViewData["Title"] = "National Teams";
+}
+@await Html.PartialAsync("MenuHeader")
+<div class="container">
+    <div> <a class="modalItem btn btn-secondary mb-4" asp-action="CreateNational"> Create new NATIONAL </a>  </div>
+    <div class="container mainsection">
+        <table class="table tb mainrow">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortType="@ViewBag.NameSort">
+                            NAME
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortType="@ViewBag.CountrySort">
+                            REGION
+                        </a>
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var n in Model)
+                {
+                    <tr>
+                        <td>
+                            <img src="@n.Flag" style="width:40px;height:46px;" />
+                        </td>
+                        <td class="club">
+                            <a asp-action="Details" asp-route-id="@n.Id"> @n.Name </a>
+                        </td>
+                        <td>
+                            @n.Region
+                        </td>
+                        <td>
+                            @if (n.CoachTeams.Count > 0)
+                            {
+                                @n.CoachTeams.Last().Coach.Name
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@n.Id">Edit</a> |
+                            <a asp-action="Delete" asp-route-id="@n.Id">Delete</a>
+                        </td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="modDialog" class="modal fade" style="top:5%">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/modal.js"></script>

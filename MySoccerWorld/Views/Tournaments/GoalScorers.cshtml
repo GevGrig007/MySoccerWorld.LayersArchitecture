@@ -1,0 +1,81 @@
+﻿@model GoalScorersViewModel
+@{
+    Layout = "_TournamentLayout";
+}
+<div class="container">
+    <div>
+        <a class="modalItem mb-4 btn btn-outline-primary" asp-route-id="@Model.Tournament.Id" asp-action="CreateAwards"> CREATE AWARDS </a>
+    </div>
+    <div>
+        @foreach (var a in Model.TournamentAwards.Where(a => a.AwardName == AwardType.GoldenBall))
+        {
+            <p> Golden Ball -   @a.PlayerTeam.Player.Name - @a.PlayerTeam.Team.Name  </p>
+        }
+    </div>
+    <div>
+        @foreach (var a in Model.TournamentAwards.Where(a => a.AwardName == AwardType.SilverBall))
+        {
+            <p> Silver Ball - @a.PlayerTeam.Player.Name - @a.PlayerTeam.Team.Name  </p>
+        }
+    </div>
+    <div>
+        @foreach (var a in Model.TournamentAwards.Where(a => a.AwardName == AwardType.BronzeBall))
+        {
+            <p> Bronze Ball -  @a.PlayerTeam.Player.Name - @a.PlayerTeam.Team.Name  </p>
+        }
+    </div>
+    <div>
+        @foreach (var a in Model.TournamentAwards.Where(a => a.AwardName == AwardType.GoalScorer))
+        {
+            <p> @a.PlayerTeam.Player.Name - @a.PlayerTeam.Team.Name  </p>
+        }
+    </div>
+    <div>
+        @foreach (var a in Model.TournamentAwards.Where(a => a.AwardName == AwardType.Asister))
+        {
+            <p> @a.PlayerTeam.Player.Name - @a.PlayerTeam.Team.Name  </p>
+        }
+    </div>
+    <div>
+        @foreach (var a in Model.TournamentAwards.Where(a => a.AwardName == AwardType.Coach))
+        {
+            <p> @a.CoachTeam.Coach.Name - @a.CoachTeam.Team.Name  </p>
+        }
+    </div>
+</div>
+<div>
+    @foreach (var p in Model.PlayerTeams.Where(p => p.Goals.Count > 0 || p.Asists.Count > 0).GroupBy(c => c.Team))
+    {
+        <div class="container">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th> @p.Key.Name </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in p)
+                    {
+                        <tr>
+                            <td> <img src="@c.Player.Country.Flag" width="24" height="24" /> </td>
+                            <td> @c.Player.Name </td>
+                            <td> @c.Goals.Count() </td>
+                            <td> @c.Asists.Count() </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    }
+</div>
+<div id="modDialog" class="modal fade" style="top:5%">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/modal.js"></script>

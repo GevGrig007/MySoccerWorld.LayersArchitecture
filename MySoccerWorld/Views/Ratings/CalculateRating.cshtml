@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Rating>
+@{
+    Layout = "_Rating";
+    ViewData["Title"] = "Calculate Rating";
+}
+<div>
+    @await Html.PartialAsync("MenuHeader")
+</div>
+<div class="container">
+    <form action="CalculateRating" method="post">
+        <input class="btn btn-danger" type="submit" value="Create" />
+        <input name="id" value="@Model.First().TournamentId" />
+        @foreach (var c in Model.OrderByDescending(p => p.Points))
+        {
+            <table class="table bg-danger">
+                <tr>
+                    <td>
+                        @c.Team.Name
+
+
+                    </td>
+                    <td>
+                        @c.Points
+                    </td>
+                    <td>
+                        @c.Round
+                    </td>
+                    <td>
+                        @c.Position
+                    </td>
+                </tr>
+            </table>
+        }
+    </form>
+</div>

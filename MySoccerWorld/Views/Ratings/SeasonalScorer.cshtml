@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Player>
+@{
+    Layout = "_Rating";
+    ViewData["Title"] = "Calculate Rating";
+}
+<div>
+    @await Html.PartialAsync("MenuHeader")
+</div>
+<div class="mainsection">
+    <div class="mainrow">
+        <div class="mainrow4">
+            <h5> GOALSCORERS </h5>
+            @foreach (var p in Model.OrderByDescending(p => p.PlayerTeams.Sum(g => g.Goals.Count())).Take(15))
+            {
+                <table class="table mb-0">
+                    <tr>
+                        <td class="col-7"> @p.Name </td>
+                        <td class="col-4"> @p.Country.Name </td>
+                        <td class="col-1"> @p.PlayerTeams.Sum(g => g.Goals.Count()) </td>
+                    </tr>
+                </table>
+            }
+        </div>
+        <div class="mainrow4">
+            <h5> ASISTANTS </h5>
+            @foreach (var p in Model.OrderByDescending(p => p.PlayerTeams.Sum(g => g.Asists.Count())).Take(15))
+            {
+                <table class="table mb-0">
+                    <tr>
+                        <td class="col-7"> @p.Name </td>
+                        <td class="col-4"> @p.Country.Name </td>
+                        <td class="col-1"> @p.PlayerTeams.Sum(g => g.Asists.Count()) </td>
+                    </tr>
+                </table>
+            }
+        </div>
+    </div>
+    <div class="rowfix">
+        @foreach(var s in ViewBag.Seasons)
+            {
+                <div class="season">
+                    <a class="btn btn-danger" asp-action="SeasonalScorer" asp-route-id="@s.Id"> @s.Data  </a>
+                </div>
+            }
+    </div>
+</div>

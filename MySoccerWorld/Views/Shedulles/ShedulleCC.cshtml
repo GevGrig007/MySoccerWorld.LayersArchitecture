@@ -1,0 +1,47 @@
+﻿@model Tournament
+@{ 
+    Layout = null;
+}
+<div class="container">
+    <button class="btn btn-collapse" type="button" data-toggle="collapse" data-target="#shedulle32" aria-expanded="false" aria-controls="shedulle32">
+        Shedulle for 1/32 finals
+    </button>
+    <div class="collapse" id="shedulle32">
+        <div class="card card-body">
+            <form asp-action="ShedulleKnockOut32" asp-controller="Shedulles" method="post">
+                <input type="hidden" asp-for="@Model.Id" />
+                @for (int i = 0; i < 32; i++)
+                {
+                    <div class="form-group">
+                        <select name="clubs[]" asp-items="@ViewBag.Teams">
+                        </select>
+                    </div>
+                }
+                <input type="text" inputmode="numeric" name="data" />
+                <input type="submit" value="Create" />
+            </form>
+        </div>
+    </div>
+    <button class="btn btn-collapse" type="button" data-toggle="collapse" data-target="#shedulle16" aria-expanded="false" aria-controls="shedulle16">
+        Shedulle for 1/16 finals
+    </button>
+    <div class="collapse" id="shedulle16">
+        <div class="card card-body">
+            <form asp-action="ShedulleKnockOut16" asp-controller="Shedulles" method="post">
+                <input type="hidden" asp-for="@Model.Id" />
+                @for (int i = 0; i < 32; i++)
+                {
+                    <div class="form-group">
+                        <select name="clubs[]" asp-items="@ViewBag.Teams">
+                        </select>
+                    </div>
+                }
+                <input type="text" inputmode="numeric" name="data" />
+                <input type="submit" value="Create" />
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+    @await Html.PartialAsync("_ShedulleKnockOut")
+</div>

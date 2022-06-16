@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Tournament>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/leagues.css" />
+</head>
+<body>
+    <div>
+        @await Html.PartialAsync("MenuHeader")
+    </div>
+    <div class="container row m-auto">
+        <div class="col-6" id="fon">
+            <p id="name">
+                TOURNAMENTS
+            </p>
+            @foreach (var tournament in Model.OrderByDescending(t => t.Season.Data).ThenBy(t => t.Division))
+            {
+                <div class="row justify-content-between m-auto">
+                    <div class="ml-3" style="font-weight:500; font-size:20px; color:#fff; ">
+                        @tournament.Name - @tournament.Season.Data - @tournament.TournamentType.ToString() - @tournament.Place
+                    </div>
+                    <div>
+                        @Html.ActionLink("EDIT", "Edit",
+                            new { id = tournament.Id }, new { @class = "modalItem" })  ||
+                        @Html.ActionLink("DELETE", "Delete",
+                            new { id = tournament.Id }, new { @class = "modalItem" })
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-6" id="fon">
+            <div class="p-5">
+                <p id="name">
+                    Create New Tournament
+                </p>
+                <div>
+                    <form asp-action="Create">
+                        <input type="text" name="Name" placeholder="Create a Name of Tournament" />
+                        <input type="text" name="Division" placeholder="Add a Division for Tournament" />
+                        <input type="text" name="Place" placeholder="Add a Place  for Tournament" />
+                        <select name="TournamentType" asp-items="Html.GetEnumSelectList<TournamentType>()">  </select>
+                        <select name="SeasonId" asp-items="@ViewBag.Seasons">  </select>
+                        <select name="LeagueId" asp-items="@ViewBag.Leagues">  </select>
+                        <button class="btn-primary" type="submit">
+                            CREATE LEAGUE
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+    <div id="modDialog" class="modal fade" style="top:5%">
+        <div id="dialogContent" class="modal-dialog"></div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/modal.js"></script>
+</body>
+</html>

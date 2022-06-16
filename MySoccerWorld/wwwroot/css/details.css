@@ -1,0 +1,55 @@
+﻿body {
+    background: url(../images/purty-wood.png);
+    background-attachment: fixed;
+    background-color: #000083;
+    padding: 0;
+    margin: 0;
+    font-family: Candara, sans-serif;
+}
+a {
+    text-decoration: none;
+}
+header .nav-item {
+    text-transform: uppercase;
+    font-size: 20px;
+    color: darkturquoise;
+    border: solid 1px;
+    background-color: ghostwhite;
+    font-weight: 500;
+}
+header .nav-item :hover {
+    color: aliceblue;
+    background-color: blue;
+    border-radius: unset;
+}
+.box {
+    background-color: midnightblue;
+    box-shadow: 5px 1px 15px 10px;
+    padding:20px;
+}
+.mainrow {
+    box-shadow: 1px 2px 10px 0px;
+    color: lightcyan;
+    padding:20px;
+}
+.table{
+    color:white;
+}
+h1 {
+    text-transform: uppercase;
+    color: floralwhite;
+}
+.center {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.ctr-spacearound{
+    display:flex;
+    justify-content:space-around;
+}
+.mainname {
+    font-size: 20px;
+    padding: 10px;
+    color:turquoise;
+}

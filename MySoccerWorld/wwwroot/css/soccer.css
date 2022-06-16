@@ -1,0 +1,38 @@
+body {
+	background: url("../images/soccer_stars.jpg") no-repeat;
+	color: #FFFFFF;
+	font-family: 'SEGOE UI', sans-serif;
+	padding: 0;
+	margin: 0;
+}
+ul{
+	list-style: none;
+}
+a{
+	text-decoration: none;
+}
+img{
+	max-width: 100%;
+}
+ul{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	float: right;
+}
+ul li{
+	margin: 20px;
+}
+ul a{
+	text-transform: uppercase;
+	color: #fff;
+	padding: 10px;
+	font-size: 18px;
+	font-weight:bold;
+	text-shadow: 0 -1px 0 #fff;  
+	letter-spacing: 3px;
+}
+ul a:hover{
+	color:lightsteelblue;
+	text-decoration:overline;
+}

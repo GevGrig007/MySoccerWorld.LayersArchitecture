@@ -1,0 +1,57 @@
+﻿@model Tournament
+<div class="center">
+    <form asp-action="EditBP" asp-controller="Tournaments" method="post">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <select name="bp" asp-items="Html.GetEnumSelectList<BestPlayerFormation>()">
+            <option selected="selected" disabled="disabled"> @Model.BestPlayerFormation </option>
+        </select>
+        <input type="submit" value="apply" />
+    </form>
+</div>
+@{
+    if (Model.BestPlayerFormation == BestPlayerFormation.F_31213)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer31213.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerFormation == BestPlayerFormation.F_31222)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer31222.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerFormation == BestPlayerFormation.F_31321)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer31321.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerFormation == BestPlayerFormation.F_3223)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer3223.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerFormation == BestPlayerFormation.F_3232)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer3232.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerFormation == BestPlayerFormation.F_3313)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer3313.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerFormation == BestPlayerFormation.F_3322)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer3322.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerFormation == BestPlayerFormation.F_3331)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer3331.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerFormation == BestPlayerFormation.F_442)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer442.cshtml", Model.BestPlayers)
+    }
+    else if (Model.BestPlayerFormation == BestPlayerFormation.F_32131)
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer32131.cshtml", Model.BestPlayers)
+    }
+    else
+    {
+        @await Html.PartialAsync("~/Views/BestPlayers/BestPlayer3133.cshtml", Model.BestPlayers)
+    }
+
+}

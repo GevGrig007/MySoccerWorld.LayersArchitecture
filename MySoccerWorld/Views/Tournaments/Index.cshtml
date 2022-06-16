@@ -1,0 +1,77 @@
+﻿@model IEnumerable<League>
+@{
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="row" style="margin-right:0;">
+        <div class="col-3">
+            <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark h-100 position-fixed" style="width:20%">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <h4 class="fs-4" style="margin-bottom:50px;">My Soccer World</h4>
+                </a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a asp-action="Index" asp-controller="Tournaments" class="nav-link active" aria-current="page">
+                            All
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-action="OnlyRegional" asp-controller="Tournaments" class="nav-link text-white">
+                            Regional
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-action="OnlyEuroCups" asp-controller="Tournaments" class="nav-link text-white">
+                            Euro Cups
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-action="OnlyNational" asp-controller="Tournaments" class="nav-link text-white">
+                            National
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-action="Index" asp-controller="Leagues" class="modal-btn nav-link text-white position-fixed" style="bottom:50px;">
+                            Manage Leagues
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="container">
+                @await Html.PartialAsync("MenuHeader")
+            </div>
+            <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+                @foreach (var leagues in Model)
+                {
+                    <div class="col-4">
+                        <div class="card mb-4 rounded-3 shadow-sm">
+                            <div class="card-header py-3">
+                                <h4 class="my-0 fw-normal">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">@leagues.Name</font>
+                                    </font>
+                                </h4>
+                            </div>
+                            <div>
+                                <img src="@leagues.Logo" style="height:250px; width:350px" />
+                                <div class="w-100 btn btn-lg btn-outline-primary">
+                                    @Html.ActionLink("Details", "Details", "Leagues", new { id = leagues.Id })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>

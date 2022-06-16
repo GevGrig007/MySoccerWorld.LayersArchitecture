@@ -1,0 +1,118 @@
+﻿@model MatchViewModel
+
+<div class="container">
+    <div>
+        <form asp-controller="Matches" asp-action="EditScore" method="post">
+            <input type="hidden" asp-for="@Model.Match.Id" />
+            <input type="hidden" asp-for="@Model.Match.Round" />
+            <input type="hidden" asp-for="@Model.Match.Data" />
+            <input type="hidden" asp-for="@Model.Match.HomeTeam" />
+            <input type="hidden" asp-for="@Model.Match.AwayTeam" />
+            <input type="hidden" asp-for="@Model.Match.TournamentId" />
+            <input type="hidden" asp-for="@Model.Match.Group" />
+            <div class="justify-content-center col-12 bg-danger border-light">
+                <div class="text-light align-text-bottom  text-center" style="font-size:larger">
+                    @Model.Match.Home.Name
+                    <input asp-for="@Model.Match.HomeScore" style="width:50px" />
+                    <input asp-for="@Model.Match.AwayScore" style="width:50px" />
+                    @Model.Match.Away.Name
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row border-danger m-0 score">
+        <div class="row col-6 border-danger">
+            @foreach (var c in Model.HomePlayers)
+            {
+                <div class="container row">
+                    <div class="col-3">
+                        <form asp-action="GoalsAdd" asp-controller="Matches" method="post">
+                            <div class="row">
+                                <div class="col-6 ">
+                                    @if (Model.Match.Tournament.League.Type == "National")
+                                    { @c.PlayerTeams.FirstOrDefault().Goals.Where(g => g.MatchId == Model.Match.Id).Count(); }
+                                    else
+                                    { @c.PlayerTeams.LastOrDefault().Goals.Where(g => g.MatchId == Model.Match.Id).Count(); }
+                                </div>
+                                <div class="col-6 ">
+                                    <button class="btn-success" type="submit">G</button>
+                                    <input type="hidden" value="@Model.Match.Id" name="MatchId" />
+                                    <input type="hidden" value="@if (Model.Match.Tournament.League.Type == "National") {@c.PlayerTeams.FirstOrDefault().Id }
+                                    else {@c.PlayerTeams.LastOrDefault().Id }" name="PlayerTeamId" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-6 text-center">
+                        @c.Name
+                    </div>
+                    <div class="col-3">
+                        <form asp-action="AsistAdd" asp-controller="Matches" method="post">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button class="btn-primary" type="submit">A</button>
+                                    <input type="hidden" value="@Model.Match.Id" name="MatchId" />
+                                    <input type="hidden" value="@if (Model.Match.Tournament.League.Type == "National") {@c.PlayerTeams.FirstOrDefault().Id }
+                                    else {@c.PlayerTeams.LastOrDefault().Id }" name="PlayerTeamId" />
+                                </div>
+                                <div class="col-6 ">
+                                    @if (Model.Match.Tournament.League.Type == "National")
+                                    { @c.PlayerTeams.FirstOrDefault().Asists.Where(g => g.MatchId == Model.Match.Id).Count(); }
+                                    else
+                                    { @c.PlayerTeams.LastOrDefault().Asists.Where(g => g.MatchId == Model.Match.Id).Count(); }
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row col-6 border-danger">
+            @foreach (var c in Model.AwayPlayers)
+            {
+                <div class="container row">
+                    <div class="col-3">
+                        <form asp-action="GoalsAdd" asp-controller="Matches" method="post">
+                            <div class="row">
+                                <div class="col-6 ">
+                                    @if (Model.Match.Tournament.League.Type == "National")
+                                    { @c.PlayerTeams.FirstOrDefault().Goals.Where(g => g.MatchId == Model.Match.Id).Count(); }
+                                    else
+                                    { @c.PlayerTeams.LastOrDefault().Goals.Where(g => g.MatchId == Model.Match.Id).Count(); }
+                                </div>
+                                <div class="col-6 ">
+                                    <button class="btn-success" type="submit">G</button>
+                                    <input type="hidden" value="@Model.Match.Id" name="MatchId" />
+                                    <input type="hidden" value="@if (Model.Match.Tournament.League.Type == "National") {@c.PlayerTeams.FirstOrDefault().Id }
+                                    else {@c.PlayerTeams.LastOrDefault().Id }" name="PlayerTeamId" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-6 text-center">
+                        @c.Name
+                    </div>
+                    <div class="col-3">
+                        <form asp-action="AsistAdd" asp-controller="Matches" method="post">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button class="btn-primary" type="submit">A</button>
+                                    <input type="hidden" value="@Model.Match.Id" name="MatchId" />
+                                    <input type="hidden" value="@if (Model.Match.Tournament.League.Type == "National") {@c.PlayerTeams.FirstOrDefault().Id }
+                                    else {@c.PlayerTeams.LastOrDefault().Id }" name="PlayerTeamId" />
+                                </div>
+                                <div class="col-6 ">
+                                    @if (Model.Match.Tournament.League.Type == "National")
+                                    { @c.PlayerTeams.FirstOrDefault().Asists.Where(g => g.MatchId == Model.Match.Id).Count(); }
+                                    else
+                                    { @c.PlayerTeams.LastOrDefault().Asists.Where(g => g.MatchId == Model.Match.Id).Count(); }
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div> 

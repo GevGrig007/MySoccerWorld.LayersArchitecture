@@ -1,0 +1,116 @@
+﻿@model IEnumerable<Tournament>
+@{
+    Layout = "_Rating";
+    ViewData["Title"] = "Create Rating";
+}
+<div>
+    @await Html.PartialAsync("MenuHeader")
+</div>
+<div class="mainsection">
+    <div class="mainrow2">
+        <div>
+            <div>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item"><a class="nav-link" href="#regional"  data-toggle="tab">REGIONAL </a></li>
+                    <li class="nav-item active"><a class="nav-link active" href="#all"  data-toggle="tab">ALL</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#national"  data-toggle="tab">NATIONAL</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#eurocups"  data-toggle="tab">EURO CUP</a></li>
+                </ul>
+                <div class="tab-content mt-3">
+                    <div role="tabpanel" class="tab-pane fade" id="regional">
+                        <div class="w-75">
+                            @foreach (var t in Model.Where(t => t.League.Type == "Regional"))
+                            {
+                                <div class="row">
+                                    <div class="col-7 p-2 center">
+                                        @t.Name @t.Season.Data
+                                    </div>
+                                    <div class="col-4 p-2">
+                                        <a class="btn btn-sm btn-outline-danger" asp-action="CalculateRating" asp-route-id="@t.Id">
+                                            CALCULATE
+                                        </a>
+                                    </div>
+                                    <div class="col-1 p-2 center">
+                                        @if (t.Ratings.Count() > 0)
+                                        {
+                                            @t.Ratings.Count();
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane active" id="all">
+                        <div class="w-75">
+                            @foreach (var t in Model)
+                            {
+                                <div class="row">
+                                    <div class="col-7 p-2 center">
+                                        @t.Name @t.Season.Data
+                                    </div>
+                                    <div class="col-4 p-2">
+                                        <a class="btn btn-sm btn-outline-danger" asp-action="CalculateRating" asp-route-id="@t.Id">
+                                            CALCULATE
+                                        </a>
+                                    </div>
+                                    <div class="col-1 p-2 center">
+                                        @if (t.Ratings.Count() > 0)
+                                        {
+                                            @t.Ratings.Count();
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="national">
+                        <div class="w-75">
+                            @foreach (var t in Model.Where(t => t.League.Type == "National"))
+                            {
+                                <div class="row">
+                                    <div class="col-7 p-2 center">
+                                        @t.Name @t.Season.Data
+                                    </div>
+                                    <div class="col-4 p-2">
+                                        <a class="btn btn-sm btn-outline-danger" asp-action="CalculateRating" asp-route-id="@t.Id">
+                                            CALCULATE
+                                        </a>
+                                    </div>
+                                    <div class="col-1 p-2 center">
+                                        @if (t.Ratings.Count() > 0)
+                                        {
+                                            @t.Ratings.Count();
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="eurocups">
+                        <div class="w-75">
+                            @foreach (var t in Model.Where(t => t.League.Type == "EuroCup"))
+                            {
+                                <div class="row">
+                                    <div class="col-7 p-2 center">
+                                        @t.Name @t.Season.Data
+                                    </div>
+                                    <div class="col-4 p-2">
+                                        <a class="btn btn-sm btn-outline-danger" asp-action="CalculateRating" asp-route-id="@t.Id">
+                                            CALCULATE
+                                        </a>
+                                    </div>
+                                    <div class="col-1 p-2 center">
+                                        @if (t.Ratings.Count() > 0)
+                                        {
+                                            @t.Ratings.Count();
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
