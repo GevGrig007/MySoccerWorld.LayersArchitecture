@@ -1,9 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MySoccerWorld.BLL;
+using MySoccerWorld.Data;
+using MySoccerWorld.EF.Data;
+using MySoccerWorld.Interfaces;
+using MySoccerWorld.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +29,14 @@ namespace MySoccerWorld
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<SoccerContext>(options => options.UseSqlServer(connection));
+            services.AddTransient<IDataManager, DataManager>();
+            services.AddTransient<ITournamentService, TournamentService>();
+            services.AddTransient<ILeagueService, LeagueService>();
+            services.AddTransient<IRatingService, RatingService>();
+            services.AddTransient<IShedulleService, ShedulleService>();
+            services.AddTransient<IClubService, ClubService>();
             services.AddControllersWithViews();
         }
 
