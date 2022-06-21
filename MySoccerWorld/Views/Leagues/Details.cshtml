@@ -17,7 +17,7 @@
                 </li>
                 @foreach (var c in Model.Tournaments.OrderByDescending(c => c.Season.Data).ThenBy(c => c.Division))
                 {
-                    var link = "";
+                    @*var link = "";
                     if (c.TournamentType == TournamentType.Regular)
                     {
                         link = "RegionalDetails";
@@ -41,9 +41,9 @@
                     else if (c.TournamentType == TournamentType.Qualification)
                     {
                         link = "Qualification";
-                    }
+                    }*@
                     <li style="padding:5px">
-                        <a style="color:cyan" asp-action=@link asp-controller="Tournaments" asp-route-id="@c.Id">
+                        <a style="color:cyan" asp-action="Details" asp-controller="Tournaments" asp-route-id="@c.Id">
                             @c.Name - @c.Season.Data
                         </a>
                     </li>
@@ -58,7 +58,7 @@
             </ul>
         </div>
     </div>
-    <div class="col-9">
+    <div class="col-9 mb-5">
         <div >
             @await Html.PartialAsync("MenuHeader") 
         </div>
@@ -118,13 +118,16 @@
                 </div>
                 <div class="container d-flex justify-content-center" style=" background-color: darkslateblue; color: aliceblue;">
                     <div>
-                        <div class="row">
+                        @if(Model.Stats != null)
+                        {
+                            <div class="row">
                             <div> Games -  @Model.Stats.Games </div>
                             <div> Goals - @Model.Stats.Goals   </div>
                             <div> Average Total per game -@Math.Round((Double)Model.Stats.AverageTotal, 1)  </div>
                         </div>
                         <div> Over Total Games :  @Model.Stats.OverResultGame.Home.Name  -@Model.Stats.OverResultGame.Away.Name  @Model.Stats.OverResultGame.HomeScore : @Model.Stats.OverResultGame.AwayScore  </div>
                         <div> Big win games :  @Model.Stats.MaxWin.Home.Name  -@Model.Stats.MaxWin.Away.Name  @Model.Stats.MaxWin.HomeScore : @Model.Stats.MaxWin.AwayScore  </div>
+                        }      
                     </div>
                 </div>
                 <div class="row">

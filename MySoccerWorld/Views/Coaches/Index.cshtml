@@ -1,13 +1,8 @@
-﻿@model IEnumerable<Player>
+﻿@model IEnumerable<Coach>
 @{
     Layout = "_General";
 }
-<div>
-    @await Html.PartialAsync("MenuHeader")
-    <p>
-        <a class="btn btn-secondary" asp-action="Index" asp-controller="Coaches" >Coaches</a>
-    </p>
-</div>
+@await Html.PartialAsync("MenuHeader")
 <div class="container">
     <p>
         <a class="modalItem btn btn-secondary" asp-action="Create">Create New</a>
@@ -23,34 +18,34 @@
                     </th>
                     <th> COUNTRY </th>
                     <th>
-                        CLUB
+                        TEAM
                     </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var player in Model)
+                @foreach (var coach in Model)
                 {
                     <tr>
                         <td class="club">
-                            <a asp-action="Details" asp-route-id="@player.Id">  @player.Name  </a>
+                            <a asp-action="Details" asp-route-id="@coach.Id">  @coach.Name  </a>
                         </td>
                         <td>
-                            @if (player.Country != null)
+                            @if (coach.Country != null)
                             {
-                                <img src="@player.Country.Flag" style="height:32px;width:36px;" /> @player.Country.Name
+                                <img src="@coach.Country.Flag" style="height:32px;width:36px;" /> @coach.Country.Name
                             }
                         </td>
                         <td>
-                            @if (player.PlayerTeams.Count > 0)
+                            @if (coach.CoachTeams.Count > 0)
                             {
-                                <img src="@player.PlayerTeams.LastOrDefault().Team.Flag" style="height:38px;width:40px;" /> @player.PlayerTeams.LastOrDefault().Team.Name
+                                <img src="@coach.CoachTeams.LastOrDefault().Team.Flag" style="height:38px;width:40px;" /> @coach.CoachTeams.LastOrDefault().Team.Name
                             }
                         </td>
                         <td>
-                            <a class="modalItem btn-sm" asp-action="Edit" asp-route-id="@player.Id">Edit</a>
-                            <a class="modalItem btn-sm" asp-action="Delete" asp-route-id="@player.Id">Delete</a>
-                            <a class="modalItem btn btn-secondary" asp-route-id="@player.Id" asp-action="AddPlayerTeams"> TRANSFER </a>
+                            <a class="modalItem btn-sm" asp-action="Edit" asp-route-id="@coach.Id">Edit</a>
+                            <a class="modalItem btn-sm" asp-action="Delete" asp-route-id="@coach.Id">Delete</a>
+                            <a class="modalItem btn btn-secondary" asp-route-id="@coach.Id" asp-action="AddCoachTeams"> TRANSFER </a>
                         </td>
                     </tr>
                 }

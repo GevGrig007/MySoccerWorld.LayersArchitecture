@@ -1,0 +1,25 @@
+﻿@model Club
+@{
+    Layout = null;
+}
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+    </div>
+    <div class="modal-body">
+        <form asp-action="Delete" method="post" class="p-4">
+            <div class="mb-4">
+                Are you sure want delete <br /> <span style="color:darkred; font-size:20px;"> @Model.Name </span> club?
+            </div>
+            <div>
+                <button id="btnCancel" class="btn btn-success" type="button">CANCEL</button>
+                <button class="btn btn-danger" type="submit" asp-route-id="@Model.Id" >DELETE</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $("#btnCancel").click(function () {
+        window.location.href = "/Clubs/Index";
+    })
+</script>

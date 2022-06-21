@@ -44,42 +44,25 @@ namespace MySoccerWorld.Controllers
             return View("Index", leagues);
         }
         //Details
-        //public IActionResult Details(int id)
-        //{
-        //    var matches = db.Matches.GetByTournament(id);
-        //    var tournament = db.Tournaments.Details(id);
-        //    if (!matches.Any())
-        //    {
-        //        var emptyTournamnet = new TournamentViewModel()
-        //        {
-        //            Tournament = tournament,
-        //            Teams = tournament.Teams.ToList(),
-        //            Matches = matches.ToList(),
-        //            BestPlayer = db.BestPlayers.GetByTournament(id).ToList()
-        //        };
-        //        return View(emptyTournamnet);
-        //    }
-        //    else if (tournament.TournamentType == TournamentType.Regular){
-        //        var standings = _serv.CalculatingTable(matches, tournament.Teams);
-        //        var tournamentView = new TournamentViewModel()
-        //        {
-        //            Tournament = tournament,
-        //            Teams = tournament.Teams.ToList(),
-        //            Matches = matches.ToList(),
-        //            Goals = db.PlayerTeams.GoalScorers(id),
-        //            Asists = db.PlayerTeams.Asisters(id),
-        //            BestPlayer = db.BestPlayers.GetByTournament(id).ToList(),
-        //            TournamentStandings = standings.OrderByDescending(c => c.Points)
-        //                                           .ThenByDescending(c => c.GoalDifference)
-        //                                           .ThenByDescending(c => c.GoalsFor)
-        //        };
-        //        return View(tournamentView);
-        //    }
-        //    else if (tournament.TournamentType == TournamentType.EuroCup)
-        //    {
-
-        //    }
-        //}
+        public IActionResult Details(int id)
+        {
+            var tournament = db.Tournaments.Get(id);
+            switch (tournament.TournamentType)
+            {
+                case TournamentType.Regular:
+                    return RedirectToAction("RegionalDetails", new { id = tournament.Id });
+                case TournamentType.EuroCup:
+                    return RedirectToAction("EuroCupDetails", new { id = tournament.Id });
+                case TournamentType.EuroCupKnockOut:
+                    return RedirectToAction("EuroCupKnockOut", new { id = tournament.Id });
+                case TournamentType.National8:
+                    return RedirectToAction("NationalDetails", new { id = tournament.Id });
+                case TournamentType.NationalEuro:
+                    return RedirectToAction("NationalEuro", new { id = tournament.Id });
+                default:
+                    return RedirectToAction("Qualification", new { id = tournament.Id });
+            }
+        }
         public async Task<IActionResult> RegionalDetails(int id)
         {
             var tournament = db.Tournaments.Details(id);

@@ -29,12 +29,12 @@ namespace MySoccerWorld.Data.Repositories
             _context.Clubs.Include(c => c.Country).Include(c => c.CoachTeams).ThenInclude(c => c.Coach);
         public Task<List<Club>> Rating() =>
               _context.Clubs.Include(c => c.Ratings).Include(c => c.Country).ToListAsync();
-        public async Task<List<Player>> Players(int id)
+        public List<Player> Players(int id)
         {
-            var players = await _context.Players.Include(p => p.Country).Include(p => p.PlayerTeams).ThenInclude(p => p.Team)
-                                                .Include(p => p.PlayerTeams).ThenInclude(p => p.Player).ToListAsync();
-            var clubPlayers =  players.Where(p => p.PlayerTeams.OrderByDescending(pt => pt.SeasonId).FirstOrDefault().TeamId == id).ToList();
-            return clubPlayers;
+            var players =  _context.Players.Include(p => p.Country).Include(p => p.PlayerTeams).ThenInclude(p => p.Team)
+                                                .Include(p => p.PlayerTeams).ThenInclude(p => p.Player).ToList();
+            var clubPlayers =  players.Where(p => p.PlayerTeams/*.OrderByDescending(pt => pt.SeasonId)*/.Last().TeamId == id);
+            return clubPlayers.ToList();
         } 
         public IEnumerable<Country> Countries() =>
               _context.Countries;      

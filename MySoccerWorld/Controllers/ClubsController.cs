@@ -42,15 +42,27 @@ namespace MySoccerWorld.Controllers
         {
             var matches = db.Matches.GetByTeam(id);
             var club = await db.Clubs.Get(id);
-            var clubView = new ClubViewModel()
+            if (matches.Count() > 0)
             {
-                Team = await db.Clubs.Details(id),
-                Matches = matches.ToList(),
-                Players = await db.Clubs.Players(id),
-                Stats =  _serv.Stats(club, matches.ToList()),
-                Ratings =  club.Ratings.OrderBy(t => t.Tournament.LeagueId)
-            };
-            return View(clubView);
+                var clubView = new ClubViewModel()
+                {
+                    Team = await db.Clubs.Details(id),
+                    Matches = matches.ToList(),
+                    Players = db.Clubs.Players(id),
+                    Stats = _serv.Stats(club, matches.ToList()),
+                    Ratings = club.Ratings.OrderBy(t => t.Tournament.LeagueId)
+                };
+                return View(clubView);
+            }
+            else
+            {
+                var clubView = new ClubViewModel()
+                {
+                    Team = await db.Clubs.Details(id),
+                    Players = db.Clubs.Players(id)
+                };
+                return View(clubView);
+            }
         }
         public IActionResult CreateClub()
         {
@@ -58,15 +70,44 @@ namespace MySoccerWorld.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CreateClub([Bind("Name,Country,Flag")] Club club)
+        public async Task<IActionResult> CreateClub([Bind("Name,CountryId,Flag")] Club club)
         {
             if (ModelState.IsValid)
             {
-                db.Clubs.Update(club);
+                await db.Clubs.Update(club);
                 db.Save();
                 return RedirectToAction(nameof(Index));
             }
             return View(club);
+        }
+        public async Task<IActionResult> Edit(int id)
+        {
+            var club = await db.Clubs.Get(id);
+            ViewBag.Country = new SelectList(db.Clubs.Countries(), "Id", "Name");
+            return View(club);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit([Bind("Id,Name,CountryId,Flag")] Club club)
+        {
+            if (ModelState.IsValid)
+            {
+                await db.Clubs.Update(club);
+                db.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(club);
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+            var club = await db.Clubs.Get(id);
+            return View(club);
+        }
+        [HttpPost , ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await db.Clubs.Delete(id);
+            db.Save();
+            return RedirectToAction("Index");
         }
     }
 }

@@ -9,13 +9,13 @@ namespace MySoccerWorld.Interfaces
 {
     public interface IPlayerRepository
     {
-        IEnumerable<Player> GetAll();
-        void Update(Player player);
-        void Delete(int id);
+        IEnumerable<Player> GetAll();      
         Player Get(int id);
         Player Details(int id);
         List<Player> ClubPlayers(int id);
         List<Player> NationalPlayers(int id);
         IQueryable<Player> Sort();
+        void Update(Player player);
+        void Delete(int id);
     }
 }

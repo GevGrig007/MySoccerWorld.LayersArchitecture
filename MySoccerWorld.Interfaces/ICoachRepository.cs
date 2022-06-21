@@ -10,6 +10,11 @@ namespace MySoccerWorld.Interfaces
     public interface ICoachRepository
     {
         IEnumerable<Coach> GetAll();
-        CoachTeam Get(int? id);
+        Coach Get(int? id);
+        Coach Details(int id);
+        IQueryable<Coach> Sort();
+        void UpdateCoachTeams(CoachTeam coachTeam);
+        void Update(Coach coach);
+        void Delete(int id);
     }
 }

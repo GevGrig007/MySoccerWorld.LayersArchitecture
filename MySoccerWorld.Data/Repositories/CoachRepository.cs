@@ -17,16 +17,47 @@ namespace MySoccerWorld.Data.Repositories
         {
             _context = context;
         }
-
-        public CoachTeam Get(int? id)
+        public void Delete(int id)
         {
-            var coach = _context.Coaches.Include(p => p.CoachTeams).ThenInclude(p => p.Season).FirstOrDefault(p => p.Id == id);
-            return coach.CoachTeams.LastOrDefault();
+            throw new NotImplementedException();
         }
-
+        public Coach Details(int id)
+        {
+            throw new NotImplementedException();
+        }
+        public Coach Get(int? id)
+        {
+            return _context.Coaches.Include(p => p.Country).FirstOrDefault(p => p.Id == id);
+        }
         public IEnumerable<Coach> GetAll()
         {
             return _context.Coaches.Include(p => p.CoachTeams).Include(p => p.Country);
+        }
+        public IQueryable<Coach> Sort()
+        {
+            return _context.Coaches.Include(p => p.CoachTeams.OrderBy(p => p.Season)).ThenInclude(p => p.Team).Include(p => p.Country);
+        }
+        public void UpdateCoachTeams(CoachTeam coachTeam)
+        {
+            if (coachTeam.Id == 0)
+            {
+                _context.CoachTeams.Add(coachTeam);
+            }
+            else
+            {
+                _context.Entry(coachTeam).State = EntityState.Modified;
+            }
+        }
+        public void Update(Coach coach)
+        {
+            if (coach.Id == 0)
+            {
+                _context.Coaches.Add(coach);
+            }
+            else
+            {
+                _context.Entry(coach).State = EntityState.Modified;
+            }
         }
     }
 }

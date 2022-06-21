@@ -14,7 +14,7 @@ namespace MySoccerWorld.Interfaces
         IEnumerable<Club> GetAll();
         IQueryable<Club> ClubSort();
         Task<List<Club>> Rating();
-        Task<List<Player>> Players(int id);
+        List<Player> Players(int id);
         IEnumerable<Country> Countries();     
         Task Update(Club club);
         Task Delete(int id);

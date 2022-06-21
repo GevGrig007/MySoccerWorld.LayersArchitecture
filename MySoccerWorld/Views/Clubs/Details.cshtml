@@ -31,11 +31,14 @@
                     </tr>
                 </thead>
                 <tr>
-                    <td> @Model.Stats.Games </td>
+                    @if(Model.Stats != null)
+                    {
+                     <td> @Model.Stats.Games </td>
                     <td> @Model.Stats.Win </td>
                     <td> @Model.Stats.Draw </td>
                     <td> @Model.Stats.Lost </td>
-                    <td> @Model.Stats.GoalsFor - @Model.Stats.GoalsAgainst </td>
+                    <td> @Model.Stats.GoalsFor - @Model.Stats.GoalsAgainst </td>  
+                    } 
                 </tr>
             </table>
         </div>
@@ -44,7 +47,9 @@
                 <div class="center mainname">
                     TOURNAMENTS
                 </div>
-                <div class="p-5">
+                @if (Model.Ratings !=null)
+                {
+                   <div class="p-5">
                     @foreach (var r in Model.Ratings)
                     {
                         <div class="ctr-spacearound">
@@ -53,7 +58,8 @@
                             <div class="col-3"> @r.Round  @r.Position </div>
                         </div>
                     }
-                </div>
+                </div> 
+                }
             </div>
             <div class="col-6">
                 <div>
@@ -83,7 +89,9 @@
                     <li class="nav-item"><a class="nav-link" href="#regional" role="tab" data-toggle="tab">REGIONAL</a></li>
                     <li class="nav-item"><a class="nav-link" href="#eurocups" role="tab" data-toggle="tab">EURO CUP</a></li>
                 </ul>
-                <div class="tab-content">
+                <div class="tab-content>
+                    @if(Model.Matches !=null)
+                   {
                     <div role="tabpanel" class="tab-pane fade" id="all">
                         @await Html.PartialAsync("ClubMatches", Model.Matches)
                     </div>
@@ -96,6 +104,7 @@
                     <div role="tabpanel" class="tab-pane fade" id="eurocups">
                         @await Html.PartialAsync("ClubMatches", Model.Matches.Where(m => m.Tournament.League.Type == "EuroCup"))
                     </div>
+                    }
                 </div>
             </div>
         </div>
