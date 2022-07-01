@@ -7,35 +7,8 @@
     @Model.Name - @Model.Season.Data
 </h1>
 <div>
-    @{
-        var action = "";
-        if (Model.TournamentType == TournamentType.Regular)
-        {
-            action = "RegionalDetails";
-        }
-        else if (Model.TournamentType == TournamentType.EuroCup)
-        {
-            action = "EuroCupDetails";
-        }
-        else if (Model.TournamentType == TournamentType.EuroCupKnockOut)
-        {
-            action = "EuroCupKnockOut";
-        }
-        else if (Model.TournamentType == TournamentType.National8)
-        {
-            action = "NationalDetails";
-        }
-        else if (Model.TournamentType == TournamentType.NationalEuro)
-        {
-            action = "NationalEuro";
-        }
-        else if (Model.TournamentType == TournamentType.Qualification)
-        {
-            action = "Qualification";
-        }
-        <a asp-action="Index" asp-controller="Home" class="btn btn-secondary float-left"> HOME </a>
-        <a asp-action="@action" asp-route-id="@Model.Id" class="btn btn-secondary float-right"> BACK TO TOURNAMENT </a>
-    }
+   <a asp-action="Index" asp-controller="Home" class="btn btn-secondary float-left"> HOME </a>
+   <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-secondary float-right"> BACK TO TOURNAMENT </a>     
 </div>
 <div class="p-5">
     <table class="table">

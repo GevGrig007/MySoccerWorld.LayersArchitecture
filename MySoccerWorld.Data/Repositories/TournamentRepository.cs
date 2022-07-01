@@ -26,8 +26,10 @@ namespace MySoccerWorld.Data.Repositories
         public Tournament Details(int id)
         {
             return _context.Tournaments.Include(t => t.League)
-                .Include(t => t.Teams).ThenInclude(t => t.PlayerTeams.OrderBy(p => p.Season))
-                .Include(t => t.Season)
+                .Include(t => t.Teams).ThenInclude(t => t.PlayerTeams).ThenInclude(p=>p.Player)
+                .Include(t => t.Teams).ThenInclude(t => t.CoachTeams).ThenInclude(c => c.Coach)
+                .Include(t => t.Season).Include(t => t.TournamentAwards)
+                .Include(t => t.BestPlayers)
                 .FirstOrDefault(x => x.Id == id);
         }
         public Tournament Get(int id)

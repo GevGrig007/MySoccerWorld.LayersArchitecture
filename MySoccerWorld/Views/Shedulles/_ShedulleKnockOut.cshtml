@@ -27,7 +27,7 @@
     </button>
     <div class="collapse" id="shedulle4">
         <div class="card card-body">
-            <form asp-action="ShedulleKnockOutQuarterDouble" asp-controller="Shedulles" method="post">
+            <form asp-action="ShedulleQuarter" asp-controller="Shedulles" method="post">
                 <input type="hidden" asp-for="@Model.Id" />
                 @for (int i = 0; i < 8; i++)
                 {
@@ -36,7 +36,15 @@
                         </select>
                     </div>
                 }
-                <input type="text" inputmode="numeric" name="data" />
+                <p> Enter a data
+                    <input type="text" inputmode="numberic" name="data" />
+                </p>
+                <p>  Select count of matches :
+                    <select name="matchcount">
+                        <option value="1"> 1 Match</option>
+                        <option value="2"> 2 Match</option>
+                    </select>
+                </p>
                 <input type="submit" value="Create" />
             </form>
         </div>
@@ -46,7 +54,7 @@
     </button>
     <div class="collapse" id="shedulle2">
         <div class="card card-body">
-            <form asp-action="ShedulleKnockOutSemiDouble" asp-controller="Shedulles" method="post">
+            <form asp-action="ShedulleSemi" asp-controller="Shedulles" method="post">
                 <input type="hidden" asp-for="@Model.Id" />
                 @for (int i = 0; i < 4; i++)
                 {
@@ -55,7 +63,15 @@
                         </select>
                     </div>
                 }
-                <input type="text" inputmode="numeric" name="data" />
+                <p> Enter a data
+                    <input type="text" inputmode="numberic" name="data" />
+                </p>
+                <p>  Select count of matches :
+                    <select name="matchcount">
+                        <option value="1"> 1 Match</option>
+                        <option value="2"> 2 Match</option>
+                    </select>
+                </p>
                 <input type="submit" value="Create" />
             </form>
         </div>

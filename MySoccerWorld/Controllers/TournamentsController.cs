@@ -106,9 +106,10 @@ namespace MySoccerWorld.Controllers
                     Matches = matches.ToList(),
                     Goals = db.PlayerTeams.GoalScorers(id),
                     Asists = db.PlayerTeams.Asisters(id),
-                    BestPlayer = await db.BestPlayers.GetByTournamentAsync(id),
-                    Groups = _serv.Group8(tournament)
+                    BestPlayer = await db.BestPlayers.GetByTournamentAsync(id)
                 };
+                if (tournament.Teams.Count == 32) { tournamentView.Groups = _serv.Group8(tournament); }
+                else { tournamentView.Groups = _serv.Group4(tournament); }
                 return View(tournamentView);
             };
             var emptyTournamnet = new EuroCupViewModel()
@@ -299,19 +300,24 @@ namespace MySoccerWorld.Controllers
         {
             Tournament tournament = db.Tournaments.Get(id);
             ViewBag.Tournament = tournament;
-            ViewBag.Players = new SelectList(db.Players.GetAll().OrderBy(p => p.Name), "Id", "Name");
-            ViewBag.Coaches = new SelectList(db.Coaches.GetAll().OrderBy(p => p.Name), "Id", "Name");
+            ViewBag.Players = new SelectList(db.BestPlayers.GetPlayerForAwards(id).OrderBy(p => p.Name), "Id", "Name");
+            ViewBag.Coaches = new SelectList(db.Coaches.GetByTournament(id).OrderBy(p => p.Name), "Id", "Name");
             return View();
         }
         [HttpPost]
-        public IActionResult CreateAwards(int TournamentId, int? PlayerTeamId, int? CoachTeamId, AwardType AwardsName)
+        public IActionResult CreateAwards(int TournamentId, int? PlayerTeamId, int? CoachTeamId, AwardType AwardName)
         {
+            var tournament = db.Tournaments.Details(TournamentId);
             var tournamentaward = new TournamentAward();
             if (PlayerTeamId != null)
             {
-                tournamentaward.PlayerTeamId = db.Awards.GetPlayerAward(PlayerTeamId).Id;
+                if (tournament.League.Type == "National")
+                {
+                    tournamentaward.PlayerTeamId = db.Awards.GetNationalPlayerAward(PlayerTeamId).Id;
+                }
+                else { tournamentaward.PlayerTeamId = db.Awards.GetPlayerAward(PlayerTeamId).Id; }
                 tournamentaward.TournamentId = TournamentId;
-                tournamentaward.AwardName = AwardsName;
+                tournamentaward.AwardName = AwardName;
                 db.Awards.Update(tournamentaward);
                 db.Save();
             }
@@ -320,11 +326,25 @@ namespace MySoccerWorld.Controllers
                 var coach = db.Coaches.Get(CoachTeamId);
                 tournamentaward.CoachTeamId = coach.Id;
                 tournamentaward.TournamentId = TournamentId;
-                tournamentaward.AwardName = AwardsName;
+                tournamentaward.AwardName = AwardName;
                 db.Awards.Update(tournamentaward);
                 db.Save();
             }
-            return RedirectToAction("GoalScorers", new { id = TournamentId });
+            return RedirectToAction("Index", "Shedulles", new { id = TournamentId });
+        }
+        public IActionResult EditAwards(int id)
+        {
+            var award = db.Awards.GetTournamentAward(id);
+            ViewBag.Players = new SelectList(db.BestPlayers.GetPlayerForAwards(award.TournamentId).OrderBy(p => p.Name), "Id", "Name");
+            ViewBag.Coaches = new SelectList(db.Coaches.GetByTournament(award.TournamentId).OrderBy(p => p.Name), "Id", "Name");
+            return View(award);
+        }
+        [HttpPost]
+        public IActionResult EditAwards(TournamentAward award)
+        {
+            db.Awards.Update(award);
+            db.Save();
+            return RedirectToAction("Index", "Shedulles", new { id = award.TournamentId });
         }
     }
 }

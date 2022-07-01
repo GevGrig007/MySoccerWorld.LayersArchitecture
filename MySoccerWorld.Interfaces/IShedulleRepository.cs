@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySoccerWorld.Model.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace MySoccerWorld.Interfaces
 {
     public interface IShedulleRepository
     {
+        Tournament TournamentForShedulle(int id);
     }
 }

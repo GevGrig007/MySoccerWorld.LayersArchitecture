@@ -23,9 +23,12 @@ namespace MySoccerWorld.BLL
                 Lost = Homes.Count(m => m.HomeScore < m.AwayScore) + Aways.Count(m => m.AwayScore < m.HomeScore),
                 GoalsFor = Homes.Sum(m => m.HomeScore) + Homes.Sum(m => m.HomeEx) + Aways.Sum(m => m.AwayEx) + Aways.Sum(m => m.AwayScore),
                 GoalsAgainst = Homes.Sum(m => m.AwayScore) + Homes.Sum(m => m.AwayEx) + Aways.Sum(m => m.HomeEx) + Aways.Sum(m => m.HomeScore),
-                OverResultGame = matches.OrderBy(m => m.HomeScore + m.AwayScore).Last(),
-                MaxWin = Homes.OrderByDescending(m => (m.HomeScore - m.AwayScore) - (m.AwayScore - m.HomeScore)).First(),
+                OverResultGame = matches.OrderBy(m => m.HomeScore + m.AwayScore).Last()
             };
+            if (matches.Count > 20)
+            {
+                stats.MaxWin = Homes.OrderByDescending(m => (m.HomeScore - m.AwayScore) - (m.AwayScore - m.HomeScore)).First();
+            }
             return stats;
         }
 

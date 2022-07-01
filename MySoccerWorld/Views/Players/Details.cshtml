@@ -23,7 +23,7 @@
                 {
                     <tr>
                         <td> @p.Team.Name </td>
-                        <td> @p.Season.Data </td>
+                        <td> @if(@p.Season!=null) {@p.Season.Data}  </td>
                         <td> @p.Goals.Count() </td>
                         <td> @p.Asists.Count() </td>
                     </tr>

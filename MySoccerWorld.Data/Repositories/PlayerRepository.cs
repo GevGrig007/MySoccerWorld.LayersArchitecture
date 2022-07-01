@@ -32,7 +32,7 @@ namespace MySoccerWorld.Data.Repositories
         }
         public List<Player> ClubPlayers(int id)
         {
-            var players = _context.Players.Include(p => p.PlayerTeams.OrderBy(p => p.Season)).ThenInclude(p => p.Player)
+            var players = _context.Players.Where(p=>p.PlayerTeams.Count>0).Include(p => p.PlayerTeams.OrderBy(p => p.Season)).ThenInclude(p => p.Player)
                                      .Include(p => p.PlayerTeams).ThenInclude(p => p.Goals)
                                      .Include(p => p.PlayerTeams).ThenInclude(p => p.Asists)
                                     .ToList();
@@ -67,6 +67,11 @@ namespace MySoccerWorld.Data.Repositories
                                           .Include(p => p.PlayerTeams).ThenInclude(p => p.Goals)
                                           .Include(p => p.PlayerTeams).ThenInclude(p => p.Asists);
             return players.Where(p => p.PlayerTeams.Any(p=>p.TeamId == id)).ToList();
+        }
+        public List<Player> GetForNational(int id)
+        {
+            National national = _context.Nationals.Find(id);
+            return _context.Players.Include(p => p.PlayerTeams).Where(p => p.Country.Name == national.Name).ToList();
         }
     }
 }

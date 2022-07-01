@@ -41,7 +41,7 @@ namespace MySoccerWorld.Controllers
         }
         public IActionResult Delete(int id)
         {
-            var match = db.Matches.Get(id);
+            var match = db.Matches.Details(id);
             return View(match);
         }
         [HttpPost, ActionName("Delete")]
@@ -75,40 +75,25 @@ namespace MySoccerWorld.Controllers
                 };
                 return View(matchView);
             }
-
         }
         [HttpPost]
-        public IActionResult EditScore(int id, [Bind("Id,Round,Neytral,Data,HomeTeam,AwayTeam,HomeScore,AwayScore,TournamentId,Group")] Match match)
+        public IActionResult EditScore(Match match)
         {
             db.Matches.Update(match);
             db.Save();
-            var tournament = db.Tournaments.Get(match.TournamentId);
-            var link = "";
-            if (tournament.TournamentType == TournamentType.Regular)
-            {
-                link = "RegionalDetails";
-            }
-            else if (tournament.TournamentType == TournamentType.EuroCup)
-            {
-                link = "EuroCupDetails";
-            }
-            else if (tournament.TournamentType == TournamentType.EuroCupKnockOut)
-            {
-                link = "EuroCupKnockOut";
-            }
-            else if (tournament.TournamentType == TournamentType.National8)
-            {
-                link = "NationalDetails";
-            }
-            else if (tournament.TournamentType == TournamentType.NationalEuro)
-            {
-                link = "NationalEuro";
-            }
-            else if (tournament.TournamentType == TournamentType.Qualification)
-            {
-                link = "Qualification";
-            }
-            return RedirectToAction(link, "Tournaments", new { id = match.Tournament.Id });
+            return RedirectToAction("Details", "Tournaments", new { id = match.TournamentId });
+        }
+        public IActionResult ExtraScore(int id)
+        {
+            var match = db.Matches.Details(id);
+            return View(match);
+        }
+        [HttpPost]
+        public IActionResult ExtraScore(Match match)
+        {
+            db.Matches.Update(match);
+            db.Save();
+            return RedirectToAction("Details", "Tournaments", new { id = match.TournamentId });
         }
         [HttpPost]
         public async Task<IActionResult> GoalsAdd([Bind("MatchId,PlayerTeamId")] Goal goal)

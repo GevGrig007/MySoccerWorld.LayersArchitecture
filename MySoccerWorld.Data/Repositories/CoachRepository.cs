@@ -19,11 +19,13 @@ namespace MySoccerWorld.Data.Repositories
         }
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            Coach coach = _context.Coaches.Find(id);
+            if (coach != null)
+                _context.Coaches.Remove(coach);
         }
         public Coach Details(int id)
         {
-            throw new NotImplementedException();
+            return _context.Coaches.Include(c => c.CoachTeams).FirstOrDefault(c => c.Id == id);
         }
         public Coach Get(int? id)
         {
@@ -58,6 +60,11 @@ namespace MySoccerWorld.Data.Repositories
             {
                 _context.Entry(coach).State = EntityState.Modified;
             }
+        }
+
+        public IEnumerable<Coach> GetByTournament(int id)
+        {
+            return _context.Coaches.Where(c => c.CoachTeams.Any(c => c.Team.Tournaments.Any(t => t.Id == id)));
         }
     }
 }

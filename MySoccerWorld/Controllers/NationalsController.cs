@@ -56,7 +56,7 @@ namespace MySoccerWorld.Controllers
         public IActionResult CreatePlayer(int id)
         {
             National national = db.Nationals.Get(id);
-            ViewBag.Players = db.Players.GetAll();
+            ViewBag.Players = db.Players.GetForNational(id);
             return View(national);
         }
 
@@ -85,7 +85,7 @@ namespace MySoccerWorld.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CreateNational([Bind("Name,Country,REgion")] National national)
+        public IActionResult CreateNational([Bind("Name,Flag,Region")] National national)
         {
             if (ModelState.IsValid)
             {
@@ -95,5 +95,33 @@ namespace MySoccerWorld.Controllers
             }
             return View(national);
         }
+        public IActionResult Edit(int id)
+        {
+            var national = db.Nationals.Get(id);
+            return View(national);
+        }
+        [HttpPost]
+        public IActionResult Edit([Bind("Id,Name,Flag,Region")] National national)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Nationals.Update(national);
+                db.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(national);
+        }
+        //public IActionResult Delete(int id)
+        //{
+        //    var national =  db.Nationals.Get(id);
+        //    return View(national);
+        //}
+        //[HttpPost, ActionName("Delete")]
+        //public IActionResult DeleteConfirmed(int id)
+        //{
+        //    db.Nationals.Delete(id);
+        //    db.Save();
+        //    return RedirectToAction("Index");
+        //}
     }
 }

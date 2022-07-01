@@ -27,7 +27,9 @@ namespace MySoccerWorld.Data.Repositories
         }
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            Match match = _context.Matches.Find(id);
+            if (match != null)
+                _context.Matches.Remove(match);
         }
         public Match Details(int id)
         {

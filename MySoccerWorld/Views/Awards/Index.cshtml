@@ -1,0 +1,38 @@
+﻿@model IEnumerable<SeasonalAward>;
+@{
+    Layout = "_Rating";
+    ViewData["Title"] = "Awards";
+}
+<div>
+    @await Html.PartialAsync("MenuHeader")
+</div>
+<div class="row justify-content-around">
+     <a class="modalItem btn btn-danger" asp-controller="Awards" asp-action="Create"> CHOOSE PLAYERS </a>
+     <a class="modalItem btn btn-danger" asp-controller="Awards" asp-action="CreateStarting"> CHOOSE STARTING XI </a>
+     <a class="modalItem btn btn-danger" asp-controller="Awards" asp-action="CreateCoach"> CHOOSE COACH </a>
+</div>
+@if (@Model != null)
+{
+<div class="m-5">
+    <h2> BEST  PLAYERS   SEASON </h2>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div> 
+}
+<div id="modDialog" class="modal fade" style="top:5%">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/modal.js"></script>

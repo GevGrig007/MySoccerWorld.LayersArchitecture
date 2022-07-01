@@ -2,47 +2,7 @@
 @{
     Layout = "_TournamentLayout";
 }
-<div class="container">
-    <div>
-        <a class="modalItem mb-4 btn btn-outline-primary" asp-route-id="@Model.Tournament.Id" asp-action="CreateAwards"> CREATE AWARDS </a>
-    </div>
-    <div>
-        @foreach (var a in Model.TournamentAwards.Where(a => a.AwardName == AwardType.GoldenBall))
-        {
-            <p> Golden Ball -   @a.PlayerTeam.Player.Name - @a.PlayerTeam.Team.Name  </p>
-        }
-    </div>
-    <div>
-        @foreach (var a in Model.TournamentAwards.Where(a => a.AwardName == AwardType.SilverBall))
-        {
-            <p> Silver Ball - @a.PlayerTeam.Player.Name - @a.PlayerTeam.Team.Name  </p>
-        }
-    </div>
-    <div>
-        @foreach (var a in Model.TournamentAwards.Where(a => a.AwardName == AwardType.BronzeBall))
-        {
-            <p> Bronze Ball -  @a.PlayerTeam.Player.Name - @a.PlayerTeam.Team.Name  </p>
-        }
-    </div>
-    <div>
-        @foreach (var a in Model.TournamentAwards.Where(a => a.AwardName == AwardType.GoalScorer))
-        {
-            <p> @a.PlayerTeam.Player.Name - @a.PlayerTeam.Team.Name  </p>
-        }
-    </div>
-    <div>
-        @foreach (var a in Model.TournamentAwards.Where(a => a.AwardName == AwardType.Asister))
-        {
-            <p> @a.PlayerTeam.Player.Name - @a.PlayerTeam.Team.Name  </p>
-        }
-    </div>
-    <div>
-        @foreach (var a in Model.TournamentAwards.Where(a => a.AwardName == AwardType.Coach))
-        {
-            <p> @a.CoachTeam.Coach.Name - @a.CoachTeam.Team.Name  </p>
-        }
-    </div>
-</div>
+
 <div>
     @foreach (var p in Model.PlayerTeams.Where(p => p.Goals.Count > 0 || p.Asists.Count > 0).GroupBy(c => c.Team))
     {

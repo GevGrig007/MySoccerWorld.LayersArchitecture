@@ -68,7 +68,7 @@ namespace MySoccerWorld.Controllers
             };
             db.Seasons.Update(season);
             db.Save();
-            return View();
+            return RedirectToAction("Index", "Leagues");
         }
         public IActionResult Details(int id)
         {
@@ -82,7 +82,11 @@ namespace MySoccerWorld.Controllers
                 Ratings = db.Leagues.Ratings(id),
                 Matches = matches
             };
-            if (matches.Count > 0) { var leagueStat = _serv.Stats(matches); leagueView.Stats = leagueStat; }
+            if (matches.Any() )
+            {
+                if(matches.FirstOrDefault().HomeScore != null)
+                { var leagueStat = _serv.Stats(matches); leagueView.Stats = leagueStat; }
+            }
             return View(leagueView);
         }
     }

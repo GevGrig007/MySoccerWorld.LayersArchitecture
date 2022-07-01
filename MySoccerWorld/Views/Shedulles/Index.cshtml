@@ -10,36 +10,9 @@
     @Model.League.Name - @Model.Season.Data
 </h1>
 <div>
-    @{
-        var action = "";
-        if (Model.TournamentType == TournamentType.Regular)
-        {
-            action = "RegionalDetails";
-        }
-        else if (Model.TournamentType == TournamentType.EuroCup)
-        {
-            action = "EuroCupDetails";
-        }
-        else if (Model.TournamentType == TournamentType.EuroCupKnockOut)
-        {
-            action = "EuroCupKnockOut";
-        }
-        else if (Model.TournamentType == TournamentType.National8)
-        {
-            action = "NationalDetails";
-        }
-        else if (Model.TournamentType == TournamentType.NationalEuro)
-        {
-            action = "NationalEuro";
-        }
-        else if (Model.TournamentType == TournamentType.Qualification)
-        {
-            action = "Qualification";
-        }
-        <div class="pl-5">
-            <a asp-action="@action" asp-controller="Tournaments" asp-route-id="@Model.Id" class="btn btn-secondary"> BACK TO TOURNAMENT </a>
-        </div>
-    }
+    <div class="pl-5">
+         <a asp-action="Details" asp-controller="Tournaments" asp-route-id="@Model.Id" class="btn btn-secondary"> BACK TO TOURNAMENT </a>
+    </div>
 </div>
 <div class="container mt-5">
     <div class="mainsection">
@@ -123,8 +96,8 @@
                         </form>
                     </div>
                 }
-                <div>
-                    <h5> CREATE YOUR SHEDULLE </h5>
+                <div class="container">
+                    <h5 class="center m-3"> CREATE YOUR SHEDULLE </h5>
                     <form asp-action="ShedulleQualification" method="get">
                         <input type="hidden" name="id" value="@Model.Id" />
                         <input type="number" name="teamscount" />
@@ -138,9 +111,19 @@
                 <h3 class="center"> BEST   PLAYERS </h3>
                 @foreach (var c in ViewBag.BestPlayers)
                 {
-                    <div class="maincol"> @c.Position - @c.PlayerTeam.Player.Name || <a asp-route-id="@c.Id" asp-action="Edit" asp-controller="BestPlayers" class="modalItem">EDIT</a> </div>
+                    <div class="maincol"> @c.Position - @c.PlayerTeam.Player.Name  <a asp-route-id="@c.Id" asp-action="Edit" asp-controller="BestPlayers" class="modalItem">EDIT</a> </div>
                 }
                 <a asp-action="Create" asp-controller="BestPlayers" asp-route-id="@Model.Id" class="modalItem btn btn-collapse"> ADD PLAYERS </a>
+            </div>
+            <div>
+                <h3 class="center"> AWARDS </h3>
+                @foreach(var a in Model.TournamentAwards)
+                {
+                    <div class="maincol">  @if(a.CoachTeamId!=null){ <p> @a.CoachTeam.Coach.Name  @a.CoachTeam.Team.Name </p> } 
+                        else{ <p> @a.PlayerTeam.Player.Name  - @a.AwardName  </p>}  
+                    <a asp-route-id="@a.Id" asp-action="EditAwards" asp-controller="Tournaments" class="modalItem">EDIT</a> </div>
+                }
+                <a  asp-route-id="@Model.Id" asp-action="CreateAwards" asp-controller="Tournaments" class="modalItem btn btn-collapse"> CREATE AWARDS </a>
             </div>
         </div>
     </div>

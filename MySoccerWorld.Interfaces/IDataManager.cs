@@ -22,6 +22,7 @@ namespace MySoccerWorld.Interfaces
         INationalRepository Nationals { get; }
         IPlayerTeamRepository PlayerTeams { get; }
         IAwardsRepository Awards { get; }
+        IShedulleRepository Shedulles { get; }
         void Save();
     }
 }

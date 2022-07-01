@@ -9,7 +9,8 @@ namespace MySoccerWorld.Interfaces
 {
     public interface IPlayerRepository
     {
-        IEnumerable<Player> GetAll();      
+        IEnumerable<Player> GetAll();
+        List<Player> GetForNational(int id);
         Player Get(int id);
         Player Details(int id);
         List<Player> ClubPlayers(int id);

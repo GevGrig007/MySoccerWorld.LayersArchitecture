@@ -237,8 +237,8 @@ namespace MySoccerWorld.BLL
             var groupGm = tournament.Matches.Where(m => m.Group == "G");
             var team25 = groupGm.ToList()[0].Home;
             var team26 = groupGm.ToList()[0].Away;
-            var team27 = groupGm.ToList()[5].Home;
-            var team28 = groupGm.ToList()[5].Away;
+            var team27 = groupGm.ToList()[1].Home;
+            var team28 = groupGm.ToList()[1].Away;
             var groupGteams = new List<Team> { team25, team26, team27, team28 };
             var standingsG = CalculatingTable(groupGm, groupGteams);
             var groupG = new TournamentGroup()

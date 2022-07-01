@@ -13,6 +13,9 @@ namespace MySoccerWorld.Model.Enums
         BronzeBall,
         GoalScorer,
         Asister,
-        Coach
+        Coach,
+        SeasonalPlayers,
+        SeasonalStarting,
+        SeasonalCoach
     }
 }

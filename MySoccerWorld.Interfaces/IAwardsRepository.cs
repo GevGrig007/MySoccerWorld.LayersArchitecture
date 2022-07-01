@@ -10,7 +10,11 @@ namespace MySoccerWorld.Interfaces
     public interface IAwardsRepository
     {
         IEnumerable<TournamentAward> GetByTournament(int id);
+        TournamentAward GetTournamentAward(int id);
+        IEnumerable<SeasonalAward> GetAwardsBySeason(int id);
         void Update(TournamentAward award);
+        void UpdateSeasonalAward(SeasonalAward award);
         PlayerTeam GetPlayerAward(int? id);
+        PlayerTeam GetNationalPlayerAward(int? id);
     }
 }

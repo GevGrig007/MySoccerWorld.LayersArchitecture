@@ -12,9 +12,9 @@ namespace MySoccerWorld.Model
         public int Games { get; set; }
         public int? GoalsFor { get; set; }
         public int? GoalsAgainst { get; set; }
-        public int Win { get; set; }
-        public int Draw { get; set; }
-        public int Lost { get; set; }
+        public int? Win { get; set; }
+        public int? Draw { get; set; }
+        public int? Lost { get; set; }
         public Match OverResultGame { get; set; }
         public Match MaxWin { get; set; }
     }

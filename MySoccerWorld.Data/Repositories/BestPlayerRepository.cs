@@ -19,8 +19,10 @@ namespace MySoccerWorld.Data.Repositories
         }       
         public async Task<BestPlayer> GetAsync(int id) =>
             await _context.BestPlayers.FindAsync(id);
-        public IEnumerable<Player> GetPlayers() =>
-            _context.Players.Include(p => p.PlayerTeams).OrderBy(p => p.Name);
+        public IEnumerable<Player> GetPlayersByTournament(int id) =>
+            _context.Players.Where(p => p.PlayerTeams.Any(c => c.Team.Tournaments.Any(t => t.Id == id))).OrderBy(p => p.Name);
+        public IEnumerable<PlayerTeam> GetPlayerTeams() =>
+            _context.PlayerTeams.Include(p => p.Player);
         public Task<List<BestPlayer>> GetByTournamentAsync(int id) =>
             _context.BestPlayers.Include(b => b.PlayerTeam).ThenInclude(p => p.Player)
                                             .Include(b => b.PlayerTeam).ThenInclude(p => p.Team)
@@ -37,6 +39,10 @@ namespace MySoccerWorld.Data.Repositories
             {
                _context.Entry(bestPlayer).State = EntityState.Modified;
             }
+        }
+        public IEnumerable<Player> GetPlayerForAwards(int id)
+        {
+           return _context.Players.Where(p => p.PlayerTeams.Any(p => p.BestPlayers.Any(b => b.TournamentId == id))).Include(p => p.PlayerTeams).Include(p => p.Country);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace MySoccerWorld.Data
         private IClubRepository clubRepository;
         private ICoachRepository coachRepository;
         private IGoalRepository goalRepository;
-        private LeagueRepository leagueRepository;
+        private ILeagueRepository leagueRepository;
         private IMatchRepository matchRepository;
         private IPlayerRepository playerRepository;
         private IRatingRepository ratingRepository;
@@ -27,6 +27,7 @@ namespace MySoccerWorld.Data
         private IBestPlayerRepository bestPlayerRepository;
         private INationalRepository nationalRepository;
         private IPlayerTeamRepository playerTeamRepository;
+        private IShedulleRepository shedulleRepository;
         public DataManager(SoccerContext context)
         {
             db = context;
@@ -38,6 +39,15 @@ namespace MySoccerWorld.Data
                 if (clubRepository == null)
                     clubRepository = new ClubRepository(db);
                 return clubRepository;
+            }
+        }
+        public IShedulleRepository Shedulles
+        {
+            get
+            {
+                if (shedulleRepository == null)
+                    shedulleRepository = new ShedulleRepository(db);
+                return shedulleRepository;
             }
         }
         public ICoachRepository Coaches
@@ -68,7 +78,6 @@ namespace MySoccerWorld.Data
                 return goalRepository;
             }
         }
-
         public ILeagueRepository Leagues
         {
             get
@@ -78,7 +87,6 @@ namespace MySoccerWorld.Data
                 return leagueRepository;
             }
         }
-
         public IMatchRepository Matches
         {
             get
@@ -88,7 +96,6 @@ namespace MySoccerWorld.Data
                 return matchRepository;
             }
         }
-
         public IPlayerRepository Players
         {
             get

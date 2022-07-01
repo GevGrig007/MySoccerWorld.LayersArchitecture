@@ -78,7 +78,7 @@ namespace MySoccerWorld.Controllers
             var fixtures = _serv.GenerateFor9Teams(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.Save();
-            return RedirectToAction("Index", "Tournaments");
+            return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
         public IActionResult ShedulleFor12(int id, int[] clubs, double data)
@@ -93,7 +93,7 @@ namespace MySoccerWorld.Controllers
             var fixtures = _serv.GenerateFor12Teams(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.Save();
-            return RedirectToAction("Index", "Tournaments");
+            return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
         public IActionResult ShedulleFor16(int id, int[] clubs, double data)
@@ -108,7 +108,7 @@ namespace MySoccerWorld.Controllers
             var fixtures = _serv.GenerateFor16Teams(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.Save();
-            return RedirectToAction("Index", "Tournaments");
+            return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
         public IActionResult ShedulleGroup(int id, int[] clubs, double data)
@@ -206,7 +206,7 @@ namespace MySoccerWorld.Controllers
                 db.Matches.AddRange(groupBm);
             }
             db.Save();
-            return RedirectToAction("Index", "Tournaments");
+            return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
         public IActionResult ShedulleKnockOut32(int id, int[] clubs, double data)
@@ -221,7 +221,7 @@ namespace MySoccerWorld.Controllers
             var fixtures = _serv.Shedulle32(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.Save();
-            return RedirectToAction("Index", "Tournaments");
+            return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
         public IActionResult ShedulleKnockOut16(int id, int[] clubs, double data)
@@ -236,7 +236,7 @@ namespace MySoccerWorld.Controllers
             var fixtures = _serv.Shedulle16(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.Save();
-            return RedirectToAction("Index", "Tournaments");
+            return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
         public IActionResult ShedulleKnockOut8(int id, int[] clubs, double data)
@@ -251,52 +251,7 @@ namespace MySoccerWorld.Controllers
             var fixtures = _serv.Shedulle8(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.Save();
-            return RedirectToAction("Index", "Tournaments");
-        }
-        [HttpPost]
-        public IActionResult ShedulleKnockOutQuarterDouble(int id, int[] clubs, double data)
-        {
-            Tournament tournament = db.Tournaments.Get(id);
-            var teams = new List<Team>();
-            for (var i = 0; i < clubs.Length; i++)
-            {
-                var team = db.Teams.Get(clubs[i]);
-                teams.Add(team);
-            };
-            var fixtures = _serv.QuartersDouble(tournament, teams, data);
-            db.Matches.AddRange(fixtures);
-            db.Save();
-            return RedirectToAction("Index", "Tournaments");
-        }
-        [HttpPost]
-        public IActionResult ShedulleKnockOutSemiDouble(int id, int[] clubs, double data)
-        {
-            Tournament tournament = db.Tournaments.Get(id);
-            var teams = new List<Team>();
-            for (var i = 0; i < clubs.Length; i++)
-            {
-                var team = db.Teams.Get(clubs[i]);
-                teams.Add(team);
-            };
-            var fixtures = _serv.SemiDouble(tournament, teams, data);
-            db.Matches.AddRange(fixtures);
-            db.Save();
-            return RedirectToAction("Index", "Tournaments");
-        }
-        [HttpPost]
-        public IActionResult ShedulleFinal(int id, int[] clubs, double data)
-        {
-            Tournament tournament = db.Tournaments.Get(id);
-            var teams = new List<Team>();
-            for (var i = 0; i < clubs.Length; i++)
-            {
-                var team = db.Teams.Get(clubs[i]);
-                teams.Add(team);
-            };
-            var fixtures = _serv.Final(tournament, teams, data);
-            db.Matches.AddRange(fixtures);
-            db.Save();
-            return RedirectToAction("Index", "Tournaments");
+            return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
         public IActionResult ShedullEuro8(int id, int[] clubs, double data)
@@ -311,10 +266,10 @@ namespace MySoccerWorld.Controllers
             var fixtures = _serv.ShedulleEuro8(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.Save();
-            return RedirectToAction("Index", "Tournaments");
+            return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
-        public IActionResult ShedulleQuarter(int id, int[] clubs, double data)
+        public IActionResult ShedulleQuarter(int id, int[] clubs, double data , string matchcount)
         {
             Tournament tournament = db.Tournaments.Get(id);
             var teams = new List<Team>();
@@ -323,13 +278,22 @@ namespace MySoccerWorld.Controllers
                 var team = db.Teams.Get(clubs[i]);
                 teams.Add(team);
             };
-            var fixtures = _serv.Quarters(tournament, teams, data);
-            db.Matches.AddRange(fixtures);
-            db.Save();
-            return RedirectToAction("Index", "Tournaments");
+            if (matchcount == "1")
+            {
+                var fixtures = _serv.Quarters(tournament, teams, data);
+                db.Matches.AddRange(fixtures);
+                db.Save();
+            }
+            else
+            {
+                var fixtures = _serv.QuartersDouble(tournament, teams, data);
+                db.Matches.AddRange(fixtures);
+                db.Save();
+            }
+            return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
-        public IActionResult ShedulleSemi(int id, int[] clubs, double data)
+        public IActionResult ShedulleSemi(int id, int[] clubs, double data , string matchcount)
         {
             Tournament tournament = db.Tournaments.Get(id);
             var teams = new List<Team>();
@@ -338,10 +302,34 @@ namespace MySoccerWorld.Controllers
                 var team = db.Teams.Get(clubs[i]);
                 teams.Add(team);
             };
-            var fixtures = _serv.Semi(tournament, teams, data);
+            if (matchcount == "1")
+            {
+                var fixtures = _serv.Semi(tournament, teams, data);
+                db.Matches.AddRange(fixtures);
+                db.Save();
+            }
+            else
+            {
+                var fixtures = _serv.SemiDouble(tournament, teams, data);
+                db.Matches.AddRange(fixtures);
+                db.Save();
+            }
+            return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
+        }
+        [HttpPost]
+        public IActionResult ShedulleFinal(int id, int[] clubs, double data)
+        {
+            Tournament tournament = db.Tournaments.Get(id);
+            var teams = new List<Team>();
+            for (var i = 0; i < clubs.Length; i++)
+            {
+                var team = db.Teams.Get(clubs[i]);
+                teams.Add(team);
+            };
+            var fixtures = _serv.Final(tournament, teams, data);
             db.Matches.AddRange(fixtures);
             db.Save();
-            return RedirectToAction("Index", "Tournaments");
+            return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         public IActionResult ShedulleQualification(int id, int teamscount)
         {
@@ -351,7 +339,7 @@ namespace MySoccerWorld.Controllers
             return View(tournament);
         }
         [HttpPost]
-        public IActionResult ShedulleQualification(int id, string round, string matchcount, int[] clubs, double data)
+        public IActionResult ShedulleQualification(int id, string round, string matchcount, int[] clubs, double data ,bool neytral )
         {
             var tournament = db.Tournaments.Details(id);
             var teams = new List<Team>();
@@ -362,17 +350,17 @@ namespace MySoccerWorld.Controllers
             };
             if (matchcount == "1")
             {
-                var fixtures = _serv.Qualification(tournament, teams, round, data);
+                var fixtures = _serv.Qualification(tournament, teams, round, data, neytral);
                 db.Matches.AddRange(fixtures);
                 db.Save();
             }
             else
             {
-                var fixtures = _serv.QualificationDouble(tournament, teams, round, data);
+                var fixtures = _serv.QualificationDouble(tournament, teams, round, data, neytral);
                 db.Matches.AddRange(fixtures);
                 db.Save();
             }
-            return RedirectToAction("Index", "Tournaments");
+            return RedirectToAction("Details", "Tournaments" , new {id= tournament.Id});
         }
     }
 }

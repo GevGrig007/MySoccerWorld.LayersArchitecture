@@ -21,8 +21,8 @@ namespace MySoccerWorld.Services
         ICollection<Match> SemiDouble(Tournament turnir, List<Team> klubi, double startData);
         ICollection<Match> Final(Tournament turnir, List<Team> klubi, double startData);
         ICollection<Match> Semi(Tournament turnir, List<Team> klubi, double startData);
-        ICollection<Match> Qualification(Tournament turnir, List<Team> klubi, string round, double startData);
-        ICollection<Match> QualificationDouble(Tournament turnir, List<Team> klubi, string round, double startData);
+        ICollection<Match> Qualification(Tournament turnir, List<Team> klubi, string round, double startData, bool neytral);
+        ICollection<Match> QualificationDouble(Tournament turnir, List<Team> klubi, string round, double startData, bool neytral);
         List<Match> GroupShedulle(Tournament turnir, List<Team> klubi, double startData, string Name);
         List<Match> EuroGroupShedulle(Tournament turnir, List<Team> klubi, double startData, string Name);
     }

@@ -96,7 +96,7 @@ namespace MySoccerWorld.Controllers
             var player = db.Players.Get(id);
             ViewData["PlayerId"] = player;
             ViewData["SeasonId"] = new SelectList(db.Seasons.GetAll().OrderByDescending(s => s.Data), "Id", "Data");
-            ViewData["TeamId"] = new SelectList(db.Teams.GetAll().OrderByDescending(s=>s.Id), "Id", "Name");
+            ViewData["TeamId"] = new SelectList(db.Teams.GetAll().OrderBy(s=>s.Id), "Id", "Name");
             return View();
         }
         [HttpPost]

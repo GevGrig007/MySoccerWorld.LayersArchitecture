@@ -17,37 +17,11 @@
                 </li>
                 @foreach (var c in Model.Tournaments.OrderByDescending(c => c.Season.Data).ThenBy(c => c.Division))
                 {
-                    @*var link = "";
-                    if (c.TournamentType == TournamentType.Regular)
-                    {
-                        link = "RegionalDetails";
-                    }
-                    else if (c.TournamentType == TournamentType.EuroCup)
-                    {
-                        link = "EuroCupDetails";
-                    }
-                    else if (c.TournamentType == TournamentType.EuroCupKnockOut)
-                    {
-                        link = "EuroCupKnockOut";
-                    }
-                    else if (c.TournamentType == TournamentType.National8)
-                    {
-                        link = "NationalDetails";
-                    }
-                    else if (c.TournamentType == TournamentType.NationalEuro)
-                    {
-                        link = "NationalEuro";
-                    }
-                    else if (c.TournamentType == TournamentType.Qualification)
-                    {
-                        link = "Qualification";
-                    }*@
-                    <li style="padding:5px">
+                   <li style="padding:5px">
                         <a style="color:cyan" asp-action="Details" asp-controller="Tournaments" asp-route-id="@c.Id">
                             @c.Name - @c.Season.Data
                         </a>
-                    </li>
-
+                    </li> 
                 }
                 <li>
                     <a asp-action="TournamentManage" asp-controller="Tournaments" asp-route-id="@Model.League.Id"
@@ -72,17 +46,16 @@
                     </div>
                 </div>
                 <div class="mt-5">
-                    <table class="table table-striped">
+                    <table class="table table-striped text-center">
                         <thead>
                             <tr>
                                 <th style="background-color: cornsilk"> SEASON </th>
-                                <th style="background-color:gold"> WINNER </th>
-                                <th style="background-color:lightgray"> SILVER </th>
-                                <th style="background-color:goldenrod"> BRONZE </th>
+                                <th style="background-color:gold"> <i class="fa-solid fa-trophy"></i> WINNER </th>
+                                <th style="background-color:lightgray"> <i class="fa-solid fa-medal"></i> SILVER </th>
+                                <th style="background-color:goldenrod"> <i class="fa-solid fa-medal"></i> BRONZE </th>
                             </tr>
                         </thead>
                         <tbody>
-
                             @foreach (var r in Model.Ratings.GroupBy(r => r.Tournament))
                             {
                                 <tr>
@@ -124,9 +97,9 @@
                             <div> Games -  @Model.Stats.Games </div>
                             <div> Goals - @Model.Stats.Goals   </div>
                             <div> Average Total per game -@Math.Round((Double)Model.Stats.AverageTotal, 1)  </div>
-                        </div>
-                        <div> Over Total Games :  @Model.Stats.OverResultGame.Home.Name  -@Model.Stats.OverResultGame.Away.Name  @Model.Stats.OverResultGame.HomeScore : @Model.Stats.OverResultGame.AwayScore  </div>
-                        <div> Big win games :  @Model.Stats.MaxWin.Home.Name  -@Model.Stats.MaxWin.Away.Name  @Model.Stats.MaxWin.HomeScore : @Model.Stats.MaxWin.AwayScore  </div>
+                            </div>
+                            <div> Over Total Games :  @Model.Stats.OverResultGame.Home.Name  -@Model.Stats.OverResultGame.Away.Name  @Model.Stats.OverResultGame.HomeScore : @Model.Stats.OverResultGame.AwayScore  </div>
+                            <div> Big win games :  @Model.Stats.MaxWin.Home.Name  -@Model.Stats.MaxWin.Away.Name  @Model.Stats.MaxWin.HomeScore : @Model.Stats.MaxWin.AwayScore  </div>
                         }      
                     </div>
                 </div>

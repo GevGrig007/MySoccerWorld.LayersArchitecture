@@ -10,6 +10,7 @@
         <div class="card card-body">
             <form asp-action="ShedullEuro8" asp-controller="Shedulles" method="post">
                 <input type="hidden" asp-for="@Model.Id" />
+                <input type="hidden"  name="matchcount" value="1" />
                 @for (int i = 0; i < 8; i++)
                 {
                     <div class="form-group">
@@ -17,7 +18,9 @@
                         </select>
                     </div>
                 }
-                <input type="text" inputmode="numeric" name="data" />
+                <p> Enter a data
+                    <input type="text" inputmode="numberic" name="data" />
+                </p>
                 <input type="submit" value="Create" />
             </form>
         </div>

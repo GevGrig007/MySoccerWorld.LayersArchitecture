@@ -147,22 +147,52 @@ namespace MySoccerWorld.BLL
                 if (AwayGames.Any(m => m.Round == "Final" && (m.HomeScore < m.AwayScore || m.HomeEx < m.AwayEx || m.HomePen < m.AwayPen)))
                 { AllPoints.Add(1); }
                 string round = "";
-                if (HomeGames.Any(m => m.Round == "Final" && (m.HomeScore > m.AwayScore || m.HomeEx > m.AwayEx || m.HomePen > m.AwayPen))
+                if (HomeGames.Any(m=>m.Round=="Final") && AwayGames.Any(m=>m.Round=="Final"))
+                {
+                    var firstFinalMatch = HomeGames.Where(m => m.Round == "Final" && m.HomeTeam == team.Id).FirstOrDefault();
+                    var secondFinalMatch = AwayGames.Where(m => m.Round == "Final" && m.AwayTeam == team.Id).FirstOrDefault();
+                    if (firstFinalMatch.HomeScore + secondFinalMatch.AwayScore >
+                       firstFinalMatch.AwayScore + secondFinalMatch.HomeScore
+                       || firstFinalMatch.HomeEx > firstFinalMatch.AwayEx || secondFinalMatch.HomeEx < secondFinalMatch.AwayEx
+                       || firstFinalMatch.HomePen > firstFinalMatch.AwayPen || firstFinalMatch.HomePen < firstFinalMatch.AwayPen)
+                    {
+                        round = "Winner";
+                    }
+                    else { round = "Silver"; }
+                }
+                else if (HomeGames.Any(m => m.Round == "Final") || AwayGames.Any(m => m.Round == "Final"))
+                {
+                    if (HomeGames.Any(m => m.Round == "Final" && (m.HomeScore > m.AwayScore || m.HomeEx > m.AwayEx || m.HomePen > m.AwayPen))
                         || AwayGames.Any(m => m.Round == "Final" && (m.HomeScore < m.AwayScore || m.HomeEx < m.AwayEx || m.HomePen < m.AwayPen)))
-                { round = "Winner"; }
-                else if (HomeGames.Any(m => m.Round == "Final" && (m.HomeScore < m.AwayScore || m.HomeEx < m.AwayEx || m.HomePen < m.AwayPen))
-                        || AwayGames.Any(m => m.Round == "Final" && (m.HomeScore > m.AwayScore || m.HomeEx > m.AwayEx || m.HomePen > m.AwayPen)))
-                { round = "Silver"; }
-                else if (HomeGames.Any(m => m.Round == "Bronze-Match" && (m.HomeScore > m.AwayScore || m.HomeEx > m.AwayEx || m.HomePen > m.AwayPen))
-                        || AwayGames.Any(m => m.Round == "Bronze-Match" && (m.HomeScore < m.AwayScore || m.HomeEx < m.AwayEx || m.HomePen < m.AwayPen)))
-                { round = "Bronze"; }
-                else if (HomeGames.Any(m => m.Round == "Bronze-Match" && (m.HomeScore < m.AwayScore || m.HomeEx < m.AwayEx || m.HomePen < m.AwayPen))
-                        || AwayGames.Any(m => m.Round == "Bronze-Match" && (m.HomeScore > m.AwayScore || m.HomeEx > m.AwayEx || m.HomePen > m.AwayPen)))
-                { round = "4th"; }
-                else if (HomeGames.Any(m => m.Round == "1/4 finals") || AwayGames.Any(m => m.Round == "1/4 finals")) { round = "1/4 "; }
-                else if (HomeGames.Any(m => m.Round == "1/8 finals") || AwayGames.Any(m => m.Round == "1/8 finals")) { round = "1/8 "; }
-                else if (HomeGames.Any(m => m.Round == "1/16 finals") || AwayGames.Any(m => m.Round == "1/16 finals")) { round = "1/16 "; }
-                else if (HomeGames.Any(m => m.Round == "1/32 finals") || AwayGames.Any(m => m.Round == "1/32 finals")) { round = "1/32 "; }
+                       { round = "Winner"; }
+                    else { round = "Silver"; }
+                }
+                else if (HomeGames.Any(m => m.Round == "Bronze-Match") && AwayGames.Any(m => m.Round == "Bronze-Match"))
+                {
+                    var firstFinalMatch = HomeGames.Where(m => m.Round == "Bronze-Match" && m.HomeTeam == team.Id).FirstOrDefault();
+                    var secondFinalMatch = AwayGames.Where(m => m.Round == "Bronze-Match" && m.AwayTeam == team.Id).FirstOrDefault();
+                    if (firstFinalMatch.HomeScore + secondFinalMatch.AwayScore >
+                       firstFinalMatch.AwayScore + secondFinalMatch.HomeScore
+                       || firstFinalMatch.HomeEx > firstFinalMatch.AwayEx || secondFinalMatch.HomeEx < secondFinalMatch.AwayEx
+                       || firstFinalMatch.HomePen > firstFinalMatch.AwayPen || firstFinalMatch.HomePen < firstFinalMatch.AwayPen)
+                    {
+                        round = "Bronze";
+                    }
+                    else { round = "4th"; }
+                }
+                else if (HomeGames.Any(m => m.Round == "Bronze-Match") || AwayGames.Any(m => m.Round == "Bronze-Match"))
+                {
+                    if (HomeGames.Any(m => m.Round == "Bronze-Match" && (m.HomeScore > m.AwayScore || m.HomeEx > m.AwayEx || m.HomePen > m.AwayPen))
+                         || AwayGames.Any(m => m.Round == "Bronze-Match" && (m.HomeScore < m.AwayScore || m.HomeEx < m.AwayEx || m.HomePen < m.AwayPen)))
+                    { round = "Bronze"; }
+                    else { round = "4th"; }
+                }
+                else if (HomeGames.Any(m => m.Round.Contains("1/4")) || AwayGames.Any(m => m.Round == "1/4")) { round = "1/4"; }
+                else if (HomeGames.Any(m => m.Round.Contains("1/8")) || AwayGames.Any(m => m.Round == "1/8")) { round = "1/8"; }
+                else if (HomeGames.Any(m => m.Round.Contains("1/16")) || AwayGames.Any(m => m.Round == "1/16")) { round = "1/16"; }
+                else if (HomeGames.Any(m => m.Round.Contains("1/32")) || AwayGames.Any(m => m.Round == "1/32")) { round = "1/32"; }
+                else if (HomeGames.Any(m => m.Round.Contains("1/64")) || AwayGames.Any(m => m.Round == "1/64")) { round = "1/64"; }
+                else if (HomeGames.Any(m => m.Round.Contains("Q", StringComparison.OrdinalIgnoreCase)) || AwayGames.Any(m => m.Round.Contains("Q", StringComparison.OrdinalIgnoreCase))) { round = "Q"; }
                 else { round = "GS"; }
                 var teamPoints = AllPoints.Sum();
                 if (tournament.League.Name == "League Champions") { teamPoints = teamPoints * 1.25; }

@@ -21,7 +21,7 @@ namespace MySoccerWorld.Controllers
         public IActionResult Create(int id)
         {
             var tournament = db.Tournaments.Get(id);
-            ViewBag.Players = new SelectList(db.BestPlayers.GetPlayers(), "Id", "Name");
+            ViewBag.Players = new SelectList(db.BestPlayers.GetPlayersByTournament(id), "Id", "Name");
             ViewData["TournamentId"] = tournament.Id;
             return View();
         }
@@ -43,17 +43,18 @@ namespace MySoccerWorld.Controllers
             db.Save();
             return RedirectToAction("Index", "Shedulles", new { id = TournamentId[1] });
         }
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var bestPlayer = db.BestPlayers.GetAsync(id);
-            ViewData["PlayerTeamId"] = new SelectList(db.BestPlayers.GetPlayers(), "Id", "Player.Name");
-            ViewData["TournamentId"] = new SelectList(db.Tournaments.GetAll(), "Id", "Name");
+            var bestPlayer = await db.BestPlayers.GetAsync(id);
+            var bestplayers = db.BestPlayers.GetPlayerTeams().OrderBy(p => p.Player.Name);
+            ViewData["PlayerTeamId"] = new SelectList(bestplayers.ToList(), "Id", "Player.Name");
+            ViewData["TournamentId"] = new SelectList(db.Tournaments.GetAll().ToList(), "Id", "Name");
             return View(bestPlayer);
         }
         [HttpPost]
-        public IActionResult Edit([Bind("Id,TournamentId,Position,PlayerTeamId")] BestPlayer bestPlayer)
+        public async Task<IActionResult> Edit([Bind("Id,TournamentId,Position,PlayerTeamId")] BestPlayer bestPlayer)
         {
-            db.BestPlayers.Update(bestPlayer);
+            await db.BestPlayers.Update(bestPlayer);
             db.Save();
             return RedirectToAction("Index", "Shedulles", new { id = bestPlayer.TournamentId });
         }

@@ -1,10 +1,10 @@
 ﻿@model MatchViewModel
-
 <div class="container">
     <div>
         <form asp-controller="Matches" asp-action="EditScore" method="post">
             <input type="hidden" asp-for="@Model.Match.Id" />
             <input type="hidden" asp-for="@Model.Match.Round" />
+            <input type="hidden" asp-for="@Model.Match.Neytral" />
             <input type="hidden" asp-for="@Model.Match.Data" />
             <input type="hidden" asp-for="@Model.Match.HomeTeam" />
             <input type="hidden" asp-for="@Model.Match.AwayTeam" />
@@ -20,6 +20,9 @@
                 </div>
             </div>
         </form>
+        <div>
+            <a asp-action="ExtraScore" asp-controller="Matches" asp-route-id="@Model.Match.Id" class="modalItem btn btn-outline-info" style="color:azure"> EXTRA TIME </a>
+        </div>
     </div>
     <div class="row border-danger m-0 score">
         <div class="row col-6 border-danger">
@@ -31,14 +34,16 @@
                             <div class="row">
                                 <div class="col-6 ">
                                     @if (Model.Match.Tournament.League.Type == "National")
-                                    { @c.PlayerTeams.FirstOrDefault().Goals.Where(g => g.MatchId == Model.Match.Id).Count(); }
+                                    { if(@c.PlayerTeams.FirstOrDefault(p=>p.SeasonId==null).Goals.Where(g => g.MatchId == Model.Match.Id).Count()>0)
+                                        @c.PlayerTeams.FirstOrDefault(p=>p.SeasonId==null).Goals.Where(g => g.MatchId == Model.Match.Id).Count(); }
                                     else
-                                    { @c.PlayerTeams.LastOrDefault().Goals.Where(g => g.MatchId == Model.Match.Id).Count(); }
+                                    { if(@c.PlayerTeams.LastOrDefault().Goals.Where(g => g.MatchId == Model.Match.Id).Count()>0)
+                                        @c.PlayerTeams.LastOrDefault().Goals.Where(g => g.MatchId == Model.Match.Id).Count(); }
                                 </div>
                                 <div class="col-6 ">
                                     <button class="btn-success" type="submit">G</button>
                                     <input type="hidden" value="@Model.Match.Id" name="MatchId" />
-                                    <input type="hidden" value="@if (Model.Match.Tournament.League.Type == "National") {@c.PlayerTeams.FirstOrDefault().Id }
+                                    <input type="hidden" value="@if (Model.Match.Tournament.League.Type == "National") {@c.PlayerTeams.First(p=>p.SeasonId==null).Id }
                                     else {@c.PlayerTeams.LastOrDefault().Id }" name="PlayerTeamId" />
                                 </div>
                             </div>
@@ -53,14 +58,16 @@
                                 <div class="col-6">
                                     <button class="btn-primary" type="submit">A</button>
                                     <input type="hidden" value="@Model.Match.Id" name="MatchId" />
-                                    <input type="hidden" value="@if (Model.Match.Tournament.League.Type == "National") {@c.PlayerTeams.FirstOrDefault().Id }
+                                    <input type="hidden" value="@if (Model.Match.Tournament.League.Type == "National") {@c.PlayerTeams.FirstOrDefault(p=>p.SeasonId==null).Id }
                                     else {@c.PlayerTeams.LastOrDefault().Id }" name="PlayerTeamId" />
                                 </div>
                                 <div class="col-6 ">
                                     @if (Model.Match.Tournament.League.Type == "National")
-                                    { @c.PlayerTeams.FirstOrDefault().Asists.Where(g => g.MatchId == Model.Match.Id).Count(); }
+                                    { if(@c.PlayerTeams.FirstOrDefault(p=>p.SeasonId==null).Asists.Where(g => g.MatchId == Model.Match.Id).Count()>0)
+                                       @c.PlayerTeams.FirstOrDefault(p=>p.SeasonId==null).Asists.Where(g => g.MatchId == Model.Match.Id).Count(); }
                                     else
-                                    { @c.PlayerTeams.LastOrDefault().Asists.Where(g => g.MatchId == Model.Match.Id).Count(); }
+                                    { if(@c.PlayerTeams.LastOrDefault().Asists.Where(g => g.MatchId == Model.Match.Id).Count()>0)
+                                        @c.PlayerTeams.LastOrDefault().Asists.Where(g => g.MatchId == Model.Match.Id).Count(); }
                                 </div>
                             </div>
                         </form>
@@ -77,14 +84,16 @@
                             <div class="row">
                                 <div class="col-6 ">
                                     @if (Model.Match.Tournament.League.Type == "National")
-                                    { @c.PlayerTeams.FirstOrDefault().Goals.Where(g => g.MatchId == Model.Match.Id).Count(); }
+                                    { if(@c.PlayerTeams.FirstOrDefault(p=>p.SeasonId==null).Goals.Where(g => g.MatchId == Model.Match.Id).Count()>0)
+                                        @c.PlayerTeams.FirstOrDefault(p=>p.SeasonId==null).Goals.Where(g => g.MatchId == Model.Match.Id).Count(); }
                                     else
-                                    { @c.PlayerTeams.LastOrDefault().Goals.Where(g => g.MatchId == Model.Match.Id).Count(); }
+                                    { if(@c.PlayerTeams.LastOrDefault().Goals.Where(g => g.MatchId == Model.Match.Id).Count()>0)
+                                        @c.PlayerTeams.LastOrDefault().Goals.Where(g => g.MatchId == Model.Match.Id).Count(); }
                                 </div>
                                 <div class="col-6 ">
                                     <button class="btn-success" type="submit">G</button>
                                     <input type="hidden" value="@Model.Match.Id" name="MatchId" />
-                                    <input type="hidden" value="@if (Model.Match.Tournament.League.Type == "National") {@c.PlayerTeams.FirstOrDefault().Id }
+                                    <input type="hidden" value="@if (Model.Match.Tournament.League.Type == "National") {@c.PlayerTeams.FirstOrDefault(p=>p.SeasonId==null).Id }
                                     else {@c.PlayerTeams.LastOrDefault().Id }" name="PlayerTeamId" />
                                 </div>
                             </div>
@@ -99,14 +108,16 @@
                                 <div class="col-6">
                                     <button class="btn-primary" type="submit">A</button>
                                     <input type="hidden" value="@Model.Match.Id" name="MatchId" />
-                                    <input type="hidden" value="@if (Model.Match.Tournament.League.Type == "National") {@c.PlayerTeams.FirstOrDefault().Id }
+                                    <input type="hidden" value="@if (Model.Match.Tournament.League.Type == "National") {@c.PlayerTeams.FirstOrDefault(p=>p.SeasonId==null).Id }
                                     else {@c.PlayerTeams.LastOrDefault().Id }" name="PlayerTeamId" />
                                 </div>
                                 <div class="col-6 ">
                                     @if (Model.Match.Tournament.League.Type == "National")
-                                    { @c.PlayerTeams.FirstOrDefault().Asists.Where(g => g.MatchId == Model.Match.Id).Count(); }
+                                    { if(@c.PlayerTeams.FirstOrDefault(p=>p.SeasonId==null).Asists.Where(g => g.MatchId == Model.Match.Id).Count()>0)
+                                       @c.PlayerTeams.FirstOrDefault(p=>p.SeasonId==null).Asists.Where(g => g.MatchId == Model.Match.Id).Count(); }
                                     else
-                                    { @c.PlayerTeams.LastOrDefault().Asists.Where(g => g.MatchId == Model.Match.Id).Count(); }
+                                    { if(@c.PlayerTeams.LastOrDefault().Asists.Where(g => g.MatchId == Model.Match.Id).Count()>0)
+                                        @c.PlayerTeams.LastOrDefault().Asists.Where(g => g.MatchId == Model.Match.Id).Count(); }
                                 </div>
                             </div>
                         </form>
@@ -116,3 +127,9 @@
         </div>
     </div>
 </div> 
+<div id="modDialog" class="modal fade" style="top:5%">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/js/modal.js"></script>

@@ -10,6 +10,7 @@ namespace MySoccerWorld.Interfaces
     public interface ICoachRepository
     {
         IEnumerable<Coach> GetAll();
+        IEnumerable<Coach> GetByTournament(int id);
         Coach Get(int? id);
         Coach Details(int id);
         IQueryable<Coach> Sort();

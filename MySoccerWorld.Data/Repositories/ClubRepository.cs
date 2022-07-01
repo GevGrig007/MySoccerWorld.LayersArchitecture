@@ -31,7 +31,7 @@ namespace MySoccerWorld.Data.Repositories
               _context.Clubs.Include(c => c.Ratings).Include(c => c.Country).ToListAsync();
         public List<Player> Players(int id)
         {
-            var players =  _context.Players.Include(p => p.Country).Include(p => p.PlayerTeams).ThenInclude(p => p.Team)
+            var players =  _context.Players.Where(p=>p.PlayerTeams.Count>0).Include(p => p.Country).Include(p => p.PlayerTeams).ThenInclude(p => p.Team)
                                                 .Include(p => p.PlayerTeams).ThenInclude(p => p.Player).ToList();
             var clubPlayers =  players.Where(p => p.PlayerTeams/*.OrderByDescending(pt => pt.SeasonId)*/.Last().TeamId == id);
             return clubPlayers.ToList();

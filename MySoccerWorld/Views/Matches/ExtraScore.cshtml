@@ -1,0 +1,47 @@
+﻿@model Match
+@{
+    Layout = null;
+}
+<div class="modal-content">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+    </div>
+    <div class="modal-body">
+        <form asp-controller="Matches" asp-action="ExtraScore" method="post">
+            <input type="hidden" asp-for="@Model.Id" />
+            <input type="hidden" asp-for="@Model.Round" />
+            <input type="hidden" asp-for="@Model.Neytral" />
+            <input type="hidden" asp-for="@Model.Data" />
+            <input type="hidden" asp-for="@Model.HomeTeam" />
+            <input type="hidden" asp-for="@Model.AwayTeam" />
+            <input type="hidden" asp-for="@Model.TournamentId" />
+            <input type="hidden" asp-for="@Model.Group" />
+            <div class="justify-content-center col-12 bg-danger border-light">
+                <div class="text-light align-text-bottom  text-center" style="font-size:larger">
+                    <div class="center m-3"> 
+                     <p> FULL TIME</p> 
+                     @Model.Home.Name  
+                     <input asp-for="@Model.HomeScore" style="width:50px" />
+                     <input asp-for="@Model.AwayScore" style="width:50px" />
+                     @Model.Away.Name
+                    </div>
+                    <div class="center m-3"> 
+                     <p> EXTRA TIME</p> 
+                     @Model.Home.Name  
+                     <input asp-for="@Model.HomeEx" style="width:50px" />
+                     <input asp-for="@Model.AwayEx" style="width:50px" />
+                     @Model.Away.Name
+                    </div>
+                    <div class="center m-3"> 
+                     <p>PENALTY </p>    
+                     @Model.Home.Name  
+                     <input asp-for="@Model.HomePen" style="width:50px" />
+                     <input asp-for="@Model.AwayPen" style="width:50px" />
+                     @Model.Away.Name
+                    </div>
+                    <input type="submit" value="SAVE RESULT" class="btn btn-primary m-4" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

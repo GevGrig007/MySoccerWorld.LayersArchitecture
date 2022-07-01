@@ -12,9 +12,10 @@ namespace MySoccerWorld.Model.Entities
         public int Id { get; set; }
         public int SeasonId { get; set; }
         public virtual Season Season { get; set; }
-        public int PlayerTeamId { get; set; }
+        public int? PlayerTeamId { get; set; }
         public virtual PlayerTeam PlayerTeam { get; set; }
         public AwardType AwardName { get; set; }
-        public CoachTeam BestCoach { get; set; }
+        public int? CoachId { get; set; }
+        public virtual CoachTeam BestCoach { get; set; }
     }
 }

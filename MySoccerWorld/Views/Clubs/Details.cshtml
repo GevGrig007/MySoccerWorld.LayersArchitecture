@@ -83,27 +83,27 @@
                 MATCHES
             </div>
             <div class="container">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item"><a class="nav-link" href="#all" role="tab" data-toggle="tab">ALL MATCHES</a></li>
-                    <li class="nav-item active"><a class="nav-link active" href="#latest" role="tab" data-toggle="tab">LAST 10 MATCHES</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#regional" role="tab" data-toggle="tab">REGIONAL</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#eurocups" role="tab" data-toggle="tab">EURO CUP</a></li>
+                <ul class="nav nav-tabs" >
+                    <li class="nav-item"><a class="nav-link" href="#all" data-toggle="tab">ALL MATCHES</a></li>
+                    <li class="nav-item active"><a class="nav-link active" href="#latest"  data-toggle="tab">LAST 10 MATCHES</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#regional" data-toggle="tab">REGIONAL</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#eurocups" data-toggle="tab">EURO CUP</a></li>
                 </ul>
-                <div class="tab-content>
-                    @if(Model.Matches !=null)
-                   {
-                    <div role="tabpanel" class="tab-pane fade" id="all">
-                        @await Html.PartialAsync("ClubMatches", Model.Matches)
-                    </div>
-                    <div role="tabpanel" class="tab-pane active" id="latest">
-                        @await Html.PartialAsync("ClubMatches", Model.Matches.OrderByDescending(m => m.Data).Take(10))
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="regional">
-                        @await Html.PartialAsync("ClubMatches", Model.Matches.Where(m => m.Tournament.League.Type == "Regional"))
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="eurocups">
-                        @await Html.PartialAsync("ClubMatches", Model.Matches.Where(m => m.Tournament.League.Type == "EuroCup"))
-                    </div>
+                <div class="tab-content">
+                    @if (Model.Matches !=null)
+                    {
+                        <div role="tabpanel" class="tab-pane fade" id="all">
+                        @await Html.PartialAsync("ClubMatches", @Model.Matches)
+                        </div>
+                        <div role="tabpanel" class="tab-pane active" id="latest">
+                            @await Html.PartialAsync("ClubMatches", @Model.Matches.OrderByDescending(m => m.Data).Take(10))
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="regional">
+                            @await Html.PartialAsync("ClubMatches", @Model.Matches.Where(m => m.Tournament.League.Type == "Regional"))
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="eurocups">
+                            @await Html.PartialAsync("ClubMatches", @Model.Matches.Where(m => m.Tournament.League.Type == "EuroCup"))
+                        </div>
                     }
                 </div>
             </div>

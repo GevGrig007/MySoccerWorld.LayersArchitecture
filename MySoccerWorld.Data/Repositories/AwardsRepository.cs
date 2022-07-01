@@ -17,7 +17,6 @@ namespace MySoccerWorld.Data.Repositories
         {
             _context = context;
         }
-
         public IEnumerable<TournamentAward> GetByTournament(int id)
         {
             return _context.TournamentAwards.Include(a => a.PlayerTeam).ThenInclude(p => p.Player)
@@ -26,18 +25,43 @@ namespace MySoccerWorld.Data.Repositories
                                                   .Include(a => a.CoachTeam).ThenInclude(p => p.Team)
                                                   .Where(t => t.TournamentId == id).ToList();
         }
-
+        public TournamentAward GetTournamentAward(int id)
+        {
+            return _context.TournamentAwards.Include(a => a.PlayerTeam).ThenInclude(p => p.Player)
+                                                  .Include(a => a.PlayerTeam).ThenInclude(p => p.Team)
+                                                  .Include(a => a.CoachTeam).ThenInclude(p => p.Coach)
+                                                  .FirstOrDefault(t => t.Id == id);
+        }
         public PlayerTeam GetPlayerAward(int? id)
         {
             var player = _context.Players.Include(p => p.PlayerTeams).ThenInclude(p => p.Season).FirstOrDefault(p => p.Id == id);
             return  player.PlayerTeams.Where(p => p.Season != null).LastOrDefault();
         }
-
+        public PlayerTeam GetNationalPlayerAward(int? id)
+        {
+            var player = _context.Players.Include(p => p.PlayerTeams).FirstOrDefault(p => p.Id == id);
+            return player.PlayerTeams.Where(p => p.Season == null).LastOrDefault();
+        }
+        public IEnumerable<SeasonalAward> GetAwardsBySeason(int id)
+        {
+            return _context.SeasonalAwards.Where(s => s.SeasonId == id);
+        }
         public void Update(TournamentAward award)
         {
             if (award.Id == 0)
             {
                 _context.TournamentAwards.Add(award);
+            }
+            else
+            {
+                _context.Entry(award).State = EntityState.Modified;
+            }
+        }
+        public void UpdateSeasonalAward(SeasonalAward award)
+        {
+            if (award.Id == 0)
+            {
+                _context.SeasonalAwards.Add(award);
             }
             else
             {

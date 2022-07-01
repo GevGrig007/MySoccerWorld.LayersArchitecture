@@ -45,7 +45,11 @@
                         <div> @g.Key - @g.Count() </div>
                     }
                 </td>
+                <td>
+                    <a class="col-1 score" asp-controller="Matches" asp-action="EditScore" asp-route-id="@m.Id"> edit </a>
+                </td>
             </tr>
         }
     </table>
 </div>
+
