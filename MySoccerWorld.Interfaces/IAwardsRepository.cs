@@ -15,6 +15,7 @@ namespace MySoccerWorld.Interfaces
         void Update(TournamentAward award);
         void UpdateSeasonalAward(SeasonalAward award);
         PlayerTeam GetPlayerAward(int? id);
+        CoachTeam GetCoachAward(int? id);
         PlayerTeam GetNationalPlayerAward(int? id);
     }
 }

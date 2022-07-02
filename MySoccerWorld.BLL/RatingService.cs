@@ -213,5 +213,14 @@ namespace MySoccerWorld.BLL
             }
             return ratings;
         }
+        //public List<Team> Medals(List<Team> teams)
+        //{
+        //    foreach(var team in teams)
+        //    {
+        //        var GoldenMedal = team.Ratings.Where(r => r.Round == "Winner" || r.Position == 1);
+        //        var SilverMedal = team.Ratings.Where(r => r.Round == "Silver" || r.Position == 2);
+        //        var BronzeMedal = team.Ratings.Where(r => r.Round == "Bronze" || r.Position == 3);
+        //    }
+        //}
     }
 }

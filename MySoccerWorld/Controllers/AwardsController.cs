@@ -5,7 +5,9 @@ using MySoccerWorld.Interfaces;
 using MySoccerWorld.Model.Entities;
 using MySoccerWorld.Model.Enums;
 using MySoccerWorld.Services;
+using MySoccerWorld.ViewModels;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MySoccerWorld.Controllers
 {
@@ -24,8 +26,9 @@ namespace MySoccerWorld.Controllers
         {
             Season season;
             if (id != null) { season = db.Seasons.Get(id); }
-            else { season = db.Seasons.GetAll().OrderBy(s => s.Id).LastOrDefault(); }
+            else { season = db.Seasons.GetAll().OrderBy(s => s.Id).FirstOrDefault(); }
             var awards = db.Awards.GetAwardsBySeason(season.Id);
+            ViewBag.Seasons = db.Seasons.GetAll();
             return View(awards);
         }
         public IActionResult Create()
@@ -48,7 +51,7 @@ namespace MySoccerWorld.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(int SeasonId, AwardType AwardName, int? PlayerId , int? CoachId)
+        public IActionResult Create(int SeasonId, SeasonalAwardType AwardName, int? PlayerId , int? CoachId)
         {
             if (PlayerId != null)
             {
@@ -63,17 +66,29 @@ namespace MySoccerWorld.Controllers
             }
             if (CoachId != null)
             {
-                var coach = db.Coaches.Get(CoachId);
                 var seasonalAward = new SeasonalAward()
                 {
                     AwardName = AwardName,
                     SeasonId = SeasonId,
-                    CoachId = coach.Id
+                    CoachTeamId = db.Awards.GetCoachAward(CoachId).Id
                 };
                 db.Awards.UpdateSeasonalAward(seasonalAward);
                 db.Save();
             }
             return RedirectToAction("Index", new { id = SeasonId });
+        }
+        public IActionResult Medals()
+        {
+            var clubs = db.Ratings.ClubMedals();
+            var nationals = db.Ratings.NationalMedals();
+            var countries = db.Ratings.CountriesMedal();
+            var view = new MedalsViewModel()
+            {
+                Clubs = clubs,
+                Nationals = nationals,
+                Countries = countries
+            };
+            return View(view);
         }
     }
 }

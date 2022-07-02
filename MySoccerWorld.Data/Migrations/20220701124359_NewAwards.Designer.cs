@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MySoccerWorld.EF.Data;
 
 namespace MySoccerWorld.Data.Migrations
 {
     [DbContext(typeof(SoccerContext))]
-    partial class SoccerContextModelSnapshot : ModelSnapshot
+    [Migration("20220701124359_NewAwards")]
+    partial class NewAwards
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -6,27 +6,62 @@
 <div>
     @await Html.PartialAsync("MenuHeader")
 </div>
-<div class="row justify-content-around">
+<div class="row w-75">
      <a class="modalItem btn btn-danger" asp-controller="Awards" asp-action="Create"> CHOOSE PLAYERS </a>
      <a class="modalItem btn btn-danger" asp-controller="Awards" asp-action="CreateStarting"> CHOOSE STARTING XI </a>
      <a class="modalItem btn btn-danger" asp-controller="Awards" asp-action="CreateCoach"> CHOOSE COACH </a>
 </div>
+<div class="rowfix">
+        @foreach(var s in ViewBag.Seasons)
+            {
+                <div class="season">
+                    <a class="btn btn-danger" asp-action="Index" asp-controller="Awards" asp-route-id="@s.Id"> @s.Data  </a>
+                </div>
+            }
+    </div>
 @if (@Model != null)
 {
 <div class="m-5">
-    <h2> BEST  PLAYERS   SEASON </h2>
-    <table>
-        <thead>
-            <tr>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="w-75">
+        <table class="table" style="background-color: #0c3d46d9;">
+            <thead>
+                <tr>
+                    <th> @Model.FirstOrDefault().Season.Data  Best Players </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                    @foreach(var a in Model.Where(a => a.AwardName == SeasonalAwardType.SeasonalPlayers))
+                    {
+                        <tr>
+                            <td style="font-size:18px;"> @a.PlayerTeam.Player.Name </td>
+                            <td> <img src="@a.PlayerTeam.Player.Country.Flag" width="25" height="25"> @a.PlayerTeam.Player.Country.Name </td> 
+                            <td> @a.PlayerTeam.Team.Name </td>
+                        </tr>
+                    } 
+            </tbody>
+        </table>
+        <table class="table" style="background-color: #0c3d46d9;">
+            <thead>
+                <tr>
+                    <th> @Model.FirstOrDefault().Season.Data  Best Coaches </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                    @foreach(var a in Model.Where(a => a.AwardName == SeasonalAwardType.SeasonalCoach))
+                    {
+                        <tr>
+                            <td style="font-size:18px;"> @a.CoachTeam.Coach.Name </td>
+                            <td> <img src="@a.CoachTeam.Coach.Country.Flag" width="25" height="25"> @a.CoachTeam.Coach.Country.Name </td>              
+                            <td> @a.CoachTeam.Team.Name </td>
+                        </tr>
+                    } 
+            </tbody>
+        </table>
+    </div>
 </div> 
 }
 <div id="modDialog" class="modal fade" style="top:5%">

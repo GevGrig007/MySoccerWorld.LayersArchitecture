@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MySoccerWorld</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/fontawesome/css/all.min.css" />
     <link href="~/css/rating.css" rel="stylesheet" />
 </head>
 <body>
@@ -14,11 +15,6 @@
                 <h4 class="fs-4">My Soccer World</h4>
                 <hr>
                 <ul class="nav nav-pills flex-column mb-auto">
-                    <li>
-                        <a href="#">
-                            Home
-                        </a>
-                    </li>
                     <li>
                         <a asp-controller="Ratings" asp-action="Index">
                             Clubs Ranking
@@ -40,8 +36,13 @@
                         </a>
                     </li>
                     <li>
-                        <a asp-controller="Awards">
+                        <a asp-controller="Awards" asp-action="Index">
                             AWARDS
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Awards" asp-action="Medals">
+                            MEDALS
                         </a>
                     </li>
                     <li>

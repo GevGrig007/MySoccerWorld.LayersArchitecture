@@ -1,0 +1,85 @@
+﻿@model MedalsViewModel
+@{
+    Layout = "_Rating";
+    ViewData["Title"] = "Medals";
+}
+<div>
+    @await Html.PartialAsync("MenuHeader")
+</div>
+<div class="text-white w-75" style="margin-left:12%;">
+    <table class="table text-center" style="background-color: #0c3d46d9;">
+        <thead>
+            <tr>
+                <th> CLUBS ALLTIME MEDALS </th>
+                <th></th>
+                <th></th>
+                <th class="row-3" style="background-color:gold"> <i class="fa-solid fa-trophy"></i> </th>
+                <th class="row-3" style="background-color:silver"> <i class="fa-solid fa-medal"></i>  </th>
+                <th class="row-3" style="background-color:goldenrod"> <i class="fa-solid fa-medal"></i>  </th>
+            </tr>
+        </thead>
+        <tbody>
+                @foreach (var c in Model.Clubs.Where(c => c.Ratings.Count > 0))
+                {
+                 <tr>
+                    <td class="text-left"> <img src="@c.Flag" width="35" height="35"> @c.Name </td>
+                    <td class="text-left"> <img src="@c.Country.Flag" width="15" height="15">  @c.Country.Name </td>
+                    <td style="background-color: darkcyan;"> @c.Ratings.Count() </td>
+                    <td style="color:gold"> @c.Ratings.Count(r=>r.Position==1 || r.Round=="Winner") </td>
+                    <td style="color:silver"> @c.Ratings.Count(r=>r.Position==2 || r.Round=="Silver") </td>
+                    <td style="color:goldenrod"> @c.Ratings.Count(r=>r.Position==3 || r.Round=="Bronze") </td>
+                 </tr>
+                }
+        </tbody>
+    </table>
+</div>
+<div class="text-white w-75" style="margin-left:12%;">
+    <table class="table text-center" style="background-color: #0c3d46d9;">
+        <thead>
+            <tr>
+                <th> NATIONAL TEAMS ALLTIME MEDALS</th>
+                <th></th>
+                <th class="row-3" style="background-color:gold"> <i class="fa-solid fa-trophy"></i> </th>
+                <th class="row-3" style="background-color:silver"> <i class="fa-solid fa-medal"></i>  </th>
+                <th class="row-3" style="background-color:goldenrod"> <i class="fa-solid fa-medal"></i>  </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model.Nationals.Where(c=>c.Ratings.Count>0))
+                {
+                 <tr>
+                    <td class="text-left"> <img src="@c.Flag" width="25" height="25">  @c.Name </td>
+                    <td style="background-color: darkcyan;"> @c.Ratings.Count() </td>
+                    <td style="color:gold"> @c.Ratings.Count(r=>r.Position==1 || r.Round=="Winner") </td>
+                    <td style="color:silver"> @c.Ratings.Count(r=>r.Position==2 || r.Round=="Silver") </td>
+                    <td style="color:goldenrod"> @c.Ratings.Count(r=>r.Position==3 || r.Round=="Bronze") </td>
+                </tr>
+                }
+        </tbody>
+    </table>
+</div>
+<div class="text-white w-75" style="margin-left:12%";>
+     <table class="table text-center" style="background-color: #0c3d46d9;">
+        <thead>
+            <tr>
+                <th> CLUBS ALLTIME MEDAL BY COUNTRY </th>
+                <th></th>
+                <th class="row-3" style="background-color:gold"> <i class="fa-solid fa-trophy"></i> </th>
+                <th class="row-3" style="background-color:silver"> <i class="fa-solid fa-medal"></i>  </th>
+                <th class="row-3" style="background-color:goldenrod"> <i class="fa-solid fa-medal"></i>  </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model.Countries.Where(c=>c.Clubs.Sum(c=>c.Ratings.Count())>0))
+                {
+                 <tr>
+                    <td class="text-left"> <img src="@c.Flag" width="25" height="25">  @c.Name </td>
+                    <td style="background-color: darkcyan;">  @c.Clubs.Sum(c=>c.Ratings.Count()) </td>
+                    <td style="color:gold">  @c.Clubs.Sum(c=>c.Ratings.Where(r=>r.Position==1 || r.Round=="Winner").Count()) </td>
+                    <td style="color:silver">  @c.Clubs.Sum(c=>c.Ratings.Where(r=>r.Position==2 || r.Round=="Silver").Count()) </td>
+                    <td style="color:goldenrod">  @c.Clubs.Sum(c=>c.Ratings.Where(r=>r.Position==3 || r.Round=="Bronze").Count()) </td>
+                 </tr>
+                }
+        </tbody>
+    </table>
+</div>

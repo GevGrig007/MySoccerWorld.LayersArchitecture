@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MySoccerWorld.EF.Data;
 
 namespace MySoccerWorld.Data.Migrations
 {
     [DbContext(typeof(SoccerContext))]
-    partial class SoccerContextModelSnapshot : ModelSnapshot
+    [Migration("20220701122639_UpdateAwards")]
+    partial class UpdateAwards
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -353,10 +355,10 @@ namespace MySoccerWorld.Data.Migrations
                     b.Property<int>("AwardName")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CoachId")
+                    b.Property<int?>("BestCoachId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CoachTeamId")
+                    b.Property<int?>("CoachId")
                         .HasColumnType("int");
 
                     b.Property<int?>("PlayerTeamId")
@@ -367,7 +369,7 @@ namespace MySoccerWorld.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CoachTeamId");
+                    b.HasIndex("BestCoachId");
 
                     b.HasIndex("PlayerTeamId");
 
@@ -684,9 +686,9 @@ namespace MySoccerWorld.Data.Migrations
 
             modelBuilder.Entity("MySoccerWorld.Model.Entities.SeasonalAward", b =>
                 {
-                    b.HasOne("MySoccerWorld.Model.Entities.CoachTeam", "CoachTeam")
+                    b.HasOne("MySoccerWorld.Model.Entities.CoachTeam", "BestCoach")
                         .WithMany("SeasonalAwards")
-                        .HasForeignKey("CoachTeamId");
+                        .HasForeignKey("BestCoachId");
 
                     b.HasOne("MySoccerWorld.Model.Entities.PlayerTeam", "PlayerTeam")
                         .WithMany("SeasonalAwards")
@@ -698,7 +700,7 @@ namespace MySoccerWorld.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CoachTeam");
+                    b.Navigation("BestCoach");
 
                     b.Navigation("PlayerTeam");
 

@@ -15,8 +15,9 @@ namespace MySoccerWorld.Interfaces
         IEnumerable<Player> SeasonalScorers(int id);
         void Update(Rating rating);
         void AddRange(List<Rating> ratings);
-        void Delete(int id);
         Rating Get(int id);
-        Rating Details(int id);
+        List<Club> ClubMedals();
+        List<National> NationalMedals();
+        List<Country> CountriesMedal();
     }
 }

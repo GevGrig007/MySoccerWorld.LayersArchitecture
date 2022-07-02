@@ -60,27 +60,15 @@
                             {
                                 <tr>
                                     <td>  @r.Key.Season.Data </td>
-                                    @foreach (var t in r.Key.Ratings.Where(r => r.Position == 1))
+                                    @foreach (var t in r.Key.Ratings.Where(r => r.Position == 1 || r.Round=="Winner"))
                                     {
                                         <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name  </td>
                                     }
-                                    @foreach (var t in r.Key.Ratings.Where(r => r.Round == "Winner"))
+                                    @foreach (var t in r.Key.Ratings.Where(r => r.Position == 2 || r.Round=="Silver"))
                                     {
                                         <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name </td>
                                     }
-                                    @foreach (var t in r.Key.Ratings.Where(r => r.Position == 2))
-                                    {
-                                        <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name </td>
-                                    }
-                                    @foreach (var t in r.Key.Ratings.Where(r => r.Round == "Silver"))
-                                    {
-                                        <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name </td>
-                                    }
-                                    @foreach (var t in r.Key.Ratings.Where(r => r.Position == 3))
-                                    {
-                                        <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name </td>
-                                    }
-                                    @foreach (var t in r.Key.Ratings.Where(r => r.Round == "Bronze"))
+                                    @foreach (var t in r.Key.Ratings.Where(r => r.Position == 3 || r.Round=="Bronze"))
                                     {
                                         <td> <img src="@t.Team.Flag" width="60" height="60"/> @t.Team.Name </td>
                                     }

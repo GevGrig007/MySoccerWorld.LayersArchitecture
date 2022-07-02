@@ -37,6 +37,11 @@ namespace MySoccerWorld.Data.Repositories
             var player = _context.Players.Include(p => p.PlayerTeams).ThenInclude(p => p.Season).FirstOrDefault(p => p.Id == id);
             return  player.PlayerTeams.Where(p => p.Season != null).LastOrDefault();
         }
+        public CoachTeam GetCoachAward(int? id)
+        {
+            var coach = _context.Coaches.Include(p => p.CoachTeams).ThenInclude(p => p.Season).FirstOrDefault(p => p.Id == id);
+            return coach.CoachTeams.LastOrDefault();
+        }
         public PlayerTeam GetNationalPlayerAward(int? id)
         {
             var player = _context.Players.Include(p => p.PlayerTeams).FirstOrDefault(p => p.Id == id);
@@ -44,7 +49,11 @@ namespace MySoccerWorld.Data.Repositories
         }
         public IEnumerable<SeasonalAward> GetAwardsBySeason(int id)
         {
-            return _context.SeasonalAwards.Where(s => s.SeasonId == id);
+            return _context.SeasonalAwards.Include(s=>s.PlayerTeam).ThenInclude(p=>p.Team)
+                                          .Include(s => s.PlayerTeam).ThenInclude(p => p.Player).ThenInclude(p=>p.Country)
+                                          .Include(s => s.CoachTeam).ThenInclude(p => p.Team)
+                                          .Include(s => s.CoachTeam).ThenInclude(p => p.Coach).ThenInclude(p => p.Country)
+                                          .Where(s => s.SeasonId == id);
         }
         public void Update(TournamentAward award)
         {

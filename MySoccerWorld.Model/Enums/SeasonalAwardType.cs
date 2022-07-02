@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace MySoccerWorld.Model.Enums
 {
-    public enum AwardType
+    public enum SeasonalAwardType
     {
-        GoldenBall,
-        SilverBall,
-        BronzeBall,
-        GoalScorer,
-        Asister,
-        Coach
+        SeasonalPlayers,
+        SeasonalStarting,
+        SeasonalCoach,
+        SeasonBestCoach
     }
 }

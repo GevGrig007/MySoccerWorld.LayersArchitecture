@@ -17,14 +17,6 @@ namespace MySoccerWorld.Data.Repositories
         {
             _context = db;
         }
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-        public Rating Details(int id)
-        {
-            throw new NotImplementedException();
-        }
         public Rating Get(int id)
         {
             return _context.Ratings.Find(id);
@@ -51,7 +43,7 @@ namespace MySoccerWorld.Data.Repositories
         }
         public Tournament TournamentRating(int id)
         {
-            return _context.Tournaments.Include(t=>t.Ratings).Include(t => t.Teams).Include(t => t.Matches).Include(t => t.League).FirstOrDefault(t => t.Id == id);
+            return _context.Tournaments.Include(t => t.Ratings).Include(t => t.Teams).Include(t => t.Matches).Include(t => t.League).FirstOrDefault(t => t.Id == id);
         }
         public void AddRange(List<Rating> ratings)
         {
@@ -67,6 +59,28 @@ namespace MySoccerWorld.Data.Repositories
             {
                 _context.Entry(rating).State = EntityState.Modified;
             }
+        }
+        public List<Club> ClubMedals()
+        {
+            return _context.Clubs.Include(c => c.Ratings.Where(r => r.Position == 1 || r.Position == 2 && r.Position == 3
+                                                   || r.Round == "Winner" || r.Round == "Silver" || r.Round == "Bronze"))
+                   .OrderByDescending(r => r.Ratings.Count(r => r.Position == 1 || r.Position == 2 || r.Position == 3
+                                                   || r.Round == "Winner" || r.Round == "Silver" || r.Round == "Bronze"))
+                   .Include(c => c.Country).ToList();
+        }
+        public List<National> NationalMedals()
+        {
+            return _context.Nationals.Include(c => c.Ratings.Where(r => r.Position == 1 || r.Position == 2 && r.Position == 3
+                                                   || r.Round == "Winner" || r.Round == "Silver" || r.Round == "Bronze"))
+                   .OrderByDescending(r => r.Ratings.Count(r => r.Position == 1 || r.Position == 2 || r.Position == 3
+                                                   || r.Round == "Winner" || r.Round == "Silver" || r.Round == "Bronze")).ToList();
+        }
+        public List<Country> CountriesMedal()
+        {
+            var countries = _context.Countries.Where(c => c.Region != null);
+            return countries.Include(c => c.Clubs).ThenInclude(c => c.Ratings.Where(r => r.Position == 1 || r.Position == 2 && r.Position == 3
+                                                   || r.Round == "Winner" || r.Round == "Silver" || r.Round == "Bronze")).ToList()
+                .OrderByDescending(c => c.Clubs.Sum(r => r.Ratings.Count())).ToList();
         }
     }
 }
