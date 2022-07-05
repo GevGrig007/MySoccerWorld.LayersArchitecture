@@ -1,0 +1,47 @@
+﻿@model List<Player>
+@{
+    Layout = "_Rating";
+    ViewData["Title"] = "Awards";
+}
+<div>
+    @await Html.PartialAsync("MenuHeader")
+</div>
+<div class="rowfix">
+        @foreach(var s in ViewBag.Seasons)
+            {
+                <div class="season">
+                    <a class="btn btn-danger" asp-action="Awards" asp-controller="Awards" asp-route-id="@s.Id"> @s.Data  </a>
+                </div>
+            }
+</div>
+<div>
+    <table class="table w-75 text-center" style="background-color: #0c3d46d9;">
+        <thead>
+            <tr>
+                <th> MOST HAVE AWARD PLAYERS </th>
+                <th></th>
+                <th> symbolic team </th>
+                <th style="background-color:gold"> <i class="fa-solid fa-futbol"></i> </th>
+                <th style="background-color:silver"> <i class="fa-solid fa-futbol"></i> </th>
+                <th style="background-color:goldenrod"> <i class="fa-solid fa-futbol"></i> </th>
+                <th> goalscorer </th>
+                <th> asister </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var c in Model)
+            {
+                <tr>
+                    <td class="text-left"> @c.Name </td>
+                    <td class="text-left"> <img src="@c.Country.Flag" width="18" href="18" > @c.Country.Name  </td>   
+                    <td> @c.PlayerTeams.Sum(c=>c.BestPlayers.Count) </td>
+                    <td> @c.PlayerTeams.Sum(c=>c.TournamentAwards.Where(p=>p.AwardName==AwardType.GoldenBall).Count())  </td>
+                    <td> @c.PlayerTeams.Sum(c=>c.TournamentAwards.Where(p=>p.AwardName==AwardType.SilverBall).Count())  </td>
+                    <td> @c.PlayerTeams.Sum(c=>c.TournamentAwards.Where(p=>p.AwardName==AwardType.BronzeBall).Count())  </td>
+                    <td> @c.PlayerTeams.Sum(c=>c.TournamentAwards.Where(p=>p.AwardName==AwardType.GoalScorer).Count())  </td>
+                    <td> @c.PlayerTeams.Sum(c=>c.TournamentAwards.Where(p=>p.AwardName==AwardType.Asister).Count())  </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

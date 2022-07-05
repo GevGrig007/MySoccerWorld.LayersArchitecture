@@ -29,6 +29,7 @@ namespace MySoccerWorld.Controllers
             else { season = db.Seasons.GetAll().OrderBy(s => s.Id).FirstOrDefault(); }
             var awards = db.Awards.GetAwardsBySeason(season.Id);
             ViewBag.Seasons = db.Seasons.GetAll();
+            ViewBag.Starting = db.Awards.GetAwardsForSymbolicTeam(season.Id).ToList();
             return View(awards);
         }
         public IActionResult Create()
@@ -89,6 +90,21 @@ namespace MySoccerWorld.Controllers
                 Countries = countries
             };
             return View(view);
+        }
+        public IActionResult Awards(int? id)
+        {
+            ViewBag.Seasons = db.Seasons.GetAll();
+            if (id != null)
+            {
+                var players = db.Awards.GetPlayerAwardStatsBySeason(id).ToList(); 
+                return View(players);
+            }
+            else
+            {
+                var players = db.Awards.GetPlayerAwardStats().ToList();
+                return View(players);
+            }
+            
         }
     }
 }

@@ -17,5 +17,8 @@ namespace MySoccerWorld.Interfaces
         PlayerTeam GetPlayerAward(int? id);
         CoachTeam GetCoachAward(int? id);
         PlayerTeam GetNationalPlayerAward(int? id);
+        IEnumerable<Player> GetPlayerAwardStats();
+        IEnumerable<Player> GetPlayerAwardStatsBySeason(int? id);
+        IEnumerable<SeasonalAward> GetAwardsForSymbolicTeam(int id);
     }
 }

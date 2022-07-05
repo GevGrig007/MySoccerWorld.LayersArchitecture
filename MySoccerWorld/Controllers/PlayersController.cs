@@ -34,6 +34,8 @@ namespace MySoccerWorld.Controllers
         public IActionResult Details(int id)
         {
             var player =  db.Players.Details(id);
+            ViewBag.Players = db.Players.ClubPlayers(player.PlayerTeams.FirstOrDefault().TeamId);
+            ViewBag.Seasons = db.Seasons.GetAll();
             return View(player);
         }
         public IActionResult Create()

@@ -25,10 +25,12 @@ namespace MySoccerWorld.Data.Repositories
         }
         public Player Details(int id)
         {
-            return _context.Players.Include(p => p.PlayerTeams).ThenInclude(p => p.Team)
-                                         .Include(p => p.PlayerTeams).ThenInclude(p => p.Season)
-                                         .Include(p => p.PlayerTeams).ThenInclude(p => p.Goals)
-                                         .Include(p => p.PlayerTeams).ThenInclude(p => p.Asists).FirstOrDefault(p => p.Id == id);
+            return _context.Players.Include(p => p.PlayerTeams).ThenInclude(p => p.Team).ThenInclude(t=>t.Ratings).ThenInclude(r=>r.Tournament)
+                                   .Include(p=>p.Country)
+                                   .Include(p => p.PlayerTeams).ThenInclude(p => p.Season)
+                                   .Include(p => p.PlayerTeams).ThenInclude(p => p.Goals).ThenInclude(g=>g.Match).ThenInclude(m=>m.Tournament).ThenInclude(t=>t.Season)
+                                   .Include(p => p.PlayerTeams).ThenInclude(p => p.Asists).ThenInclude(g => g.Match).ThenInclude(m => m.Tournament).ThenInclude(t => t.Season)
+                                   .FirstOrDefault(p => p.Id == id);
         }
         public List<Player> ClubPlayers(int id)
         {

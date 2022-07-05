@@ -1,59 +1,115 @@
 ﻿@model Player
-
 @{
-    ViewData["Title"] = "Details";
+    Layout = "_Details";
+    ViewData["Title"] = @Model.Name;
 }
-<style>
-    .table td, th {
-        color: aliceblue;
-    }
-</style>
-<div class="col-5" style="margin-left:25%;margin-top:10%;padding:20px;background-color:brown">
-    <div>
-        <div class="d-flex justify-content-center" style="text-transform:uppercase;color:aliceblue;font-size:30px;"> @Model.Name </div>
-        <div>
-            <table class="table table-bordered">
-                <tr>
-                    <th> C </th>
-                    <th> S </th>
-                    <th> G </th>
-                    <th> A </th>
-                </tr>
-                @foreach (var p in Model.PlayerTeams)
-                {
-                    <tr>
-                        <td> @p.Team.Name </td>
-                        <td> @if(@p.Season!=null) {@p.Season.Data}  </td>
-                        <td> @p.Goals.Count() </td>
-                        <td> @p.Asists.Count() </td>
-                    </tr>
-                }
-                <tr>
-                    <td></td>
-                    <td></td>
-                    @{
-                        var goals = new List<int>();
-                        foreach (var p in Model.PlayerTeams)
-                        {
-                            var goal = p.Goals.Count();
-                            goals.Add(goal);
-                        }
-                        <td> @goals.Sum() </td>
+<div class="row mr-0">
+     <div class="col-3">
+            <div class="sidebar flex-column flex-shrink-0">
+                <h4 class="fs-4">My Soccer World</h4>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    @foreach(var c in ViewBag.Players)
+                    {
+                        <li>
+                            <a asp-controller="Players" asp-action="Details" asp-route-id="@c.Id">
+                                @c.Name
+                            </a>
+                        </li>
                     }
-                    @{
-                        var asists = new List<int>();
-                        foreach (var p in Model.PlayerTeams)
-                        {
-                            var asist = p.Asists.Count();
-                            asists.Add(asist);
-                        }
-                        <td> @asists.Sum() </td>
-                    }
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+                </ul>
+            </div>
+     </div>
+     <div class="col-9">
+            <div>
+                <div>
+                    @await Html.PartialAsync("MenuHeader")
+                </div>
+                <div class="m-5 d-flex justify-content-center">
+                    <div class="w-75" style="background-color: indigo;">
+                        <div class="center" style="text-transform:uppercase;color:aliceblue;font-size:30px;padding:10px"> 
+                            <p>@Model.Name</p> 
+                            <p> <img src="@Model.Country.Flag" width="35" href="35" /> @Model.Country.Name </p>  
+                        </div>
+                        <div>
+                            <table class="table">
+                                <tr style="background-color:darkblue">
+                                    <th> team </th>
+                                    <th> season </th>
+                                    <th> G </th>
+                                    <th> A </th>
+                                </tr>
+                                @foreach (var p in Model.PlayerTeams)
+                                {
+                                    <tr>
+                                        <td> @p.Team.Name </td>
+                                        <td> @if(@p.Season!=null) {@p.Season.Data}  </td>
+                                        <td> @p.Goals.Count() </td>
+                                        <td> @p.Asists.Count() </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td> @Model.PlayerTeams.Sum(c=>c.Goals.Count()) </td>
+                                    <td> @Model.PlayerTeams.Sum(c=>c.Asists.Count()) </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div>
+                            <table class="table">
+                                <thead style="background-color:darkblue">
+                                    <tr>
+                                        <th>  RESULTS BY SEASONS </th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(var c in Model.PlayerTeams)
+                                        {
+                                          @foreach(var g in c.Goals.GroupBy(c=>c.Match.Tournament.Season))
+                                             {
+                                             <tr>
+                                                  <td> @c.Team.Name </td>
+                                                  <td> @g.Key.Data </td>
+                                                  <td> @g.Count()  </td>
+                                                  <td> @c.Asists.Where(a=>a.Match.Tournament.Season==@g.Key).Count() </td>
+                                             </tr>
+                                             }
+                                        }
+                                </tbody>
+                            </table>
+                             <table class="table">
+                                <thead style="background-color:darkblue">
+                                    <tr>
+                                        <th>  MEDALS BY SEASONS </th>
+                                        <th>   </th>
+                                        <th class="row-3" style="background-color:gold"> <i class="fa-solid fa-trophy"></i> </th>
+                                        <th class="row-3" style="background-color:silver"> <i class="fa-solid fa-medal"></i>  </th>
+                                        <th class="row-3" style="background-color:goldenrod"> <i class="fa-solid fa-medal"></i>  </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        @foreach(var s in ViewBag.Seasons)
+                                        {
+                                            @foreach(var c in Model.PlayerTeams)
+                                            {
+                                             <tr>
+                                                <td> @s.Data </td>
+                                                <td> @c.Team.Name  </td>
+                                                <td> @c.Team.Ratings.Where(r=>r.Position==1 || r.Round=="Winner" && r.Tournament.Season==@s).Count() </td>
+                                                <td> @c.Team.Ratings.Where(r=>r.Position==2 || r.Round=="Silver" && r.Tournament.Season==@s).Count() </td>
+                                                <td> @c.Team.Ratings.Where(r=>r.Position==3 || r.Round=="Bronze" && r.Tournament.Season==@s).Count() </td>
+                                            </tr>
+                                            }
+                                        }                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+     </div>
 </div>

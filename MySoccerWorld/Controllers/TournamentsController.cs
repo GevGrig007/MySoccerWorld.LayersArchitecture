@@ -301,6 +301,26 @@ namespace MySoccerWorld.Controllers
             Tournament tournament = db.Tournaments.Get(id);
             ViewBag.Tournament = tournament;
             ViewBag.Players = new SelectList(db.BestPlayers.GetPlayerForAwards(id).OrderBy(p => p.Name), "Id", "Name");
+            return View();
+        }
+        public IActionResult CreateBestScorer(int id)
+        {
+            Tournament tournament = db.Tournaments.Get(id);
+            ViewBag.Tournament = tournament;
+            ViewBag.Players = new SelectList(db.BestPlayers.GetPlayersByTournament(id).OrderBy(p => p.Name), "Id", "Name");
+            return View();
+        }
+        public IActionResult CreateBestAsister(int id)
+        {
+            Tournament tournament = db.Tournaments.Get(id);
+            ViewBag.Tournament = tournament;
+            ViewBag.Players = new SelectList(db.BestPlayers.GetPlayersByTournament(id).OrderBy(p => p.Name), "Id", "Name");
+            return View();
+        }
+        public IActionResult CreateBestCoach(int id)
+        {
+            Tournament tournament = db.Tournaments.Get(id);
+            ViewBag.Tournament = tournament;
             ViewBag.Coaches = new SelectList(db.Coaches.GetByTournament(id).OrderBy(p => p.Name), "Id", "Name");
             return View();
         }

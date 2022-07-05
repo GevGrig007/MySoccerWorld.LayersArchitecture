@@ -18,7 +18,7 @@
                     <a class="btn btn-danger" asp-action="Index" asp-controller="Awards" asp-route-id="@s.Id"> @s.Data  </a>
                 </div>
             }
-    </div>
+</div>
 @if (@Model != null)
 {
 <div class="m-5">
@@ -26,7 +26,7 @@
         <table class="table" style="background-color: #0c3d46d9;">
             <thead>
                 <tr>
-                    <th> @Model.FirstOrDefault().Season.Data  Best Players </th>
+                    <th> Season  Best Players </th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -45,7 +45,7 @@
         <table class="table" style="background-color: #0c3d46d9;">
             <thead>
                 <tr>
-                    <th> @Model.FirstOrDefault().Season.Data  Best Coaches </th>
+                    <th> Season Best Coaches </th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -61,6 +61,45 @@
                     } 
             </tbody>
         </table>
+    </div>
+    <div>
+        <div>  SYMBOLIC TEAM OF SEASON </div>
+        <div class="container mt-5" id="bestplayer">
+            <div class="row bprow">
+                <div class="col-3">
+                    <p class="bestplayer gk">
+                       @if (ViewBag.Starting[0]!=null) {@ViewBag.Starting[0].PlayerTeam.Player.Name;}</p>
+                </div>
+            </div>
+            <div class="row bprow">
+            </div>
+            <div class="row bprow">
+                <div class="col-3"> <p class="bestplayer"> @if (ViewBag.Starting[1] != null) {@ViewBag.Starting[1].PlayerTeam.Player.Name;}</p> </div>            
+                <div class="col-3"> <p class="bestplayer"> @if (ViewBag.Starting[2] != null) {@ViewBag.Starting[2].PlayerTeam.Player.Name;}</p> </div>
+                <div class="col-3"> <p class="bestplayer"> @if (ViewBag.Starting[3] != null) {@ViewBag.Starting[3].PlayerTeam.Player.Name;}</p> </div>
+            </div>
+            <div class="row bprow">
+            </div>
+            <div class="row bprow">
+                <div class="col-3"> <p class="bestplayer"> @if (ViewBag.Starting[4] != null) {@ViewBag.Starting[4].PlayerTeam.Player.Name;}</p> </div>
+                <div class="col-3"> <p class="bestplayer"> @if (ViewBag.Starting[5] != null) {@ViewBag.Starting[5].PlayerTeam.Player.Name;}</p> </div>
+                <div class="col-3"> <p class="bestplayer"> @if (ViewBag.Starting[6] != null) {@ViewBag.Starting[6].PlayerTeam.Player.Name;}</p> </div>
+            </div>
+            <div class="row bprow">
+            </div>
+            <div class="row bprow">
+                <div class="col-3"> <p class="bestplayer"> @if (ViewBag.Starting[7] != null) {@ViewBag.Starting[7].PlayerTeam.Player.Name;}</p> </div>
+                <div class="col-3"> <p class="bestplayer"> @if (ViewBag.Starting[8] != null) {@ViewBag.Starting[8].PlayerTeam.Player.Name;}</p> </div>
+                <div class="col-3"> <p class="bestplayer"> @if (ViewBag.Starting[9] != null) {@ViewBag.Starting[9].PlayerTeam.Player.Name;}</p> </div>
+            </div>
+            <div class="row bprow">
+            </div>
+            <div class="row bprow">
+                <div class="col-3"> <p class="bestplayer"> @if (ViewBag.Starting[10] != null) {@ViewBag.Starting[10].PlayerTeam.Player.Name;}</p> </div>
+            </div>
+            <div class="row bprow">
+            </div>
+        </div>
     </div>
 </div> 
 }

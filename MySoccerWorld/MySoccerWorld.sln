@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySoccerWorld", "MySoccerWorld.csproj", "{13687013-1E54-42AF-BAF8-8EA3FE19AE13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySoccerWorld", "MySoccerWorld.csproj", "{13687013-1E54-42AF-BAF8-8EA3FE19AE13}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{6B22BE6F-7427-4608-B3A0-FC9E0AA64B4A}"
 EndProject
@@ -11,15 +11,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{AC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{67240718-3C59-468A-AE3F-305D65EF5195}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySoccerWorld.Interfaces", "..\MySoccerWorld.Interfaces\MySoccerWorld.Interfaces.csproj", "{7FD9264D-2433-42E1-8659-E47092179622}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySoccerWorld.Interfaces", "..\MySoccerWorld.Interfaces\MySoccerWorld.Interfaces.csproj", "{7FD9264D-2433-42E1-8659-E47092179622}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySoccerWorld.Model", "..\MySoccerWorld.Model\MySoccerWorld.Model.csproj", "{82038308-E488-4CC9-A5C0-E82CD21A043B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySoccerWorld.Model", "..\MySoccerWorld.Model\MySoccerWorld.Model.csproj", "{82038308-E488-4CC9-A5C0-E82CD21A043B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySoccerWorld.BLL", "..\MySoccerWorld.BLL\MySoccerWorld.BLL.csproj", "{E725FCA7-2046-49DB-AFE0-95B8529D323F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySoccerWorld.BLL", "..\MySoccerWorld.BLL\MySoccerWorld.BLL.csproj", "{E725FCA7-2046-49DB-AFE0-95B8529D323F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySoccerWorld.Data", "..\MySoccerWorld.Data\MySoccerWorld.Data.csproj", "{12643707-E4F1-4974-B9AA-37A22683EEEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySoccerWorld.Data", "..\MySoccerWorld.Data\MySoccerWorld.Data.csproj", "{12643707-E4F1-4974-B9AA-37A22683EEEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySoccerWorld.Services", "..\MySoccerWorld.Services\MySoccerWorld.Services.csproj", "{770C3262-1C8A-4F59-9953-2E367B9CC06B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySoccerWorld.Services", "..\MySoccerWorld.Services\MySoccerWorld.Services.csproj", "{770C3262-1C8A-4F59-9953-2E367B9CC06B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

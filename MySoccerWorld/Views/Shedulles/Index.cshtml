@@ -117,13 +117,66 @@
             </div>
             <div>
                 <h3 class="center"> AWARDS </h3>
-                @foreach(var a in Model.TournamentAwards)
-                {
-                    <div class="maincol">  @if(a.CoachTeamId!=null){ <p> @a.CoachTeam.Coach.Name  @a.CoachTeam.Team.Name </p> } 
-                        else{ <p> @a.PlayerTeam.Player.Name  - @a.AwardName  </p>}  
-                    <a asp-route-id="@a.Id" asp-action="EditAwards" asp-controller="Tournaments" class="modalItem">EDIT</a> </div>
-                }
-                <a  asp-route-id="@Model.Id" asp-action="CreateAwards" asp-controller="Tournaments" class="modalItem btn btn-collapse"> CREATE AWARDS </a>
+                <div class="border border-dark">
+                    <div class="d-flex justify-content-around bg-light"> GOLDEN BALL <a  asp-route-id="@Model.Id" asp-action="CreateAwards" asp-controller="Tournaments" class="modalItem text-dark"> ADD </a> </div>
+                    <div  class="bg-primary d-flex justify-content-around">
+                        @foreach(var g in Model.TournamentAwards.Where(g => g.AwardName == AwardType.GoldenBall))
+                        {
+                         <p> @g.PlayerTeam.Player.Name </p> 
+                         <p> <a asp-route-id="@g.Id" asp-action="EditAwards" asp-controller="Tournaments" class="modalItem"> CHANGE </a> </p>   
+                        }
+                    </div>
+                </div>
+                <div class="border border-dark">
+                    <div class="d-flex justify-content-around bg-light"> SILVER BALL <a  asp-route-id="@Model.Id" asp-action="CreateAwards" asp-controller="Tournaments" class="modalItem text-dark"> ADD </a> </div>
+                    <div class="bg-primary d-flex justify-content-around">
+                        @foreach(var g in Model.TournamentAwards.Where(g => g.AwardName == AwardType.SilverBall))
+                        {
+                         <p> @g.PlayerTeam.Player.Name </p> 
+                         <p> <a asp-route-id="@g.Id" asp-action="EditAwards" asp-controller="Tournaments" class="modalItem"> CHANGE </a> </p>
+                        }
+                    </div>
+                </div>
+                <div class="border border-dark">
+                    <div class="d-flex justify-content-around bg-light"> BRONZE BALL <a  asp-route-id="@Model.Id" asp-action="CreateAwards" asp-controller="Tournaments" class="modalItem text-dark"> ADD </a> </div>
+                    <div class="bg-primary d-flex justify-content-around">
+                        @foreach(var g in Model.TournamentAwards.Where(g => g.AwardName == AwardType.BronzeBall))
+                        {
+                         <p> @g.PlayerTeam.Player.Name </p> 
+                         <p> <a asp-route-id="@g.Id" asp-action="EditAwards" asp-controller="Tournaments" class="modalItem"> CHANGE </a> </p>   
+                        }
+                    </div>
+                </div>
+                <div class="border border-dark">
+                    <div class="d-flex justify-content-around bg-light"> GOALSCORER <a  asp-route-id="@Model.Id" asp-action="CreateBestScorer" asp-controller="Tournaments" class="modalItem text-dark"> ADD </a> </div>
+                    <div class="bg-primary d-flex justify-content-around">
+                         @foreach(var g in Model.TournamentAwards.Where(g => g.AwardName == AwardType.GoalScorer))
+                        {
+                         <p> @g.PlayerTeam.Player.Name </p> 
+                         <p> <a asp-route-id="@g.Id" asp-action="EditAwards" asp-controller="Tournaments" class="modalItem"> CHANGE </a> </p>
+                        }
+                    </div>
+                </div>
+                <div class="border border-dark">
+                    <div class="d-flex justify-content-around bg-light"> ASISTER <a  asp-route-id="@Model.Id" asp-action="CreateBestAsister" asp-controller="Tournaments" class="modalItem text-dark"> ADD </a></div>
+                    <div class="bg-primary d-flex justify-content-around">
+                        @foreach(var g in Model.TournamentAwards.Where(g => g.AwardName == AwardType.Asister))
+                        {
+                         <p> @g.PlayerTeam.Player.Name </p> 
+                         <p> <a asp-route-id="@g.Id" asp-action="EditAwards" asp-controller="Tournaments" class="modalItem"> CHANGE </a> </p>
+                        }
+                    </div>
+                </div>
+                <div class="border border-dark">
+                    <div class="d-flex justify-content-around bg-light"> COACH <a  asp-route-id="@Model.Id" asp-action="CreateBestCoach" asp-controller="Tournaments" class="modalItem text-dark"> ADD </a> </div>
+                    <div class="bg-primary d-flex justify-content-around">
+                        @foreach(var g in Model.TournamentAwards.Where(g => g.AwardName == AwardType.Coach))
+                        {
+                         <p> @g.CoachTeam.Coach.Name </p>
+                         <p> <a asp-route-id="@g.Id" asp-action="EditAwards" asp-controller="Tournaments" class="modalItem"> CHANGE </a> </p>
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     </div>
