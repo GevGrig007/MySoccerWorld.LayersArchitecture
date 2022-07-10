@@ -17,28 +17,12 @@ namespace MySoccerWorld.Data.Repositories
         {
             _context = db;
         }
-        public Season Get(int? id)
-        {
-            return _context.Seasons.Find(id);
-        }
+        public Season Get(int? id) => _context.Seasons.Find(id);
+        public IEnumerable<Season> GetAll() =>  _context.Seasons;
         public void Update(Season season)
         {
-            if (season.Id == 0)
-            {
-                _context.Seasons.Add(season);
-            }
-            else
-            {
-                _context.Entry(season).State = EntityState.Modified;
-            }
-        }
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
-        public IEnumerable<Season> GetAll()
-        {
-            return _context.Seasons;
+            if (season.Id == 0) _context.Seasons.Add(season);
+            else _context.Entry(season).State = EntityState.Modified;
         }
     }
 }

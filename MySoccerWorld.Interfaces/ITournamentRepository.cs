@@ -11,9 +11,9 @@ namespace MySoccerWorld.Interfaces
     {
         IEnumerable<Tournament> GetAll();
         IEnumerable<Tournament> GetByLeague(int id);
-        void Update(Tournament tournament);
-        void Delete(int id);
-        Tournament Get(int id);
-        Tournament Details(int id);
+        Task<Tournament> GetAsync(int id);
+        Task<Tournament> DetailsAsync(int id);
+        Task UpdateAsync(Tournament tournament);
+        Task DeleteAsync(int id);
     }
 }

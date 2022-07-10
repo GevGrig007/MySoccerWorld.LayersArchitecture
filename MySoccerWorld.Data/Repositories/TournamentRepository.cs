@@ -17,46 +17,22 @@ namespace MySoccerWorld.Data.Repositories
         {
             _context = db;
         }
-        public void Delete(int id)
+        public async Task<Tournament> DetailsAsync(int id) =>
+                  await _context.Tournaments.Include(t => t.League).Include(t => t.Teams).ThenInclude(t => t.PlayerTeams).ThenInclude(p=>p.Player)
+                                       .Include(t => t.Teams).ThenInclude(t => t.CoachTeams).ThenInclude(c => c.Coach).Include(t => t.Season)
+                                       .Include(t => t.TournamentAwards).Include(t => t.BestPlayers).FirstOrDefaultAsync(x => x.Id == id);
+        public async Task<Tournament> GetAsync(int id) => await _context.Tournaments.Include(t=>t.Teams).FirstOrDefaultAsync(t=>t.Id==id);
+        public IEnumerable<Tournament> GetAll() => _context.Tournaments.Include(t => t.Season).Include(t => t.Ratings).Include(t => t.League);
+        public IEnumerable<Tournament> GetByLeague(int id) => _context.Tournaments.Include(t => t.Season).Where(t => t.LeagueId == id);
+        public async Task UpdateAsync(Tournament tournament)
         {
-            Tournament tournament = _context.Tournaments.Find(id);
-            if (tournament != null)
-                _context.Tournaments.Remove(tournament);
+            if (tournament.Id == 0) await _context.Tournaments.AddAsync(tournament);
+            else _context.Entry(tournament).State = EntityState.Modified;
         }
-        public Tournament Details(int id)
+        public async Task DeleteAsync(int id)
         {
-            return _context.Tournaments.Include(t => t.League)
-                .Include(t => t.Teams).ThenInclude(t => t.PlayerTeams).ThenInclude(p=>p.Player)
-                .Include(t => t.Teams).ThenInclude(t => t.CoachTeams).ThenInclude(c => c.Coach)
-                .Include(t => t.Season).Include(t => t.TournamentAwards)
-                .Include(t => t.BestPlayers)
-                .FirstOrDefault(x => x.Id == id);
-        }
-        public Tournament Get(int id)
-        {
-            return _context.Tournaments.Include(t=>t.Teams).FirstOrDefault(t=>t.Id==id);
-        }
-
-        public IEnumerable<Tournament> GetAll()
-        {
-            return _context.Tournaments.Include(t => t.Season).Include(t => t.Ratings).Include(t => t.League);
-        }
-
-        public IEnumerable<Tournament> GetByLeague(int id)
-        {
-            return _context.Tournaments.Include(t => t.Season).Where(t => t.LeagueId == id);
-        }
-
-        public void Update(Tournament tournament)
-        {
-            if (tournament.Id == 0)
-            {
-                _context.Tournaments.Add(tournament);
-            }
-            else
-            {
-                _context.Entry(tournament).State = EntityState.Modified;
-            }
+            Tournament tournament = await _context.Tournaments.FindAsync(id);
+            if (tournament != null) _context.Tournaments.Remove(tournament);
         }
     }
 }

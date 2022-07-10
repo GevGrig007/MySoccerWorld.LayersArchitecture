@@ -14,8 +14,8 @@ namespace MySoccerWorld.Interfaces
         Coach Get(int? id);
         Coach Details(int id);
         IQueryable<Coach> Sort();
-        void UpdateCoachTeams(CoachTeam coachTeam);
         void Update(Coach coach);
+        void UpdateCoachTeams(CoachTeam coachTeam); 
         void Delete(int id);
     }
 }

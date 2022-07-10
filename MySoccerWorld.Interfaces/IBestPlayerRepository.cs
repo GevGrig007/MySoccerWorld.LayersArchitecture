@@ -15,6 +15,6 @@ namespace MySoccerWorld.Interfaces
         IEnumerable<PlayerTeam> GetPlayerTeams();
         Task<List<BestPlayer>> GetByTournamentAsync(int id);
         Player GetClubsPlayer(int id);
-        Task Update(BestPlayer bestPlayer);
+        Task UpdateAsync(BestPlayer bestPlayer);
     }
 }

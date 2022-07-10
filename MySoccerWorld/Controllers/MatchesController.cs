@@ -98,7 +98,7 @@ namespace MySoccerWorld.Controllers
         [HttpPost]
         public async Task<IActionResult> GoalsAdd([Bind("MatchId,PlayerTeamId")] Goal goal)
         {
-            await db.Matches.AddGoal(goal);
+            await db.Matches.AddGoalAsync(goal);
             db.Save();
             return RedirectToAction("EditScore", "Matches", new { id = goal.MatchId });
         }

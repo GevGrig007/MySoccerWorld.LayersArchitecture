@@ -11,11 +11,11 @@ namespace MySoccerWorld.Interfaces
     {
         IEnumerable<Player> GetAll();
         List<Player> GetForNational(int id);
-        Player Get(int id);
-        Player Details(int id);
         List<Player> ClubPlayers(int id);
         List<Player> NationalPlayers(int id);
         IQueryable<Player> Sort();
+        Player Get(int id);
+        Player Details(int id);
         void Update(Player player);
         void Delete(int id);
     }

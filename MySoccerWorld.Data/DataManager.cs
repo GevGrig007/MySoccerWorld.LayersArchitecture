@@ -68,7 +68,6 @@ namespace MySoccerWorld.Data
                 return bestPlayerRepository;
             }
         }
-
         public IGoalRepository Goals
         {
             get
@@ -105,7 +104,6 @@ namespace MySoccerWorld.Data
                 return playerRepository;
             }
         }
-
         public IRatingRepository Ratings
         {
             get
@@ -115,7 +113,6 @@ namespace MySoccerWorld.Data
                 return ratingRepository;
             }
         }
-
         public ISeasonRepository Seasons
         {
             get
@@ -125,7 +122,6 @@ namespace MySoccerWorld.Data
                 return seasonRepository;
             }
         }
-
         public ITeamRepository Teams
         {
             get
@@ -135,7 +131,6 @@ namespace MySoccerWorld.Data
                 return teamRepository;
             }
         }
-
         public ITournamentRepository Tournaments
         {
             get
@@ -145,7 +140,6 @@ namespace MySoccerWorld.Data
                 return tournamentRepository;
             }
         }
-
         public INationalRepository Nationals
         {
             get
@@ -155,7 +149,6 @@ namespace MySoccerWorld.Data
                 return nationalRepository;
             }
         }
-
         public IPlayerTeamRepository PlayerTeams
         {
             get
@@ -165,7 +158,6 @@ namespace MySoccerWorld.Data
                 return playerTeamRepository;
             }
         }
-
         public IAwardsRepository Awards
         {
             get
@@ -175,10 +167,8 @@ namespace MySoccerWorld.Data
                 return awardsRepository;
             }
         }
-        public void Save()
-        {
-            db.SaveChanges();
-        }
+        public void Save() => db.SaveChanges();
+
         private bool disposed = false;
         public void Dispose(bool disposing)
         {

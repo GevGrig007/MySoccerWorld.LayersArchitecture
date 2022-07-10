@@ -26,7 +26,7 @@ namespace MySoccerWorld.Controllers
         }
         public async Task<IActionResult> Index(int id)
         {
-            var tournament = db.Tournaments.Details(id);
+            var tournament = await db.Tournaments.DetailsAsync(id);
             var teams = tournament.Teams.ToList();
             ViewBag.Teams = new SelectList(teams, "Id", "Name");
             ViewBag.BestPlayers = await db.BestPlayers.GetByTournamentAsync(id);
@@ -34,9 +34,9 @@ namespace MySoccerWorld.Controllers
         }
         // Add Teams
         [HttpGet]
-        public IActionResult AddTeams(int id)
+        public async Task<IActionResult> AddTeams(int id)
         {
-            Tournament tournament = db.Tournaments.Details(id);
+            Tournament tournament = await db.Tournaments.DetailsAsync(id);
             if (tournament == null)
             {
                 return NotFound();
@@ -47,9 +47,9 @@ namespace MySoccerWorld.Controllers
             return View(tournament);
         }
         [HttpPost]
-        public IActionResult AddTeams(Tournament tournament, int[] selectedClubs)
+        public async Task<IActionResult> AddTeams(Tournament tournament, int[] selectedClubs)
         {
-            Tournament newTournament = db.Tournaments.Get(tournament.Id);
+            Tournament newTournament = await db.Tournaments.GetAsync(tournament.Id);
             newTournament.Name = tournament.Name;
             newTournament.Teams.Clear();
             if (selectedClubs != null)
@@ -59,16 +59,15 @@ namespace MySoccerWorld.Controllers
                     newTournament.Teams.Add(c);
                 }
             }
-            db.Tournaments.Update(newTournament);
+            await db.Tournaments.UpdateAsync(newTournament);
             db.Save();
             return RedirectToAction("Index", new { id = newTournament.Id });
         }
         // Sheduelles
-
         [HttpPost]
-        public IActionResult ShedulleFor9(int id, int[] clubs, double data)
+        public async Task<IActionResult> ShedulleFor9(int id, int[] clubs, double data)
         {
-            Tournament tournament =  db.Tournaments.Get(id);
+            Tournament tournament =  await db.Tournaments.GetAsync(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
@@ -81,9 +80,9 @@ namespace MySoccerWorld.Controllers
             return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
-        public IActionResult ShedulleFor12(int id, int[] clubs, double data)
+        public async Task<IActionResult> ShedulleFor12(int id, int[] clubs, double data)
         {
-            Tournament tournament = db.Tournaments.Get(id);
+            Tournament tournament = await db.Tournaments.GetAsync(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
@@ -96,9 +95,9 @@ namespace MySoccerWorld.Controllers
             return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
-        public IActionResult ShedulleFor16(int id, int[] clubs, double data)
+        public async Task<IActionResult> ShedulleFor16(int id, int[] clubs, double data)
         {
-            Tournament tournament = db.Tournaments.Get(id);
+            Tournament tournament = await db.Tournaments.GetAsync(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
@@ -111,9 +110,9 @@ namespace MySoccerWorld.Controllers
             return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
-        public IActionResult ShedulleGroup(int id, int[] clubs, double data)
+        public async Task<IActionResult> ShedulleGroup(int id, int[] clubs, double data)
         {
-            Tournament tournament = db.Tournaments.Get(id);
+            Tournament tournament = await db.Tournaments.GetAsync(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
@@ -209,9 +208,9 @@ namespace MySoccerWorld.Controllers
             return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
-        public IActionResult ShedulleKnockOut32(int id, int[] clubs, double data)
+        public async Task<IActionResult> ShedulleKnockOut32(int id, int[] clubs, double data)
         {
-            Tournament tournament = db.Tournaments.Get(id);
+            Tournament tournament = await db.Tournaments.GetAsync(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
@@ -224,9 +223,9 @@ namespace MySoccerWorld.Controllers
             return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
-        public IActionResult ShedulleKnockOut16(int id, int[] clubs, double data)
+        public async Task<IActionResult> ShedulleKnockOut16(int id, int[] clubs, double data)
         {
-            Tournament tournament = db.Tournaments.Get(id);
+            Tournament tournament = await db.Tournaments.GetAsync(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
@@ -239,9 +238,9 @@ namespace MySoccerWorld.Controllers
             return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
-        public IActionResult ShedulleKnockOut8(int id, int[] clubs, double data)
+        public async Task<IActionResult> ShedulleKnockOut8(int id, int[] clubs, double data)
         {
-            Tournament tournament = db.Tournaments.Get(id);
+            Tournament tournament = await db.Tournaments.GetAsync(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
@@ -254,9 +253,9 @@ namespace MySoccerWorld.Controllers
             return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
-        public IActionResult ShedullEuro8(int id, int[] clubs, double data)
+        public async Task<IActionResult> ShedullEuro8(int id, int[] clubs, double data)
         {
-            Tournament tournament = db.Tournaments.Get(id);
+            Tournament tournament = await db.Tournaments.GetAsync(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
@@ -269,9 +268,9 @@ namespace MySoccerWorld.Controllers
             return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
-        public IActionResult ShedulleQuarter(int id, int[] clubs, double data , string matchcount)
+        public async Task<IActionResult> ShedulleQuarter(int id, int[] clubs, double data , string matchcount)
         {
-            Tournament tournament = db.Tournaments.Get(id);
+            Tournament tournament = await db.Tournaments.GetAsync(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
@@ -293,9 +292,9 @@ namespace MySoccerWorld.Controllers
             return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
-        public IActionResult ShedulleSemi(int id, int[] clubs, double data , string matchcount)
+        public async Task<IActionResult> ShedulleSemi(int id, int[] clubs, double data , string matchcount)
         {
-            Tournament tournament = db.Tournaments.Get(id);
+            Tournament tournament = await db.Tournaments.GetAsync(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
@@ -317,9 +316,9 @@ namespace MySoccerWorld.Controllers
             return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
         [HttpPost]
-        public IActionResult ShedulleFinal(int id, int[] clubs, double data)
+        public async Task<IActionResult> ShedulleFinal(int id, int[] clubs, double data)
         {
-            Tournament tournament = db.Tournaments.Get(id);
+            Tournament tournament = await db.Tournaments.GetAsync(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {
@@ -331,17 +330,17 @@ namespace MySoccerWorld.Controllers
             db.Save();
             return RedirectToAction("Details", "Tournaments", new { id = tournament.Id });
         }
-        public IActionResult ShedulleQualification(int id, int teamscount)
+        public async Task<IActionResult> ShedulleQualification(int id, int teamscount)
         {
-            var tournament = db.Tournaments.Details(id);
+            var tournament = await db.Tournaments.DetailsAsync(id);
             ViewBag.Teams = new SelectList(tournament.Teams, "Id", "Name");
             ViewBag.TeamsCount = teamscount;
             return View(tournament);
         }
         [HttpPost]
-        public IActionResult ShedulleQualification(int id, string round, string matchcount, int[] clubs, double data ,bool neytral )
+        public async Task<IActionResult> ShedulleQualification(int id, string round, string matchcount, int[] clubs, double data ,bool neytral )
         {
-            var tournament = db.Tournaments.Details(id);
+            var tournament = await db.Tournaments.DetailsAsync(id);
             var teams = new List<Team>();
             for (var i = 0; i < clubs.Length; i++)
             {

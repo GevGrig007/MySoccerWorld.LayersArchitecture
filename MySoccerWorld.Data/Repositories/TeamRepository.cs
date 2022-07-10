@@ -17,36 +17,14 @@ namespace MySoccerWorld.Data.Repositories
         {
             _context = db;
         }
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-        public Team Details(int id)
-        {
-           return _context.Teams.Include(t => t.PlayerTeams).ThenInclude(t => t.Player).FirstOrDefault(t=>t.Id==id);
-        }
-        public Team Get(int id)
-        {
-            return _context.Teams.Find(id);
-        }
-        public IEnumerable<Team> GetAll()
-        {
-            return _context.Teams;
-        }
-        public void Save()
-        {
-            _context.SaveChanges();
-        }
+        public Team Get(int id) => _context.Teams.Find(id);
+        public Team Details(int id) => _context.Teams.Include(t => t.PlayerTeams).ThenInclude(t => t.Player).FirstOrDefault(t => t.Id == id);
+        public IEnumerable<Team> GetAll() => _context.Teams;
         public void Update(Team team)
         {
-            if (team.Id == 0)
-            {
-                _context.Teams.Add(team);
-            }
-            else
-            {
-                _context.Entry(team).State = EntityState.Modified;
-            }
+            if (team.Id == 0)  _context.Teams.Add(team);
+            else  _context.Entry(team).State = EntityState.Modified;
         }
+        public void Delete(int id) => throw new NotImplementedException();
     }
 }

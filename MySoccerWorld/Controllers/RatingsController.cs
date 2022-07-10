@@ -23,7 +23,7 @@ namespace MySoccerWorld.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var clubs = await db.Clubs.Rating();
+            var clubs = await db.Clubs.RatingAsync();
             return View(clubs);
         }
         public IActionResult NationalRanking()

@@ -10,9 +10,9 @@ namespace MySoccerWorld.Interfaces
     public interface INationalRepository
     {
         IQueryable<National> GetAll();
+        IEnumerable<National> Rating();
         National Details(int id);
         National Get(int id);
-        IEnumerable<National> Rating();
         void Update(National national);
     }
 }

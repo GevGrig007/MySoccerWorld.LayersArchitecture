@@ -85,9 +85,9 @@ namespace MySoccerWorld.Controllers
             var countries = db.Ratings.CountriesMedal();
             var view = new MedalsViewModel()
             {
-                Clubs = clubs,
-                Nationals = nationals,
-                Countries = countries
+                Clubs = clubs.ToList(),
+                Nationals = nationals.ToList(),
+                Countries = countries.ToList()
             };
             return View(view);
         }

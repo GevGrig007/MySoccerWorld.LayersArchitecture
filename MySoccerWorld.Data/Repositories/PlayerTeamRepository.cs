@@ -17,24 +17,14 @@ namespace MySoccerWorld.Data.Repositories
         {
             _context = context;
         }
+        public IEnumerable<PlayerTeam> GoalScorers(int id) =>
+               _context.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Goals.Where(g => g.Match.TournamentId == id));
+        public IEnumerable<PlayerTeam> Asisters(int id) =>
+               _context.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Asists.Where(g => g.Match.TournamentId == id));
         public void Update(PlayerTeam playerTeam)
         {
-            if (playerTeam.Id == 0)
-            {
-                _context.PlayerTeams.Add(playerTeam);
-            }
-            else
-            {
-                _context.Entry(playerTeam).State = EntityState.Modified;
-            }
-        }
-        public IEnumerable<PlayerTeam> GoalScorers(int id)
-        {
-            return _context.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Goals.Where(g => g.Match.TournamentId == id));
-        }
-        public IEnumerable<PlayerTeam> Asisters(int id)
-        {
-            return _context.PlayerTeams.Include(p => p.Player).Include(p => p.Team).Include(p => p.Asists.Where(g => g.Match.TournamentId == id));
+            if (playerTeam.Id == 0) _context.PlayerTeams.Add(playerTeam);
+            else _context.Entry(playerTeam).State = EntityState.Modified;
         }
     }
 }

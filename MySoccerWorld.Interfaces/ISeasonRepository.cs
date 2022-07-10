@@ -10,8 +10,7 @@ namespace MySoccerWorld.Interfaces
     public interface ISeasonRepository
     {
         Season Get(int? id);
-        void Update(Season season);
-        void Save();
         IEnumerable<Season> GetAll();
+        void Update(Season season);
     }
 }

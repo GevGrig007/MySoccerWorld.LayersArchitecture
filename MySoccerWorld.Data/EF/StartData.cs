@@ -13,7 +13,8 @@ namespace MySoccerWorld.EF.Data
         {
             if (!context.Leagues.Any())
             {
-                context.Leagues.AddRange(
+                context.Leagues.AddRange
+                  (
                     new League { Name = "GB Premier League", Region = "GreatBritain", Type = "Regional", Logo = "/images/LeaguesLogo/Gb.png" },
                     new League { Name = "Championat SNG", Region = "SNG", Type = "Regional", Logo = "/images/LeaguesLogo/Sng.png" },
                     new League { Name = "SuperLiga Alpys", Region = "Alpys", Type = "Regional", Logo = "/images/LeaguesLogo/Alpys.png" },
@@ -33,6 +34,23 @@ namespace MySoccerWorld.EF.Data
                     new League { Name = "UEFA EURO CUP", Type = "National", Logo = "/images/LeaguesLogo/eurocup.png" },
                     new League { Name = "Cup of AFRICAN Nations", Type = "National", Logo = "/images/LeaguesLogo/africacup.png" },
                     new League { Name = "Copa de AMERICA", Type = "National", Logo = "/images/LeaguesLogo/copaamerica.png" }
+                );
+                context.SaveChanges();
+            }
+            if (!context.Countries.Any())
+            {
+                context.Countries.AddRange
+                  (
+                    new Country { Name = "England", Region = "GreatBritain", Flag = "/images/CountryFlag/1.png"},
+                    new Country { Name = "Spain", Region = "Pyreneeys", Flag = "/images/CountryFlag/2.png" },
+                    new Country { Name = "Italy", Region = "Italy", Flag = "/images/CountryFlag/3.png" },
+                    new Country { Name = "Germany", Region = "CentralEurope", Flag = "/images/CountryFlag/4.png" },
+                    new Country { Name = "France", Region = "France", Flag = "/images/CountryFlag/5.png" },
+                    new Country { Name = "Portugal", Region = "Pyreneeys", Flag = "/images/CountryFlag/6.png" },
+                    new Country { Name = "Netherlands", Region = "Benelux", Flag = "/images/CountryFlag/7.png" },
+                    new Country { Name = "Russia", Region = "SNG", Flag = "/images/CountryFlag/8.png" },
+                    new Country { Name = "Belgium", Region = "Benelux", Flag = "/images/CountryFlag/9.png" },
+                    new Country { Name = "Austria", Region = "Alpys", Flag = "/images/CountryFlag/10.png" }
                 );
                 context.SaveChanges();
             }

@@ -18,9 +18,9 @@ namespace MySoccerWorld.Controllers
             _logger = logger;
             db = context;
         }
-        public IActionResult Create(int id)
+        public async Task<IActionResult> Create(int id)
         {
-            var tournament = db.Tournaments.Get(id);
+            var tournament = await db.Tournaments.GetAsync(id);
             ViewBag.Players = new SelectList(db.BestPlayers.GetPlayersByTournament(id), "Id", "Name");
             ViewData["TournamentId"] = tournament.Id;
             return View();
@@ -38,7 +38,7 @@ namespace MySoccerWorld.Controllers
                     PlayerTeamId = playerTeam.Id,
                     Position = Position[i]
                 };
-                db.BestPlayers.Update(bestplayer);
+                db.BestPlayers.UpdateAsync(bestplayer);
             }
             db.Save();
             return RedirectToAction("Index", "Shedulles", new { id = TournamentId[1] });
@@ -54,7 +54,7 @@ namespace MySoccerWorld.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit([Bind("Id,TournamentId,Position,PlayerTeamId")] BestPlayer bestPlayer)
         {
-            await db.BestPlayers.Update(bestPlayer);
+            await db.BestPlayers.UpdateAsync(bestPlayer);
             db.Save();
             return RedirectToAction("Index", "Shedulles", new { id = bestPlayer.TournamentId });
         }

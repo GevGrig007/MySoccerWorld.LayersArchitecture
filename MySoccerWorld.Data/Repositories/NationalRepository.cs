@@ -17,34 +17,17 @@ namespace MySoccerWorld.Data.Repositories
         {
             _context = context;
         }
-        public IQueryable<National> GetAll()
-        {
-            return _context.Nationals.Include(n => n.CoachTeams).ThenInclude(n => n.Coach);
-        }
-        public National Details(int id)
-        {
-            return _context.Nationals.Include(c => c.Ratings).ThenInclude(r => r.Tournament).ThenInclude(t => t.Season)
-                                                           .Include(c => c.PlayerTeams).ThenInclude(p => p.Team)
-                                                           .Include(c => c.CoachTeams).ThenInclude(c => c.Team).FirstOrDefault(c => c.Id == id);
-        }
-        public National Get(int id)
-        {
-            return _context.Nationals.Find(id);
-        }
+        public IQueryable<National> GetAll() => _context.Nationals.Include(n => n.CoachTeams).ThenInclude(n => n.Coach);
+        public National Details(int id) => 
+                        _context.Nationals.Include(c => c.Ratings).ThenInclude(r => r.Tournament).ThenInclude(t => t.Season)
+                                          .Include(c => c.PlayerTeams).ThenInclude(p => p.Team)
+                                          .Include(c => c.CoachTeams).ThenInclude(c => c.Team).FirstOrDefault(c => c.Id == id);
+        public National Get(int id) => _context.Nationals.Find(id);
+        public IEnumerable<National> Rating() => _context.Nationals.Include(c => c.Ratings);
         public void Update(National national)
         {
-            if (national.Id == 0)
-            {
-                _context.Nationals.Add(national);
-            }
-            else
-            {
-                _context.Entry(national).State = EntityState.Modified;
-            }
-        }
-        public IEnumerable<National> Rating()
-        {
-            return _context.Nationals.Include(c => c.Ratings);
+            if (national.Id == 0) _context.Nationals.Add(national);
+            else _context.Entry(national).State = EntityState.Modified;
         }
     }
 }
